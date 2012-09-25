@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 
 namespace KruispuntGroep6.Communication
@@ -22,10 +23,12 @@ namespace KruispuntGroep6.Communication
 				jsons = new string[total];
 			}
 
-			int randomInt = random.Next(2);
+			float floatTrafficDensity = ((float)count / (float)total) * 4f + 2;
+			int intTrafficDensity = (int)Math.Round(floatTrafficDensity, 0);
+			int randomInt = random.Next(intTrafficDensity);
 			if (randomInt > 0)
 				count -= index++;
-			else
+			else if (index > 0)
 				count -= index - 1;
 
 			string json = @"{";
@@ -43,7 +46,10 @@ namespace KruispuntGroep6.Communication
 			json += positionTo;
 			json += @"""}";
 
-			jsons[index + count - 1] = json;
+			if (index > 0)
+				jsons[index + count - 1] = json;
+			else
+				jsons[0] = json;
 
 			return json;
 		}

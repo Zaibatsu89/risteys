@@ -247,17 +247,8 @@ namespace KruispuntGroep6.Communication
 			{
 				for (int i = 0; i < nrOfInputs; i++)
 				{
-					bwResultsLb = new BackgroundWorker();
-					bwResultsLb.DoWork += bwResultsLb_DoWork;
-					bwResultsLb.RunWorkerCompleted += bwResultsLb_RunWorkerCompleted;
-					
-					if (!bwResultsLb.IsBusy)
-						bwResultsLb.RunWorkerAsync(jsonGenerator.GenerateJSON(i, nrOfInputs));
+					jsonGenerator.GenerateJSON(i, nrOfInputs);
 				}
-
-				bwResultsLb = new BackgroundWorker();
-				bwResultsLb.DoWork += bwResultsLb_DoWork;
-				bwResultsLb.RunWorkerCompleted += bwResultsLb_RunWorkerCompleted;
 
 				if (jsonGenerator.SaveJSONFile())
 				{
@@ -426,14 +417,6 @@ namespace KruispuntGroep6.Communication
 					bwNewTextBool.RunWorkerAsync(true);
 				if (!bwSendBtn.IsBusy)
 					bwSendBtn.RunWorkerAsync(true);
-
-                JsonInput input = new JsonInput();
-                string json = input.getType();
-
-                if (!bwResultsLb.IsBusy)
-                {
-                    bwResultsLb.RunWorkerAsync("JSON waarde: " + json);
-                }
 			}
 			catch (SocketException)
 			{
