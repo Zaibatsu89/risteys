@@ -5,8 +5,8 @@ namespace XNASimulator
 {
 	static class Program
 	{
-		private static TcpClient client;
-		private static TcpServer server;
+		private static Client client;
+		private static Server server;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -19,21 +19,23 @@ namespace XNASimulator
 			var serverThread = new Thread(ServerTask);
 			serverThread.Start();
 
+			/* not needed yet
 			using (Game1 game = new Game1())
 			{
 				game.Run();
 			}
+			 */
 		}
 
 		public static void ClientTask()
 		{
-			client = new TcpClient();
+			client = new Client();
 			client.ShowDialog();
 		}
 
 		public static void ServerTask()
 		{
-			server = new TcpServer();
+			server = new Server();
 		}
 	}
 }

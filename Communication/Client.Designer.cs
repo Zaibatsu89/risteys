@@ -1,6 +1,6 @@
 ﻿namespace KruispuntGroep6.Communication
 {
-	partial class TcpClient
+	partial class Client
 	{
 		/// <summary>
 		/// Required designer variable.
