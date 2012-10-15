@@ -12,10 +12,10 @@
 
 	public enum VehicleType
 	{
-		Default,
 		Bike,
 		Bus,
 		Car,
+		Default,
 		Godzilla,
 		Pedestrian,
 		Truck

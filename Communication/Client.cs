@@ -166,7 +166,7 @@ namespace KruispuntGroep6.Communication
 			tbNewText = new TextBox();
 			tbNewText.Enabled = false;
 			tbNewText.Location = new Point(10, 55);
-			tbNewText.MaxLength = 30;
+			//tbNewText.MaxLength = 30;
 			tbNewText.Parent = this;
 			tbNewText.Size = new Size(190, 2 * Font.Height);
 			tbNewText.TabIndex = 0;

@@ -1,5 +1,8 @@
 ﻿namespace KruispuntGroep6.Communication
 {
+	/// <summary>
+	/// Class used to store various strings used in the GUI. Handy when multiple languages needs to be supported.
+	/// </summary>
 	class Strings
 	{
 		public string Address

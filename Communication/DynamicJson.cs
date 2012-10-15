@@ -31,13 +31,13 @@ namespace KruispuntGroep6.Communication
 
         // public static methods
 
-        /// <summary>from JsonSring to DynamicJson</summary>
+        /// <summary>from JsonString to DynamicJson</summary>
         public static dynamic Parse(string json)
         {
             return Parse(json, Encoding.Unicode);
         }
 
-        /// <summary>from JsonSring to DynamicJson</summary>
+        /// <summary>from JsonString to DynamicJson</summary>
         public static dynamic Parse(string json, Encoding encoding)
         {
             using (var reader = JsonReaderWriterFactory.CreateJsonReader(encoding.GetBytes(json), XmlDictionaryReaderQuotas.Max))
@@ -46,7 +46,7 @@ namespace KruispuntGroep6.Communication
             }
         }
 
-        /// <summary>from JsonSringStream to DynamicJson</summary>
+        /// <summary>from JsonStringStream to DynamicJson</summary>
         public static dynamic Parse(Stream stream)
         {
             using (var reader = JsonReaderWriterFactory.CreateJsonReader(stream, XmlDictionaryReaderQuotas.Max))
@@ -55,7 +55,7 @@ namespace KruispuntGroep6.Communication
             }
         }
 
-        /// <summary>from JsonSringStream to DynamicJson</summary>
+        /// <summary>from JsonStringStream to DynamicJson</summary>
         public static dynamic Parse(Stream stream, Encoding encoding)
         {
             using (var reader = JsonReaderWriterFactory.CreateJsonReader(stream, encoding, XmlDictionaryReaderQuotas.Max, _ => { }))
@@ -64,7 +64,7 @@ namespace KruispuntGroep6.Communication
             }
         }
 
-        /// <summary>create JsonSring from primitive or IEnumerable or Object({public property name:property value})</summary>
+        /// <summary>create JsonString from primitive or IEnumerable or Object({public property name:property value})</summary>
         public static string Serialize(object obj)
         {
             return CreateJsonString(new XStreamingElement("root", CreateTypeAttr(GetJsonType(obj)), CreateJsonNode(obj)));
@@ -258,7 +258,14 @@ namespace KruispuntGroep6.Communication
 
         private object DeserializeObject(Type targetType)
         {
-            var result = Activator.CreateInstance(targetType);
+			var result = Activator.CreateInstance(targetType);
+			//var result = Activator.CreateInstance(targetType,
+			//     BindingFlags.CreateInstance |
+			//     BindingFlags.Public |
+			//     BindingFlags.Instance |
+			//     BindingFlags.OptionalParamBinding,
+			//     null, new Object[] { Type.Missing }, null);
+			//var result = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(targetType);
             var dict = targetType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.CanWrite)
                 .ToDictionary(pi => pi.Name, pi => pi);
