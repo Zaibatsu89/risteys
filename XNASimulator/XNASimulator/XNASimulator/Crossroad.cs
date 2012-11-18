@@ -16,13 +16,14 @@ namespace XNASimulator
     class Crossroad
     {
         private Tile[,] tiles;
-        Vector2 tileOrigin;          
 
+        //Amount of horizontal tiles
         public int Width
         {
             get { return tiles.GetLength(0); }
         }
 
+        //Amount of vertical tiles
         public int Height
         {
             get { return tiles.GetLength(1); }
@@ -36,10 +37,6 @@ namespace XNASimulator
 
         public Crossroad(IServiceProvider serviceProvider)
         {
-            //for rotation
-            tileOrigin.X = Tile.Width / 2;
-            tileOrigin.Y = Tile.Height / 2;
-
             content = new ContentManager(serviceProvider, "Content");         
         }
 
@@ -82,12 +79,16 @@ namespace XNASimulator
             {
                 case 'A':
                     return LoadTile("Road128x128", TileRotation.Up);
+                case 'a':
+                    return LoadTile("Road128x128", TileRotation.Right);
                 case 'B':
                     return LoadTile("Crossing128x128", TileRotation.Up);
                 case 'b':
                     return LoadTile("Crossing128x128", TileRotation.Right);
                 case 'C':
                     return LoadTile("Sidewalk128x128", TileRotation.Up);
+                case 'D':
+                    return LoadTile("Lights128x128", TileRotation.Up);
 
                 // Unknown tile type character
                 default:
@@ -113,20 +114,20 @@ namespace XNASimulator
                 for (int x = 0; x < Width; ++x)
                 {
                     // If there is a visible tile in that position
-                    Texture2D texture = tiles[x, y].Texture;
+                    Texture2D texture = tiles[x, y].getTexture();
                     if (texture != null)
                     {
                         // Draw it in screen space.
-                        Vector2 position = new Vector2(x, y) * Tile.Size;
+                        Vector2 position = new Vector2(x, y) * tiles[x,y].getSize();
                         spriteBatch.Draw(texture,
                                         position,
                                         null,
-                                        Color.White);
-                                        //0.0f, 
-                                        //tileOrigin, 
-                                        //1.0f, 
-                                        //SpriteEffects.None, 
-                                        //0f);
+                                        Color.White,
+                                        tiles[x,y].getRotation(), 
+                                        tiles[x,y].getOrigin(), 
+                                        1.0f, 
+                                        SpriteEffects.None, 
+                                        0f);
                     }
                 }
             }

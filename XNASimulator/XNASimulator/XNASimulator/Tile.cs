@@ -17,27 +17,87 @@ namespace XNASimulator
         Up = 0,
         Right = 90,
         Down = 180,
-        Left = 270,
+        Left = 270
     }
 
-    struct Tile
+
+    class Tile
     {
-        public Texture2D Texture;
-        public TileRotation Rotation;
+        private Texture2D Texture;
+        private TileRotation Rotation;
 
-        float circle = MathHelper.Pi * 2;
-        //private int rotationAngle;
+        public Texture2D getTexture()
+        {
+            return Texture;
+        }
 
-        public const int Height = 128;
-        public const int Width = 128;
+        //Dimensions
+        private int Height;
+        private int Width;
+        private Vector2 Size;
+        private Vector2 Origin;
 
-        public static readonly Vector2 Size = new Vector2(Width, Height);
+        public int getHeight()
+        {
+            return Height;
+        }
+        public int getWidth()
+        {
+            return Width;
+        }
+        public Vector2 getSize()
+        {
+            return Size;
+        }
+        public Vector2 getOrigin()
+        {
+            return Origin;
+        }
+
+        //Information
+        public int TileID;
+        public int TrafficLightID;
+        public Tile[] adjacentTiles;
+
+        public bool isOccupied = false;
+        public bool isGreen = false;
+        public bool isWalkway = false;
 
         public Tile(Texture2D texture, TileRotation rotation)
         {
-            //rotationAngle = rotation. % circle;
+            Height = 128;
+            Width = 128;
+
+            Size = new Vector2(Width, Height);
+            Origin = new Vector2(Width / 2, Height / 2);
+
             Texture = texture;
             Rotation = rotation;
+        }
+
+        //Calculates rotation of this Tile
+        public float getRotation()
+        {
+            double angle = 0;
+
+            switch(Rotation)
+            {
+                case TileRotation.Up:
+                    angle = 0;
+                    break;
+                case TileRotation.Right:
+                    angle = 90;
+                    break;
+                case TileRotation.Down:
+                    angle = 180;
+                    break;
+                case TileRotation.Left:
+                    angle = 270;
+                    break;
+            }
+
+            angle = Math.PI * angle / 180.0;
+            return (float)angle;
         }
     }
 }

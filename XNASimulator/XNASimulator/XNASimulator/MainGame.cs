@@ -21,8 +21,8 @@ namespace XNASimulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private int tilesHor = 7;
-        private int tilesVer = 7;
+        private int tilesHor = 9;
+        private int tilesVer = 9;
 
         private Crossroad crossroad;
         private Audio audio;
@@ -64,7 +64,6 @@ namespace XNASimulator
             }
             #endregion
 
-            //background = Content.Load<Texture2D>("background");
             base.Initialize();
 
         }
@@ -79,7 +78,7 @@ namespace XNASimulator
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadCrossroad("Content/Grids/TestGrid2.txt");
-            audio.PlayBackgroundMusic();
+            //audio.PlayBackgroundMusic();
 
         }
 

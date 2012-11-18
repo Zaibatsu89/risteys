@@ -18,7 +18,8 @@ namespace XNASimulator
 
         public string getTestMessage()
         {
-            string message = "Naam,Johannes,Woonplaats,Ferwert";
+            string message2 = "n1,red"; //light,state
+            string message = "0,car,n3,s6"; //time, type, from, to
             return message;
         }
     }
