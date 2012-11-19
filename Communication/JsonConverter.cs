@@ -16,9 +16,24 @@ namespace KruispuntGroep6.Communication
 		/// <returns>String used to contain dynamic JSON value of Naam.</returns>
 		public static string BytesToString(byte[] bytes, int bytesRead)
 		{
-			var r = DynamicJson.Parse(Encoding.ASCII.GetString(bytes, 0, bytesRead));
+			/* For later...
+			string message = Encoding.ASCII.GetString(bytes, 0, bytesRead); 
+			
+			var json = DynamicJson.Parse(message);
 
-			return r.Naam;
+			switch (getType(message))
+			{
+				case "starttime":
+					message = json.starttime;
+					break;
+				case "time":
+					message = Convert.ToString(json.time);
+					break;
+				default:
+					throw new Exception(String.Format("{0} is niet bekend als type!", getType(message)));
+			}*/
+
+			return Encoding.ASCII.GetString(bytes, 0, bytesRead);
 		}
 
 		/// <summary>
@@ -27,9 +42,12 @@ namespace KruispuntGroep6.Communication
 		/// <returns>Byte array used to contain 8192 bytes of serialized JSON.</returns>
 		public static byte[] StringToBytes(string message)
 		{
-			var json = DynamicJson.Serialize(new { Naam = "Johannes", Woonplaats = "Ferwert" });
+			return Encoding.ASCII.GetBytes(message);
+		}
 
-			return Encoding.ASCII.GetBytes(json);
+		public static string getType(string message)
+		{
+			return message.Equals(string.Empty) ? string.Empty : (message.Split('"'))[1];
 		}
     }
 }

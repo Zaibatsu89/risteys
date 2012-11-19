@@ -9,6 +9,8 @@ namespace KruispuntGroep6.Communication
 	/// </summary>
     class SendToController : SendTo
     {
+		
+
 		/// <summary>
 		/// Sends message to controller.
 		/// </summary>
@@ -33,6 +35,7 @@ namespace KruispuntGroep6.Communication
 				{
 					// Byte array used to contain message.
 					byte[] bytes = JsonConverter.StringToBytes(message);
+
 					// Write data to NetworkStream.
 					stream.Write(bytes, 0, bytes.Length);
 
@@ -42,19 +45,25 @@ namespace KruispuntGroep6.Communication
 
 					// Returns the data received from the simulator to the controller.
 					fromSimulator = Encoding.ASCII.GetString(bytes, 0, bytesLength);
-
-					// Close NetworkStream and TcpClient.
-					stream.Close();
-					simulator.Close();
 				}
-				else
-					// Close TcpClient.
-					simulator.Close();
+
+				// Close NetworkStream and TcpClient.
+				stream.Close();
+				simulator.Close();
 			}
 			// Gonna catch 'em all... Pokémon!
-			catch (SocketException) { }
-			catch (System.IO.IOException) { }
-			catch (Exception) { }
+			catch (SocketException e)
+			{
+				Console.WriteLine(String.Format(strings.SocketException, e.Message));
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine(String.Format(strings.IOException, e.Message));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(String.Format(strings.Exception, e.Message));
+			}
 
 			// String used to contain returned message from simulator.
 			return fromSimulator;

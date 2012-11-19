@@ -2,19 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KruispuntGroep6.Communication;
+using System.Threading;
 
 namespace XNASimulator
 {
     class Communication
     {
-        public Communication()
-        {
+		private static Client client;
 
-        }
-        public void begin()
-        {
+		public Communication() { }
 
-        }
+		public void Begin()
+		{
+			var clientThread = new Thread(ClientTask);
+			clientThread.Start();
+		}
+
+		public static void ClientTask()
+		{
+			client = new Client();
+			client.ShowDialog();
+		}
 
         public string getTestMessage()
         {

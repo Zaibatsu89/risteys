@@ -17,6 +17,7 @@ namespace XNASimulator
     /// </summary>
     public class MainGame : Microsoft.Xna.Framework.Game
     {
+		private Communication communication;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -55,6 +56,9 @@ namespace XNASimulator
         /// </summary>
         protected override void Initialize()
         {
+			communication = new Communication();
+			communication.Begin();
+
             crossroad = new Crossroad(Services);
             audio = new Audio(Services);
 

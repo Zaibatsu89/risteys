@@ -5,8 +5,9 @@
 	/// </summary>
 	abstract class SendTo
 	{
-		protected string address = "127.0.0.1";	// String used to contain IP address of localhost.
-		protected int port = 1337;				// Integer used to contain leet port number.
+		protected string address = "127.0.0.1";		// String used to contain IP address of localhost.
+		protected int port = 1337;					// Integer used to contain leet port number.
+		protected Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
 
 		/// <summary>
 		/// Sends message.

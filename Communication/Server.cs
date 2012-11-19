@@ -14,9 +14,8 @@ namespace KruispuntGroep6.Communication
 	{
 		private static string address;					// String used to contain IP address of localhost.
 		private const int port = 1337;					// Integer used to contain leet port number.
-		private static TcpClient connection;			// TcpClient used to provide a client connection for a TCP network service.
-		private static ClientHandler simulator;			// ClientHandler used to handle client.
 		private static Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
+		private static AutoResetEvent connectionWaitHandle = new AutoResetEvent(false); // AutoResetEvent used to spread incoming connections
 
 		/// <summary>
 		/// Constructor.
@@ -38,129 +37,116 @@ namespace KruispuntGroep6.Communication
 		private static void BeginListen()
 		{
 			// TcpListener used to listen for connections from TCP network clients.
-			TcpListener listener = new TcpListener(IPAddress.Parse(address), port);
-			
+			TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+
+			// Set timeouts
+			listener.Server.ReceiveTimeout = 10000;
+			listener.Server.SendTimeout = 10000;
+
 			// Start listening for incoming connection requests.
 			listener.Start();
 
 			// Start listening for connections.
 			Console.WriteLine(strings.Waiting);
 
+			// True forever
 			while (true)
 			{
 				// Accepts a pending connection request.
-				connection = listener.AcceptTcpClient();
+				IAsyncResult result = listener.BeginAcceptTcpClient(HandleAsyncConnection, listener);
 
-				if (connection != null)
-				{
-					// An incoming connection needs to be processed.
-					simulator = new ClientHandler(connection);
-					simulator.Start();
-				}
-				else
-					break;
+				// Wait until a client has begun handling an event.
+				connectionWaitHandle.WaitOne();
+
+				// Reset wait handle or the loop goes as fast as it can (after first request).
+				connectionWaitHandle.Reset();
 			}
-
-			// Stop TcpListener and ClientHandler
-			listener.Stop();
-			simulator.Stop();
-			Console.WriteLine(strings.Stopped);
-			Console.Read();
-		}
-	}
-
-	/// <summary>
-	/// Class used to handle client.
-	/// </summary>
-	class ClientHandler
-	{
-		TcpClient ClientSocket;				// TcpClient used to provide a client connection for a TCP network service.
-		Thread ClientThread;				// Thread used to start Process.
-		bool ContinueProcess = false;		// Boolean used to contain True if Process needs to continue and False otherwise.
-		Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="ClientSocket">TcpClient used to provide a client connection for a TCP network service.</param>
-		public ClientHandler(TcpClient ClientSocket)
-		{
-			this.ClientSocket = ClientSocket;
 		}
 
 		/// <summary>
-		/// Start.
+		/// Handle an async connection
 		/// </summary>
-		public void Start()
+		/// <param name="result">An IAsyncResult</param>
+		private static void HandleAsyncConnection(IAsyncResult result)
 		{
-			ContinueProcess = true;
-			ClientThread = new Thread(new ThreadStart(Process));
-			ClientThread.Start();
+			/*AsyncState gets a user-defined object that qualifies
+			 *or contains information about an asynchronous operation.*/
+			TcpListener listener = (TcpListener)result.AsyncState;
+			/*EndAcceptTcpClient asynchronously accepts an incoming
+			 *connection attempt and creates this TcpClient to handle
+			 *remote host communication.*/
+			TcpClient client = listener.EndAcceptTcpClient(result);
+
+			//Inform the main thread this connection is now handled.
+			connectionWaitHandle.Set();
+
+			//Process TcpClient.
+			Process(client);
 		}
 
 		/// <summary>
-		/// Process.
+		/// Process TcpClient.
 		/// </summary>
-		private void Process()
+		private static void Process(TcpClient client)
 		{
+			// Boolean used to contain True if Process needs to continue and False otherwise.
+			bool ContinueProcess = true;
+
 			// Incoming data from the client.
 			string data = null;
 
 			// Data buffer for incoming data.
-			byte[] bytes;
+			byte[] receiveBytes;
 
-			if (ClientSocket != null)
+			if (client != null)
 			{
 				// NetworkStream used to send and receive data.
-				NetworkStream networkStream = ClientSocket.GetStream();
+				NetworkStream networkStream = client.GetStream();
 				// ReceiveTimeout used to set the amount of time TcpClient will wait to receive data once a read operation is initiated.
-				ClientSocket.ReceiveTimeout = 100;
+				client.ReceiveTimeout = 100;
 
 				while (ContinueProcess)
 				{
 					// Data buffer is as big as receive buffer.
-					bytes = new byte[ClientSocket.ReceiveBufferSize];
+					receiveBytes = new byte[client.ReceiveBufferSize];
 
 					try
 					{
 						// Reads data from NetworkStream.
-						int bytesRead = networkStream.Read(bytes, 0, (int)ClientSocket.ReceiveBufferSize);
+						int bytesRead = networkStream.Read(receiveBytes, 0, (int)client.ReceiveBufferSize);
 
 						if (bytesRead > 0)
 						{
 							// String used to contain converted data buffer.
-							data = Encoding.ASCII.GetString(bytes, 0, bytesRead);
-
-							// If String isn't welcome message, display him as JSON.
-							if (!data.Equals(strings.HiIAmSimulator))
-							{
-								string d = JsonConverter.BytesToString(bytes, bytesRead);
-								Console.WriteLine(d);
-							}
+							data = Encoding.ASCII.GetString(receiveBytes, 0, bytesRead);
 
 							// If String is exit message, display it.
 							if (data.Equals(strings.Exit))
 							{
 								Console.WriteLine(strings.SimulatorDisconnected);
 							}
+							// If String isn't welcome message, display him as JSON.
+							else if (!data.Equals(strings.HiIAmSimulator) && (data.StartsWith("{") || data.StartsWith("[")))
+							{
+								string message = JsonConverter.BytesToString(receiveBytes, bytesRead);
+								Console.WriteLine(String.Format(strings.Received, message));
+							}
 							else
 							{
 								// Show the data on the console.
-								Console.WriteLine(strings.Received, data);
+								Console.WriteLine(String.Format(strings.Received, data));
 							}
 
 							byte[] sendBytes = default(byte[]);
-							string message = string.Empty;
 
 							// If String is welcome message.
 							if (data.Equals(strings.HiIAmSimulator))
 							{
 								// Send a welcome message back to the client.
-								message = strings.HiIAmController;
-								sendBytes = Encoding.ASCII.GetBytes(message);
+								sendBytes = Encoding.ASCII.GetBytes(strings.HiIAmController);
 
 								// Show the message on the console.
-								Console.WriteLine(strings.Sent, message);
+								Console.WriteLine(String.Format(strings.Sent, strings.HiIAmController));
 							}
 							else
 							{
@@ -174,40 +160,27 @@ namespace KruispuntGroep6.Communication
 							// If data is exit message, break.
 							if (data.Equals(strings.Exit)) break;
 						}
-
-
 					}
 					// Gonna catch 'em all... Pokémon!
-					catch (IOException) { } // Time-out
-					catch (SocketException)
+					catch (SocketException e)
 					{
-						Console.WriteLine(strings.Broken);
-						break;
+						Console.WriteLine(String.Format("SocketException: {0}", e.Message));
 					}
-					// Sleep.
-					Thread.Sleep(200);
+					catch (System.IO.IOException e)
+					{
+						Console.WriteLine(String.Format("IOException: {0}", e.Message));
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(String.Format("Exception: {0}", e.Message));
+					}
+					// Short sleep.
+					Thread.Sleep(1);
 				}
 
 				// Close NetworkStream and ClientHandler.
 				networkStream.Close();
-				ClientSocket.Close();
-			}
-		}
-
-		// Stop.
-		public void Stop()
-		{
-			ContinueProcess = false;
-			if (ClientThread != null && ClientThread.IsAlive)
-				ClientThread.Join();
-		}
-
-		// Is alive?
-		public bool Alive
-		{
-			get
-			{
-				return (ClientThread != null && ClientThread.IsAlive);
+				client.Close();
 			}
 		}
 	}

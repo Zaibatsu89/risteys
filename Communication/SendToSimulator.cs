@@ -33,6 +33,7 @@ namespace KruispuntGroep6.Communication
 				{
 					// Byte array used to contain message.
 					byte[] bytes = JsonConverter.StringToBytes(message);
+
 					// Write data to NetworkStream.
 					stream.Write(bytes, 0, bytes.Length);
 
@@ -42,19 +43,25 @@ namespace KruispuntGroep6.Communication
 
 					// Returns the data received from the controller to the simulator.
 					fromController = Encoding.ASCII.GetString(bytes, 0, bytesLength);
-
-					// Close NetworkStream and TcpClient.
-					stream.Close();
-					controller.Close();
 				}
-				else
-					// Close TcpClient.
-					controller.Close();
+
+				// Close NetworkStream and TcpClient.
+				stream.Close();
+				controller.Close();
 			}
 			// Gonna catch 'em all... Pokémon!
-			catch (SocketException) { }
-			catch (System.IO.IOException) { }
-			catch (Exception) { }
+			catch (SocketException e)
+			{
+				Console.WriteLine(String.Format(strings.SocketException, e.Message));
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine(String.Format(strings.IOException, e.Message));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(String.Format(strings.Exception, e.Message));
+			}
 
 			// String used to contain returned message from controller.
 			return fromController;

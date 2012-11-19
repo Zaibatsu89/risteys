@@ -1,46 +1,45 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace KruispuntGroep6.Communication
 {
+	/// <summary>
+	/// Client class of XNASimulator used to handle inputs, sends messages to the controller and shows simulator logs.
+	/// </summary>
 	public partial class Client : Form
 	{
-		private Button btnClear;
-		private Button btnConnect;
-		private Button btnDisconnect;
-		private Button btnJsonGenerator;
-		private Button btnSend;
-		private BackgroundWorker bwClearBtn = new BackgroundWorker();
-		private BackgroundWorker bwConnectBtn = new BackgroundWorker();
-		private BackgroundWorker bwConStatusTb = new BackgroundWorker();
-		private BackgroundWorker bwDisconnectBtn = new BackgroundWorker();
-		private BackgroundWorker bwJsonGeneratorBtn = new BackgroundWorker();
-		private BackgroundWorker bwJsonGeneratorBool = new BackgroundWorker();
-		private BackgroundWorker bwJsonGeneratorTb = new BackgroundWorker();
-		private BackgroundWorker bwNewTextBool = new BackgroundWorker();
-		private BackgroundWorker bwNewTextTb = new BackgroundWorker();
-		private BackgroundWorker bwResultsLb = new BackgroundWorker();
-		private BackgroundWorker bwSendBtn = new BackgroundWorker();
+		private BackgroundWorker backgroundWorker;
+		private delegate void backgroundWorker_Handler(Tuple<string, dynamic> argument);
+		private Button btnClear, btnConnect, btnDisconnect, btnJsonGenerator, btnSend;
 		private byte[] byteData = new byte[1024];
+		private string[] inputJSON;
+		private int inputJSONnumber;
 		private int intPort = 1337;
 		private IPAddress ipAddr = new IPAddress(0);
 		private JsonGenerator jsonGenerator = new JsonGenerator();
 		private ListBox lbResults;
+		private int previousTime;
 		private Strings strings = new Strings();
 		private TcpClient tcpSimulator;
-		private TextBox tbConStatus;
-		private TextBox tbJsonGenerator;
-		private TextBox tbNewText;
+		private TextBox tbConStatus, tbJsonGenerator, tbNewText;
+		private System.Timers.Timer timer = new System.Timers.Timer(1000);
 
 		public Client()
 		{
 			this.InitializeComponent();
 
+			// Initialize background worker
+			backgroundWorker = new BackgroundWorker();
+			backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+
+			// Generate GUI
 			btnClear = new Button();
 			btnClear.Enabled = false;
 			btnClear.Parent = this;
@@ -83,39 +82,6 @@ namespace KruispuntGroep6.Communication
 			btnSend.Size = new Size(5 * Font.Height, 2 * Font.Height);
 			btnSend.Click += new EventHandler(btnSend_Click);
 			btnSend.TabIndex = 1;
-
-			bwClearBtn.DoWork += new DoWorkEventHandler(bwClearBtn_DoWork);
-			bwClearBtn.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwClearBtn_RunWorkerCompleted);
-
-			bwConnectBtn.DoWork += new DoWorkEventHandler(bwConnectBtn_DoWork);
-			bwConnectBtn.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwConnectBtn_RunWorkerCompleted);
-
-			bwConStatusTb.DoWork += new DoWorkEventHandler(bwConStatusTb_DoWork);
-			bwConStatusTb.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwConStatusTb_RunWorkerCompleted);
-
-			bwDisconnectBtn.DoWork += new DoWorkEventHandler(bwDisconnectBtn_DoWork);
-			bwDisconnectBtn.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwDisconnectBtn_RunWorkerCompleted);
-
-			bwJsonGeneratorBool.DoWork += new DoWorkEventHandler(bwJsonGeneratorBool_DoWork);
-			bwJsonGeneratorBool.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwJsonGeneratorBool_RunWorkerCompleted);
-
-			bwJsonGeneratorBtn.DoWork += new DoWorkEventHandler(bwJsonGeneratorBtn_DoWork);
-			bwJsonGeneratorBtn.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwJsonGeneratorBtn_RunWorkerCompleted);
-
-			bwJsonGeneratorTb.DoWork += new DoWorkEventHandler(bwJsonGeneratorTb_DoWork);
-			bwJsonGeneratorTb.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwJsonGeneratorTb_RunWorkerCompleted);
-
-			bwNewTextBool.DoWork += new DoWorkEventHandler(bwNewTextBool_DoWork);
-			bwNewTextBool.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwNewTextBool_RunWorkerCompleted);
-
-			bwNewTextTb.DoWork += new DoWorkEventHandler(bwNewTextTb_DoWork);
-			bwNewTextTb.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwNewTextTb_RunWorkerCompleted);
-
-			bwResultsLb.DoWork += new DoWorkEventHandler(bwResultsLb_DoWork);
-			bwResultsLb.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwResultsLb_RunWorkerCompleted);
-
-			bwSendBtn.DoWork += new DoWorkEventHandler(bwSendBtn_DoWork);
-			bwSendBtn.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwSendBtn_RunWorkerCompleted);
 
 			this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
@@ -166,7 +132,6 @@ namespace KruispuntGroep6.Communication
 			tbNewText = new TextBox();
 			tbNewText.Enabled = false;
 			tbNewText.Location = new Point(10, 55);
-			//tbNewText.MaxLength = 30;
 			tbNewText.Parent = this;
 			tbNewText.Size = new Size(190, 2 * Font.Height);
 			tbNewText.TabIndex = 0;
@@ -175,106 +140,230 @@ namespace KruispuntGroep6.Communication
 			this.Text = strings.TcpClient;
 		}
 
+		/// <summary>
+		/// Clears input text.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void btnClear_Click(object sender, EventArgs e)
 		{
-			if (!bwClearBtn.IsBusy)
-				bwClearBtn.RunWorkerAsync(false);
-			if (!bwNewTextTb.IsBusy)
-				bwNewTextTb.RunWorkerAsync(String.Empty);
+			backgroundWorker_Set(new Tuple<string, dynamic>("btnClear", false));
+			backgroundWorker_Set(new Tuple<string, dynamic>("tbNewText",
+				string.Empty));
 		}
 
+		/// <summary>
+		/// Connects to controller, step 1.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void btnConnect_Click(object sender, EventArgs e)
 		{
-			if (!bwConStatusTb.IsBusy)
-				bwConStatusTb.RunWorkerAsync(strings.Connecting);
+			backgroundWorker_Set(new Tuple<string, dynamic>("tbConStatus",
+				strings.Connecting));
 
 			string message = strings.HiIAmSimulator;
 
 			Connect(message);
 		}
 
+		/// <summary>
+		/// Connects to controller, step 2.
+		/// </summary>
+		/// <param name="message">String used to determine the message to be received.</param>
 		private void Connect(string message)
 		{
 			IPEndPoint iep = new IPEndPoint(ipAddr, intPort);
+			// TcpClient used to provide a client connection for a TCP network service.
 			tcpSimulator = new TcpClient();
-			string fromSimulator = string.Empty;
+			// Set timeouts
+			tcpSimulator.ReceiveTimeout = 10000;
+			tcpSimulator.SendTimeout = 10000;
+			// String used to contain returned message from controller.
+			string fromController = string.Empty;
 
 			try
 			{
+				// Connects client to localhost and leet port.
 				tcpSimulator.Connect(iep);
-
+				// NetworkStream used to send and receive data.
 				NetworkStream stream = tcpSimulator.GetStream();
 
+				// If NetworkStream supports reading and writing.
 				if (stream.CanWrite && stream.CanRead)
 				{
+					// Byte array used to contain message.
 					byte[] bytes = Encoding.ASCII.GetBytes(message);
+
+					// Write data to NetworkStream.
 					stream.Write(bytes, 0, bytes.Length);
+
+					// Show sent data in results list.
+					backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+						"Sent: " + Encoding.ASCII.GetString(bytes)));
 
 					// Reads the NetworkStream into a byte buffer
 					byte[] buffer = new byte[tcpSimulator.ReceiveBufferSize];
 					int bytesLength = stream.Read(buffer, 0, (int)tcpSimulator.ReceiveBufferSize);
 
 					// Returns the data received from the simulator to the controller
-					fromSimulator = Encoding.ASCII.GetString(buffer, 0, bytesLength);
+					fromController = Encoding.ASCII.GetString(buffer, 0, bytesLength);
 
-					if (!bwConnectBtn.IsBusy)
-						bwConnectBtn.RunWorkerAsync(false);
+					// Update GUI
+					backgroundWorker_Set(new Tuple<string, dynamic>("btnConnect", false));
+					backgroundWorker_Set(new Tuple<string, dynamic>("tbConStatus",
+						strings.Connected + tcpSimulator.Client.RemoteEndPoint.ToString()));
+					backgroundWorker_Set(new Tuple<string, dynamic>("btnDisconnect", true));
+					backgroundWorker_Set(new Tuple<string, dynamic>("boolJsonGenerator", true));
+					backgroundWorker_Set(new Tuple<string, dynamic>("btnJsonGenerator", true));
+					backgroundWorker_Set(new Tuple<string, dynamic>("boolNewText", true));
+					backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+						"Received: " + fromController));
 
-					bwConStatusTb = new BackgroundWorker();
-					bwConStatusTb.DoWork += bwConStatusTb_DoWork;
-					bwConStatusTb.RunWorkerCompleted += bwConStatusTb_RunWorkerCompleted;
-
-					if (!bwConStatusTb.IsBusy)
-						bwConStatusTb.RunWorkerAsync(strings.Connected + tcpSimulator.Client.RemoteEndPoint.ToString());
-					if (!bwDisconnectBtn.IsBusy)
-						bwDisconnectBtn.RunWorkerAsync(true);
-					if (!bwJsonGeneratorBool.IsBusy)
-						bwJsonGeneratorBool.RunWorkerAsync(true);
-					if (!bwJsonGeneratorBtn.IsBusy)
-						bwJsonGeneratorBtn.RunWorkerAsync(true);
-					if (!bwNewTextBool.IsBusy)
-						bwNewTextBool.RunWorkerAsync(true);
-					if (!bwResultsLb.IsBusy)
-						bwResultsLb.RunWorkerAsync(fromSimulator);
-
+					// Close stream
 					stream.Close();
+
+					// Read JSON input file
+					readJSON();
+
+					// Send start time to controller
+					sendStartTime();
 				}
 				else
 					tcpSimulator.Close();
 			}
-			catch (SocketException)
+			// Gonna catch 'em all... Pokémon!
+			catch (SocketException e)
 			{
-				if (!bwConStatusTb.IsBusy)
-					bwConStatusTb.RunWorkerAsync(strings.ConnectionError);
+				Console.WriteLine(String.Format(strings.SocketException, e.Message));
 			}
-			catch (System.IO.IOException) { }
-			catch (Exception) { }
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine(String.Format(strings.IOException, e.Message));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(String.Format(strings.Exception, e.Message));
+			}
 		}
 
+		/// <summary>
+		/// Read JSON input file.
+		/// </summary>
+		private void readJSON()
+		{
+			Console.Write("Reading JSON input file... ");
+
+			inputJSON = File.ReadAllLines(@"..\..\..\input.json");
+			inputJSONnumber = 0;
+
+			Console.Write("Done.\n");
+		}
+
+		/// <summary>
+		/// Sends start time to controller.
+		/// </summary>
+		private void sendStartTime()
+		{
+			string jsonStartTime = DynamicJson.Serialize(new{starttime = DateTime.UtcNow.ToString("HH:mm")});
+
+			SendToController(jsonStartTime);
+
+			previousTime = 0;
+			timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+			timer.Start();
+		}
+
+		/// <summary>
+		/// Sends a JSON every second.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">ElapsedEventArgs used to determine elapsed event arguments.</param>
+		private void timer_Elapsed(object sender, ElapsedEventArgs e)
+		{
+			int time = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
+
+			while (time.Equals(previousTime))
+			{
+				SendToController(inputJSON[inputJSONnumber]);
+
+				inputJSONnumber++;
+
+				if (inputJSONnumber < inputJSON.Length)
+				{
+					time = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
+				}
+				else
+				{
+					timer.Stop();
+					break;
+				}
+			}
+
+			if (timer.Enabled)
+			{
+				SendToController(inputJSON[inputJSONnumber]);
+				inputJSONnumber++;
+			}
+
+			if (inputJSONnumber < inputJSON.Length)
+			{
+				previousTime = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
+			}
+			else
+			{
+				timer.Stop();
+			}
+		}
+
+		/// <summary>
+		/// Shows progress of items.
+		/// </summary>
+		/// <param name="current">Integer used to determine current item number.</param>
+		/// <param name="count">Integer used to determine total amount of items.</param>
+		private void showProgress(int current, int count)
+		{
+			int left = Console.CursorLeft;
+			int top = Console.CursorTop;
+
+			Console.CursorLeft += 3;
+			Console.Write("%");
+			Console.CursorLeft -= 4;
+			Console.Write(Convert.ToInt32((float)current / (float)count * (float)100).ToString());
+			Console.CursorLeft = left;
+			Console.CursorTop = top;
+		}
+
+		/// <summary>
+		/// Disconnects from controller.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void btnDisconnect_Click(object sender, EventArgs e)
 		{
-			SendToController send2Controller = new SendToController();
-			send2Controller.Send("exit");
+			SendToController(strings.Exit);
 			tcpSimulator.Close();
+			timer.Stop();
 
-			if (!bwClearBtn.IsBusy)
-				bwClearBtn.RunWorkerAsync(false);
-			if (!bwConnectBtn.IsBusy)
-				bwConnectBtn.RunWorkerAsync(true);
-			if (!bwConStatusTb.IsBusy)
-				bwConStatusTb.RunWorkerAsync(strings.Disconnected);
-			if (!bwDisconnectBtn.IsBusy)
-				bwDisconnectBtn.RunWorkerAsync(false);
-			if (!bwJsonGeneratorTb.IsBusy)
-				bwJsonGeneratorTb.RunWorkerAsync(String.Empty);
-			if (!bwNewTextBool.IsBusy)
-				bwNewTextBool.RunWorkerAsync(false);
-			if (!bwNewTextTb.IsBusy)
-				bwNewTextTb.RunWorkerAsync(String.Empty);
-			if (!bwSendBtn.IsBusy)
-				bwSendBtn.RunWorkerAsync(false);
+			// Update GUI
+			backgroundWorker_Set(new Tuple<string, dynamic>("btnClear", false));
+			backgroundWorker_Set(new Tuple<string, dynamic>("btnConnect", true));
+			backgroundWorker_Set(new Tuple<string, dynamic>("tbConStatus",
+				strings.Disconnected));
+			backgroundWorker_Set(new Tuple<string, dynamic>("btnDisconnect", false));
+			backgroundWorker_Set(new Tuple<string, dynamic>("tbJsonGenerator",
+				string.Empty));
+			backgroundWorker_Set(new Tuple<string, dynamic>("boolNewText", false));
+			backgroundWorker_Set(new Tuple<string, dynamic>("tbNewText",
+				string.Empty));
+			backgroundWorker_Set(new Tuple<string, dynamic>("btnSend", false));
 		}
 
+		/// <summary>
+		/// Generates JSON input file.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void btnJsonGenerator_Click(object sender, EventArgs e)
 		{
 			int nrOfInputs = -1;
@@ -302,156 +391,201 @@ namespace KruispuntGroep6.Communication
 
 				if (jsonGenerator.SaveJSONFile())
 				{
-					if (!bwResultsLb.IsBusy)
-						bwResultsLb.RunWorkerAsync(strings.JsonSaved);
+					backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+						strings.JsonSaved));
 				}
 				else
 				{
-					if (!bwResultsLb.IsBusy)
-						bwResultsLb.RunWorkerAsync(strings.JsonSavingError);
+					backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+						strings.JsonSavingError));
 				}
 			}
 		}
 
+		/// <summary>
+		/// Sends a message to the controller, step 1.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void btnSend_Click(object sender, EventArgs e)
 		{
-			string strMessage = tbNewText.Text;
+			SendToController(tbNewText.Text);
+		}
+
+		/// <summary>
+		/// Sends a message to the controller, step 2.
+		/// </summary>
+		/// <param name="message">String used to determine the message to be send.</param>
+		private void SendToController(string message)
+		{
 			SendToController send2Controller = new SendToController();
-			if (strMessage.Length > 0)
-				send2Controller.Send(strMessage);
+			send2Controller.Send(message);
+
+			// Show sent data in results list.
+			backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+				String.Format(strings.Sent, message)));
 		}
 
-		private void bwClearBtn_DoWork(object sender, DoWorkEventArgs e)
+		/// <summary>
+		/// The background worker is doing work, step 1.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">DoWorkEventArgs used to determine do work event arguments.</param>
+		private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
-			e.Result = e.Argument;
+			backgroundWorker_Worker((Tuple<string, dynamic>) e.Argument);
 		}
 
-		private void bwClearBtn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		/// <summary>
+		/// Creates a new background worker.
+		/// </summary>
+		/// <param name="argument">Tuple<string, dynamic> used to determine
+		///	the GUI object and it's argument</param>
+		private void backgroundWorker_Set(Tuple<string, dynamic> argument)
 		{
-			this.btnClear.Enabled = (bool)e.Result;
+			backgroundWorker = new BackgroundWorker();
+			backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+			if (!backgroundWorker.IsBusy)
+			{
+				backgroundWorker.RunWorkerAsync(argument);
+			}
 		}
 
-		private void bwConnectBtn_DoWork(object sender, DoWorkEventArgs e)
+		/// <summary>
+		/// The background worker is doing work, step 2.
+		/// </summary>
+		/// <param name="argument">Tuple<string, dynamic> used to determine
+		///	the GUI object and it's argument</param>
+		private void backgroundWorker_Worker(Tuple<string, dynamic> argument)
 		{
-			e.Result = e.Argument;
+			switch (argument.Item1)
+			{
+				case "btnClear":
+					if (this.btnClear.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.btnClear.Enabled = argument.Item2;
+					break;
+				case "btnConnect":
+					if (this.btnConnect.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.btnConnect.Enabled = argument.Item2;
+					break;
+				case "tbConStatus":
+					if (this.tbConStatus.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.tbConStatus.Text = argument.Item2;
+					break;
+				case "btnDisconnect":
+					if (this.btnDisconnect.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.btnDisconnect.Enabled = argument.Item2;
+					break;
+				case "boolJsonGenerator":
+					if (this.tbJsonGenerator.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.tbJsonGenerator.Enabled = argument.Item2;
+					break;
+				case "btnJsonGenerator":
+					if (this.btnJsonGenerator.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.btnJsonGenerator.Enabled = argument.Item2;
+					break;
+				case "tbJsonGenerator":
+					if (this.tbJsonGenerator.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.tbJsonGenerator.Text = argument.Item2;
+					break;
+				case "boolNewText":
+					if (this.tbNewText.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.tbNewText.Enabled = argument.Item2;
+					break;
+				case "tbNewText":
+					if (this.tbNewText.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.tbNewText.Text = argument.Item2;
+					break;
+				case "lbResults":
+					if (this.lbResults.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.lbResults.Items.Add(argument.Item2);
+
+					// Autoscroll. Source: http://www.csharp-examples.net/autoscroll
+					this.lbResults.SelectedIndex = this.lbResults.Items.Count - 1;
+					this.lbResults.SelectedIndex = -1;
+					break;
+				case "btnSend":
+					if (this.btnSend.InvokeRequired)
+					{
+						this.Invoke(new backgroundWorker_Handler(this.backgroundWorker_Worker), argument);
+						return;
+					}
+
+					this.btnSend.Enabled = argument.Item2;
+					break;
+			}
 		}
 
-		private void bwConnectBtn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.btnConnect.Enabled = (bool)e.Result;
-		}
-
-		private void bwConStatusTb_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwConStatusTb_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.tbConStatus.Text = e.Result as String;
-		}
-
-		private void bwDisconnectBtn_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwDisconnectBtn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.btnDisconnect.Enabled = (bool)e.Result;
-		}
-
-		private void bwJsonGeneratorBool_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwJsonGeneratorBool_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.tbJsonGenerator.Enabled = (bool)e.Result;
-		}
-
-		private void bwJsonGeneratorBtn_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwJsonGeneratorBtn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.btnJsonGenerator.Enabled = (bool)e.Result;
-		}
-
-		private void bwJsonGeneratorTb_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwJsonGeneratorTb_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			tbJsonGenerator.Text = e.Result as String;
-		}
-
-		private void bwNewTextBool_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwNewTextBool_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.tbNewText.Enabled = (bool)e.Result;
-		}
-
-		private void bwNewTextTb_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwNewTextTb_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.tbNewText.Text = e.Result as String;
-		}
-
-		private void bwResultsLb_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwResultsLb_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.lbResults.Items.Add(e.Result as String);
-
-			// Autoscroll. Source: http://www.csharp-examples.net/autoscroll
-			this.lbResults.SelectedIndex = this.lbResults.Items.Count - 1;
-			this.lbResults.SelectedIndex = -1;
-		}
-
-		private void bwSendBtn_DoWork(object sender, DoWorkEventArgs e)
-		{
-			e.Result = e.Argument;
-		}
-
-		private void bwSendBtn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			this.btnSend.Enabled = (bool)e.Result;
-		}
-
+		/// <summary>
+		/// Update GUI buttons Clear and Send if the input text changes.
+		/// </summary>
+		/// <param name="sender">object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void tbNewText_TextChanged(object sender, EventArgs e)
 		{
 			int length = (sender as TextBox).Text.Length;
 
 			if (length > 0)
 			{
-				if (!bwClearBtn.IsBusy)
-					bwClearBtn.RunWorkerAsync(true);
-				if (!bwSendBtn.IsBusy)
-					bwSendBtn.RunWorkerAsync(true);
+				// Update GUI
+				backgroundWorker_Set(new Tuple<string, dynamic>("btnClear", true));
+				backgroundWorker_Set(new Tuple<string, dynamic>("btnSend", true));
 			}
 			else
 			{
-				if (!bwClearBtn.IsBusy)
-					bwClearBtn.RunWorkerAsync(false);
-				if (!bwSendBtn.IsBusy)
-					bwSendBtn.RunWorkerAsync(false);
+				// Update GUI
+				backgroundWorker_Set(new Tuple<string, dynamic>("btnClear", false));
+				backgroundWorker_Set(new Tuple<string, dynamic>("btnSend", false));
 			}
 		}
 	}

@@ -111,7 +111,7 @@ namespace KruispuntGroep6.Communication
 					randomType = VehicleType.Car;
 					break;
 				case 3:
-					// Change at getting Godzilla is 12 times less than getting other vehicles.
+					// Chance at getting Godzilla is 12 times less than getting other vehicles.
 					if (random.Next(12) < 1)
 						randomType = VehicleType.Godzilla;
 					else

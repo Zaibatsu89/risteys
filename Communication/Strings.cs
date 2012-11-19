@@ -55,6 +55,11 @@
 			get { return "Disconnected"; }
 		}
 
+		public string Exception
+		{
+			get { return "Exception: {0}"; }
+		}
+
 		public string Exit
 		{
 			get { return "exit"; }
@@ -62,7 +67,7 @@
 
 		public string GenerateJSON
 		{
-			get { return "Generate JSON inputdata file"; }
+			get { return "Generate JSON input data file"; }
 		}
 
 		public string HiIAmController
@@ -75,9 +80,14 @@
 			get { return "Hi, I am simulator"; }
 		}
 
+		public string IOException
+		{
+			get { return "IOException: {0}"; }
+		}
+
 		public string JsonGenerator
 		{
-			get { return "How much inputs?"; }
+			get { return "How many inputs?"; }
 		}
 
 		public string JsonSaved
@@ -97,7 +107,7 @@
 
 		public string Received
 		{
-			get { return "Received : {0}"; }
+			get { return "Received: {0}"; }
 		}
 
 		public string Send
@@ -107,12 +117,17 @@
 
 		public string Sent
 		{
-			get { return "Sent : {0}"; }
+			get { return "Sent: {0}"; }
 		}
 
 		public string SimulatorDisconnected
 		{
 			get { return "The simulator has disconnected"; }
+		}
+
+		public string SocketException
+		{
+			get { return "SocketException: {0}"; }
 		}
 
 		public string Stopped
