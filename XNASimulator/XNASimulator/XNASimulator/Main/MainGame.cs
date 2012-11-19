@@ -21,8 +21,8 @@ namespace XNASimulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private int tilesHor = 9;
-        private int tilesVer = 9;
+        private int tilesHor = 11;
+        private int tilesVer = 11;
 
         private Crossroad crossroad;
         private Audio audio;

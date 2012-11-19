@@ -17,7 +17,7 @@ namespace XNASimulator
         public Texture2D sprite;
         public Vector2 position;
         public float rotation;
-        public Vector2 center;
+        public Vector2 origin;
         public Vector2 velocity;
         public bool alive;
         
@@ -26,7 +26,7 @@ namespace XNASimulator
             this.rotation = rotation;
             position = Vector2.Zero;
             sprite = texture;
-            center = new Vector2(sprite.Width / 2, sprite.Height / 2);
+            origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
             velocity = Vector2.Zero;
             alive = false;
         }
