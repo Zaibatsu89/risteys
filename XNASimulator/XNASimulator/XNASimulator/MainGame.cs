@@ -28,12 +28,14 @@ namespace XNASimulator
         private Audio audio;
 
         #region testcars
+        /*
         private float minCarVelocity = 1.0f;
         private float maxCarVelocity = 2.0f;
         private float minCarDistance = 250.0f;
         private float maxCarDistance = 600.0f;
         Vehicle[] vehicles;
         Random random = new Random();
+        */
         #endregion
 
         public MainGame()
@@ -41,8 +43,8 @@ namespace XNASimulator
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferHeight = this.tilesHor * 128;
-            graphics.PreferredBackBufferWidth = this.tilesVer * 128;
+            graphics.PreferredBackBufferHeight = this.tilesHor * 64;
+            graphics.PreferredBackBufferWidth = this.tilesVer * 64;
         }
 
         /// <summary>
@@ -57,11 +59,13 @@ namespace XNASimulator
             audio = new Audio(Services);
 
             #region testcars
+            /*
             vehicles = new Vehicle[6];
             for (int i = 0; i < 6; i++)
             {
                 vehicles[i] = new Vehicle(Content.Load<Texture2D>("Sprites/RedCar64x64LR"), 0.0f);
             }
+            */
             #endregion
 
             base.Initialize();
@@ -102,7 +106,7 @@ namespace XNASimulator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            UpdateCars();
+            //UpdateCars();
 
             base.Update(gameTime);
         }
@@ -117,13 +121,15 @@ namespace XNASimulator
 
             spriteBatch.Begin();
             crossroad.Draw(gameTime, spriteBatch);
-            foreach (Vehicle car in vehicles)
+            #region testcars
+            /* foreach (Vehicle car in vehicles)
             {
                 if (car.alive)
                 {
                     spriteBatch.Draw(car.sprite, car.position,null, Color.White, car.rotation, car.center, 1.0f, SpriteEffects.None, 0f);
                 }
-            }
+            } */
+            #endregion
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -136,6 +142,7 @@ namespace XNASimulator
             else throw new Exception("No Level Detected");
         }
 
+        /* UpdateCars
         private void UpdateCars()
         {
             foreach (Vehicle car in vehicles)
@@ -161,6 +168,6 @@ namespace XNASimulator
                                                                0);
                 }
             }
-        }
+        } */
     }
 }

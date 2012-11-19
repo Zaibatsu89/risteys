@@ -22,5 +22,10 @@ namespace XNASimulator
             string message = "0,car,n3,s6"; //time, type, from, to
             return message;
         }
+
+        public void Listen()
+        {
+           
+        }
     }
 }

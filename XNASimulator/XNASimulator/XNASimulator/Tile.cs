@@ -65,8 +65,8 @@ namespace XNASimulator
 
         public Tile(Texture2D texture, TileRotation rotation)
         {
-            Height = 128;
-            Width = 128;
+            Height = 64;
+            Width = 64;
 
             Size = new Vector2(Width, Height);
             Origin = new Vector2(Width / 2, Height / 2);

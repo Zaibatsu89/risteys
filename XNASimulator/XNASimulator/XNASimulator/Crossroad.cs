@@ -78,17 +78,25 @@ namespace XNASimulator
             switch (tileType)
             {
                 case 'A':
-                    return LoadTile("Road128x128", TileRotation.Up);
+                    return LoadTile("Road64x64", TileRotation.Up);
                 case 'a':
-                    return LoadTile("Road128x128", TileRotation.Right);
+                    return LoadTile("Road64x64", TileRotation.Right);
                 case 'B':
-                    return LoadTile("Crossing128x128", TileRotation.Up);
+                    return LoadTile("Crossing64x64", TileRotation.Up);
                 case 'b':
-                    return LoadTile("Crossing128x128", TileRotation.Right);
+                    return LoadTile("Crossing64x64", TileRotation.Right);
                 case 'C':
-                    return LoadTile("Sidewalk128x128", TileRotation.Up);
+                    return LoadTile("Sidewalk64x64", TileRotation.Up);
                 case 'D':
-                    return LoadTile("Lights128x128", TileRotation.Up);
+                    return LoadTile("Lights64x64", TileRotation.Up);
+                case 'd':
+                    return LoadTile("Lights64x64", TileRotation.Right);
+                case 'f':
+                    return LoadTile("Lights64x64", TileRotation.Left);
+                case 'g':
+                    return LoadTile("Lights64x64", TileRotation.Down);
+                case 'S':
+                    return LoadTile("Grass64x64", TileRotation.Up);
 
                 // Unknown tile type character
                 default:
@@ -118,7 +126,7 @@ namespace XNASimulator
                     if (texture != null)
                     {
                         // Draw it in screen space.
-                        Vector2 position = new Vector2(x, y) * tiles[x,y].getSize();
+                        Vector2 position = new Vector2(x, y) * tiles[x, y].getSize() + (tiles[x, y].getSize() / 2);
                         spriteBatch.Draw(texture,
                                         position,
                                         null,
