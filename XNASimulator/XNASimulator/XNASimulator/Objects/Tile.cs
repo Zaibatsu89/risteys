@@ -99,5 +99,6 @@ namespace XNASimulator
             angle = Math.PI * angle / 180.0;
             return (float)angle;
         }
+
     }
 }

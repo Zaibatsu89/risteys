@@ -17,6 +17,11 @@ namespace XNASimulator
     {
         private Tile[,] tiles;
 
+        public Tile[,] getTiles()
+        {
+            return tiles;
+        }
+
         //Amount of horizontal tiles
         public int Width
         {
@@ -88,13 +93,13 @@ namespace XNASimulator
                 case 'C':
                     return LoadTile("Sidewalk64x64", TileRotation.Up);
                 case 'D':
-                    return LoadTile("Lights64x64", TileRotation.Up);
+                    return LoadTile("LightsRed64x64", TileRotation.Up);
                 case 'd':
-                    return LoadTile("Lights64x64", TileRotation.Right);
+                    return LoadTile("LightsRed64x64", TileRotation.Right);
                 case 'f':
-                    return LoadTile("Lights64x64", TileRotation.Left);
+                    return LoadTile("LightsRed64x64", TileRotation.Left);
                 case 'g':
-                    return LoadTile("Lights64x64", TileRotation.Down);
+                    return LoadTile("LightsRed64x64", TileRotation.Down);
                 case 'S':
                     return LoadTile("Grass64x64", TileRotation.Up);
 
