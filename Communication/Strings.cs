@@ -105,6 +105,11 @@
 			get { return "Enter text string:"; }
 		}
 
+		public int Port
+		{
+			get { return 1337; }
+		}
+
 		public string Received
 		{
 			get { return "Received: {0}"; }

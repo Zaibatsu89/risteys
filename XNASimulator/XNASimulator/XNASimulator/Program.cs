@@ -1,5 +1,5 @@
 using System.Threading;
-using KruispuntGroep6.Communication;
+using KruispuntGroep6.Communication.Server;
 
 namespace XNASimulator
 {

@@ -51,26 +51,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicJson.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="JsonGenerator.cs" />
-    <Compile Include="JsonInput.cs" />
-    <Compile Include="SendTo.cs" />
-    <Compile Include="SendToController.cs" />
-    <Compile Include="SendToSimulator.cs" />
-    <Compile Include="JsonConverter.cs" />
+    <Compile Include="Json\DynamicJson.cs" />
+    <Compile Include="Json\Enums.cs" />
+    <Compile Include="Json\JsonGenerator.cs" />
+    <Compile Include="Json\JsonInput.cs" />
+    <Compile Include="Client\Send.cs" />
+    <Compile Include="Json\JsonConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Client.cs">
+    <Compile Include="Client\Client.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Client.Designer.cs">
+    <Compile Include="Client\Client.Designer.cs">
       <DependentUpon>Client.cs</DependentUpon>
     </Compile>
-    <Compile Include="Server.cs" />
+    <Compile Include="Server\Server.cs" />
+    <Compile Include="Server\DoCommunicate.cs" />
     <Compile Include="Strings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Client.resx">
+    <EmbeddedResource Include="Client\Client.resx">
       <DependentUpon>Client.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

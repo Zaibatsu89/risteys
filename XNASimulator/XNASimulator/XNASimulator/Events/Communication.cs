@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using KruispuntGroep6.Communication;
-using System.Threading;
+﻿using System.Threading;
+using KruispuntGroep6.Communication.Client;
 
 namespace XNASimulator
 {
