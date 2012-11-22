@@ -9,96 +9,50 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using XNASimulator.Enums;
 
 namespace XNASimulator
 {
-    enum TileRotation
-    {
-        Up = 0,
-        Right = 90,
-        Down = 180,
-        Left = 270
-    }
-
-
     class Tile
     {
-        private Texture2D Texture;
-        private TileRotation Rotation;
+        public Texture2D Texture {get; set;}
 
-        public Texture2D getTexture()
-        {
-            return Texture;
-        }
-
-        //Dimensions
-        private int Height;
-        private int Width;
-        private Vector2 Size;
-        private Vector2 Origin;
-
-        public int getHeight()
-        {
-            return Height;
-        }
-        public int getWidth()
-        {
-            return Width;
-        }
-        public Vector2 getSize()
-        {
-            return Size;
-        }
-        public Vector2 getOrigin()
-        {
-            return Origin;
-        }
+        //Positions and Dimensions
+        public RotationEnum Rotation { get; private set; }
+        public int Height { get; private set; }
+        public int Width { get; private set; }
+        public Vector2 Size { get; private set; }
+        public Vector2 Origin { get; private set; }
+        public Vector2 Position {get; set; }
+        public Vector2 DrawPosition { get; set; }
+        public Rectangle CollisionRectangle { get; private set; }
 
         //Information
         public int TileID;
         public int TrafficLightID;
         public Tile[] adjacentTiles;
 
+        //Bools
         public bool isOccupied = false;
         public bool isGreen = false;
         public bool isWalkway = false;
+        public bool isSpawn = false;
 
-        public Tile(Texture2D texture, TileRotation rotation)
+        public Tile(Texture2D texture, RotationEnum rotation)
         {
-            Height = 64;
-            Width = 64;
+            this.Height = texture.Height;
+            this.Width = texture.Width;
 
-            Size = new Vector2(Width, Height);
-            Origin = new Vector2(Width / 2, Height / 2);
+            this.Size = new Vector2(Width, Height);
+            this.Origin = new Vector2(Width / 2, Height / 2);
 
-            Texture = texture;
-            Rotation = rotation;
+            this.Texture = texture;
+            this.Rotation = rotation;
         }
 
-        //Calculates rotation of this Tile
-        public float getRotation()
+        public void setCollisionRectangle(Vector2 position)
         {
-            double angle = 0;
-
-            switch(Rotation)
-            {
-                case TileRotation.Up:
-                    angle = 0;
-                    break;
-                case TileRotation.Right:
-                    angle = 90;
-                    break;
-                case TileRotation.Down:
-                    angle = 180;
-                    break;
-                case TileRotation.Left:
-                    angle = 270;
-                    break;
-            }
-
-            angle = Math.PI * angle / 180.0;
-            return (float)angle;
+            this.CollisionRectangle = new Rectangle((int)position.X, (int)position.Y, this.Width, this.Height);
         }
-
     }
 }
