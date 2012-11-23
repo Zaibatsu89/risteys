@@ -61,26 +61,27 @@ namespace XNASimulator
 
         public void UpdateOccupied(List<Vehicle> vehicles)
         {
-            int i = 0;
+            //TODO check vehicle id for release of occupied
 
             foreach (Vehicle vehicle in vehicles)
             {
-                if (!vehicle.collission.Intersects(this.CollisionRectangle))
+                if (vehicle.ID == this.OccupiedID)
                 {
-                    i += 1;
+                    //if occupying vehicle no longer occupies...
+                    if (!vehicle.collission.Intersects(this.CollisionRectangle))
+                    {
+                        //release tile
+                        this.isOccupied = false;
+                        this.OccupiedID = "";
+                    }
                 }
-                else
+
+                //if not occupied and vehicle enters...
+                if (!this.isOccupied && vehicle.collission.Intersects(this.CollisionRectangle))
                 {
                     this.isOccupied = true;
                     this.OccupiedID = vehicle.ID;
                 }
-            }
-
-            //if no vehicles are on the tile
-            if (i == vehicles.Count)
-            {
-                this.isOccupied = false;
-                this.OccupiedID = "";
             }
         }
     }
