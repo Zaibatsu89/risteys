@@ -24,6 +24,7 @@ namespace XNASimulator
         public Rectangle collission;
         public bool alive;
         public bool stopped;
+        public bool bumpered;
         
         public Vehicle(Texture2D texture, RotationEnum rotation)
         {
@@ -34,6 +35,7 @@ namespace XNASimulator
             velocity = Vector2.Zero;
             alive = false;
             stopped = false;
+            bumpered = false;
             collission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
         }
     }

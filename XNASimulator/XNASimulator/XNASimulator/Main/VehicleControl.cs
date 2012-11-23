@@ -52,7 +52,7 @@ namespace XNASimulator.Main
                 this.CheckAlive(vehicle);
                 this.CheckCollission(vehicle);
 
-                if (!vehicle.stopped)
+                if (!vehicle.stopped && !vehicle.bumpered)
                 {
                     if (vehicle.rotation == RotationEnum.Right)
                     {
@@ -72,7 +72,7 @@ namespace XNASimulator.Main
         {
             foreach (Vehicle vehicle in vehicles)
             {
-                if (vehicle.alive == true)
+                if (vehicle.alive)
                 {
                     spriteBatch.Draw(vehicle.sprite,
                                             vehicle.position,
@@ -125,6 +125,21 @@ namespace XNASimulator.Main
                     else
                     {
                         vehicle.stopped = false;
+                    }
+                }
+            }
+
+            foreach (Vehicle othervehicle in vehicles)
+            {
+                if (vehicle.collission.Intersects(othervehicle.collission))
+                {
+                    if (vehicle.position != othervehicle.position)
+                    {
+                        vehicle.bumpered = true;
+                    }
+                    else
+                    {
+                        vehicle.bumpered = false;
                     }
                 }
             }
