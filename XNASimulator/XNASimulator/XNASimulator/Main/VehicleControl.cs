@@ -15,42 +15,62 @@ namespace XNASimulator.Main
 {
     class VehicleControl
     {
-        public ContentManager Content { get; private set; }
+        private ContentManager content; 
         private Crossroad crossroad;
+        private List<Vehicle> vehicles;
 
-        public VehicleControl(IServiceProvider serviceProvider, Crossroad crossroad)
+        public VehicleControl(Crossroad crossroad)
         {
             this.crossroad = crossroad;
-            Content = new ContentManager(serviceProvider, "Content");
+            this.vehicles = new List<Vehicle>();
+            this.content = crossroad.Content;
         }
 
-        public void SpawnVehicles()
+        public void LoadVehicles()
         {
-            Texture2D spawnTexture = Content.Load<Texture2D>("Tiles/Spawn64x64");
+            Texture2D spawnTexture = content.Load<Texture2D>("Tiles/Spawn64x64");
 
             foreach (Tile tile in crossroad.tiles)
             {
                 if (tile.Texture.Equals(spawnTexture))
                 {
-
+                    vehicles.Add(LoadVehicle(tile, tile.Rotation));
                 }
             }
         }
 
-        private Vehicle SpawnVehicle(RotationEnum tilerotation)
-        {
-            Vehicle vehicle = new Vehicle(Content.Load<Texture2D>("Sprites/RedCar64x64DU"), 0.0f);
-            return vehicle; 
-        }
-
         public void UpdateVehicles()
         {
-
+            foreach (Vehicle vehicle in vehicles)
+            {
+                if (vehicle.rotation == RotationEnum.Right)
+                    vehicle.position += new Vector2(1, 0);
+                else if (vehicle.rotation == RotationEnum.Down)
+                    vehicle.position += new Vector2(0, 1);
+            }
         }
 
-        public void DrawVehicles()
+        public void DrawVehicles(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            foreach (Vehicle vehicle in vehicles)
+            {
+                spriteBatch.Draw(vehicle.sprite,
+                                        vehicle.position,
+                                        null,
+                                        Color.White,
+                                        Rotation.getRotation(vehicle.rotation),
+                                        vehicle.origin,
+                                        1.0f,
+                                        SpriteEffects.None,
+                                        0.0f);
+            }
+        }
 
+        private Vehicle LoadVehicle(Tile tile, RotationEnum tilerotation)
+        {
+            Vehicle vehicle = new Vehicle(content.Load<Texture2D>("Sprites/RedCar64x64DU"), tilerotation);
+            vehicle.position = tile.Position + tile.Origin;
+            return vehicle;
         }
     }
 }

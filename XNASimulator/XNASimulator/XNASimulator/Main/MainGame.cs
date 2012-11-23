@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using XNASimulator.Main;
 
 namespace XNASimulator
 {
@@ -26,6 +27,7 @@ namespace XNASimulator
         private int tilesVer = 11;
 
         private Crossroad crossroad;
+        private VehicleControl vehicleControl;
         private Audio audio;
 
         private MouseState mouseStateCurrent;
@@ -64,6 +66,8 @@ namespace XNASimulator
 			communication.Begin();
 
             crossroad = new Crossroad(Services);
+            vehicleControl = new VehicleControl(crossroad);
+
             audio = new Audio(Services);
 
             #region testcars
@@ -91,7 +95,9 @@ namespace XNASimulator
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            LoadCrossroad("Content/Grids/TestGrid2.txt");
+            this.LoadCrossroad("Content/Grids/TestGrid2.txt");
+            vehicleControl.LoadVehicles();
+
             //audio.PlayBackgroundMusic();
 
         }
@@ -124,6 +130,7 @@ namespace XNASimulator
             }
 
             mouseStatePrevious = mouseStateCurrent;
+            vehicleControl.UpdateVehicles();
 
             //UpdateCars();
 
@@ -140,6 +147,7 @@ namespace XNASimulator
 
             spriteBatch.Begin();
             crossroad.Draw(gameTime, spriteBatch);
+            vehicleControl.DrawVehicles(gameTime, spriteBatch);
             #region testcars
             /* foreach (Vehicle car in vehicles)
             {

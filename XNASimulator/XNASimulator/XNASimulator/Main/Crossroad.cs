@@ -125,7 +125,7 @@ namespace XNASimulator
                 case 'S':
                     return LoadTile("Grass64x64", RotationEnum.Up);
                 case 'V':
-                    return LoadTile("Spawn64x64", RotationEnum.Up);
+                    return LoadTile("Spawn64x64", RotationEnum.Down);
                 case 'v':
                     return LoadTile("Spawn64x64", RotationEnum.Right);
 
@@ -152,7 +152,7 @@ namespace XNASimulator
                     if (tiles[x, y].Texture != null)
                     {
                         // Draw it in screen space.                     
-                        spriteBatch.Draw(tiles[x, y].Texture,
+                        spriteBatch.Draw(tiles[x,y].Texture,
                                         tiles[x,y].DrawPosition, 
                                         null,
                                         Color.White,
@@ -160,7 +160,7 @@ namespace XNASimulator
                                         tiles[x,y].Origin, 
                                         1.0f, 
                                         SpriteEffects.None, 
-                                        0f);
+                                        1.0f);
                     }
                 }
             }
