@@ -16,12 +16,14 @@ namespace XNASimulator
     class Vehicle
     {
         public Texture2D sprite;
+        public Tile spawntile;
         public Vector2 position;
         public RotationEnum rotation;
         public Vector2 origin;
         public Vector2 velocity;
-        public Rectangle colission;
+        public Rectangle collission;
         public bool alive;
+        public bool stopped;
         
         public Vehicle(Texture2D texture, RotationEnum rotation)
         {
@@ -31,7 +33,8 @@ namespace XNASimulator
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
             velocity = Vector2.Zero;
             alive = false;
-            colission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
+            stopped = false;
+            collission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
         }
     }
 }

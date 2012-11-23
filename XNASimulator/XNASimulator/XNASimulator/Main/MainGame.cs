@@ -66,7 +66,7 @@ namespace XNASimulator
 			communication.Begin();
 
             crossroad = new Crossroad(Services);
-            vehicleControl = new VehicleControl(crossroad);
+            vehicleControl = new VehicleControl(this.GraphicsDevice, crossroad);
 
             audio = new Audio(Services);
 
@@ -168,6 +168,7 @@ namespace XNASimulator
                 crossroad.LoadLevel(path);
             else throw new Exception("No Level Detected");
         }
+
 
         /* UpdateCars
         private void UpdateCars()
