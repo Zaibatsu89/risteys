@@ -35,24 +35,33 @@ namespace XNASimulator.Main
         public void LoadVehicles()
         {
             Texture2D spawnTexture = content.Load<Texture2D>("Tiles/Spawn64x64");
+            string vehicleID = "";
+            int i = 0;
 
             foreach (Tile tile in crossroad.tiles)
             {
                 if (tile.Texture.Equals(spawnTexture))
                 {
-                    vehicles.Add(LoadVehicle(tile, tile.Rotation));
+                    i += 1;   
+                    vehicleID = "V" + i;
+                    vehicles.Add(LoadVehicle(tile, vehicleID));
                 }
             }
         }
 
         public void UpdateVehicles()
         {
+            foreach (Tile tile in crossroad.tiles)
+            {
+                tile.UpdateOccupied(vehicles);
+            }
+
             foreach (Vehicle vehicle in vehicles)
             {
                 this.CheckAlive(vehicle);
                 this.CheckCollission(vehicle);
 
-                if (!vehicle.stopped && !vehicle.bumpered)
+                if (!vehicle.stopRedLight && !vehicle.stopCar)
                 {
                     if (vehicle.rotation == RotationEnum.Right)
                     {
@@ -87,9 +96,10 @@ namespace XNASimulator.Main
             }
         }
 
-        private Vehicle LoadVehicle(Tile tile, RotationEnum tilerotation)
+        private Vehicle LoadVehicle(Tile tile, string vehicleID)
         {
-            Vehicle vehicle = new Vehicle(content.Load<Texture2D>("Sprites/RedCar64x64DU"), tilerotation);
+            Vehicle vehicle = new Vehicle(content.Load<Texture2D>("Sprites/RedCar64x64DU"), vehicleID);
+            vehicle.rotation = tile.Rotation;
             vehicle.position = tile.Position + tile.Origin;
             vehicle.spawntile = tile;
             return vehicle;
@@ -118,28 +128,22 @@ namespace XNASimulator.Main
             {
                 if (vehicle.collission.Intersects(tile.CollisionRectangle))
                 {
+                    if (tile.isOccupied && tile.OccupiedID != vehicle.ID)
+                    {
+                        vehicle.stopCar = true;
+                    }
+                    else
+                    {
+                        vehicle.stopCar = false;
+                    }
+
                     if (tile.Texture.Equals(redLight))
                     {
-                        vehicle.stopped = true;
+                        vehicle.stopRedLight = true;
                     }
                     else
                     {
-                        vehicle.stopped = false;
-                    }
-                }
-            }
-
-            foreach (Vehicle othervehicle in vehicles)
-            {
-                if (vehicle.collission.Intersects(othervehicle.collission))
-                {
-                    if (vehicle.position != othervehicle.position)
-                    {
-                        vehicle.bumpered = true;
-                    }
-                    else
-                    {
-                        vehicle.bumpered = false;
+                        vehicle.stopRedLight = false;
                     }
                 }
             }

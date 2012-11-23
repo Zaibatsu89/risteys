@@ -15,6 +15,7 @@ namespace XNASimulator
 {
     class Vehicle
     {
+        public string ID;
         public Texture2D sprite;
         public Tile spawntile;
         public Vector2 position;
@@ -23,19 +24,20 @@ namespace XNASimulator
         public Vector2 velocity;
         public Rectangle collission;
         public bool alive;
-        public bool stopped;
-        public bool bumpered;
+        public bool stopCar;
+        public bool stopRedLight;
         
-        public Vehicle(Texture2D texture, RotationEnum rotation)
+        public Vehicle(Texture2D texture, string ID)
         {
-            this.rotation = rotation;
+            this.ID = ID;
+            rotation = RotationEnum.Up;
             position = Vector2.Zero;
             sprite = texture;
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
             velocity = Vector2.Zero;
             alive = false;
-            stopped = false;
-            bumpered = false;
+            stopCar = false;
+            stopRedLight = false;
             collission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
         }
     }

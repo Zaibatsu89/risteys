@@ -34,17 +34,6 @@ namespace XNASimulator
         private MouseState mouseStatePrevious;
         private Vector2 mousePosition;
 
-        #region testcars
-        /*
-        private float minCarVelocity = 1.0f;
-        private float maxCarVelocity = 2.0f;
-        private float minCarDistance = 250.0f;
-        private float maxCarDistance = 600.0f;
-        Vehicle[] vehicles;
-        Random random = new Random();
-        */
-        #endregion
-
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -70,16 +59,6 @@ namespace XNASimulator
 
             audio = new Audio(Services);
 
-            #region testcars
-            /*
-            vehicles = new Vehicle[6];
-            for (int i = 0; i < 6; i++)
-            {
-                vehicles[i] = new Vehicle(Content.Load<Texture2D>("Sprites/RedCar64x64LR"), 0.0f);
-            }
-            */
-            #endregion
-
             this.IsMouseVisible = true;
 
             base.Initialize();
@@ -98,7 +77,7 @@ namespace XNASimulator
             this.LoadCrossroad("Content/Grids/TestGrid2.txt");
             vehicleControl.LoadVehicles();
 
-            //audio.PlayBackgroundMusic();
+            audio.PlayBackgroundMusic();
 
         }
 
@@ -132,8 +111,6 @@ namespace XNASimulator
             mouseStatePrevious = mouseStateCurrent;
             vehicleControl.UpdateVehicles();
 
-            //UpdateCars();
-
             base.Update(gameTime);
         }
 
@@ -148,15 +125,6 @@ namespace XNASimulator
             spriteBatch.Begin();
             crossroad.Draw(gameTime, spriteBatch);
             vehicleControl.DrawVehicles(gameTime, spriteBatch);
-            #region testcars
-            /* foreach (Vehicle car in vehicles)
-            {
-                if (car.alive)
-                {
-                    spriteBatch.Draw(car.sprite, car.position,null, Color.White, car.rotation, car.center, 1.0f, SpriteEffects.None, 0f);
-                }
-            } */
-            #endregion
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -168,34 +136,5 @@ namespace XNASimulator
                 crossroad.LoadLevel(path);
             else throw new Exception("No Level Detected");
         }
-
-
-        /* UpdateCars
-        private void UpdateCars()
-        {
-            foreach (Vehicle car in vehicles)
-            {
-                if (car.alive == true)
-                {
-                    car.position += car.velocity;
-                    if (!GraphicsDevice.PresentationParameters.Bounds.Contains(new Point((int)car.position.X,
-                                                        (int)car.position.Y)))
-                    {
-                        car.alive = false;
-                    }
-                }
-                else
-                {
-                    car.alive = true;
-                    car.position = new Vector2(64.0f, MathHelper.Lerp(minCarDistance,
-                                                               maxCarDistance,
-                                                               (float)random.NextDouble()));
-                    car.velocity = new Vector2(MathHelper.Lerp(minCarVelocity,
-                                                               maxCarVelocity,
-                                                               (float)random.NextDouble()),
-                                                               0);
-                }
-            }
-        } */
     }
 }

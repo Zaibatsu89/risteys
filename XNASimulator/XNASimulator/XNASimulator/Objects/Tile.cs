@@ -15,7 +15,7 @@ namespace XNASimulator
 {
     class Tile
     {
-        public Texture2D Texture {get; set;}
+        public Texture2D Texture { get; set; }
 
         //Positions and Dimensions
         public RotationEnum Rotation { get; private set; }
@@ -31,6 +31,8 @@ namespace XNASimulator
         public int TileID;
         public int TrafficLightID;
         public Tile[] adjacentTiles;
+
+        public string OccupiedID { get; set; }
 
         //Bools
         public bool isOccupied = false;
@@ -48,11 +50,38 @@ namespace XNASimulator
 
             this.Texture = texture;
             this.Rotation = rotation;
+
+            this.OccupiedID = "";
         }
 
         public void setCollisionRectangle(Vector2 position)
         {
             this.CollisionRectangle = new Rectangle((int)position.X, (int)position.Y, this.Width, this.Height);
+        }
+
+        public void UpdateOccupied(List<Vehicle> vehicles)
+        {
+            int i = 0;
+
+            foreach (Vehicle vehicle in vehicles)
+            {
+                if (!vehicle.collission.Intersects(this.CollisionRectangle))
+                {
+                    i += 1;
+                }
+                else
+                {
+                    this.isOccupied = true;
+                    this.OccupiedID = vehicle.ID;
+                }
+            }
+
+            //if no vehicles are on the tile
+            if (i == vehicles.Count)
+            {
+                this.isOccupied = false;
+                this.OccupiedID = "";
+            }
         }
     }
 }
