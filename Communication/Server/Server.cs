@@ -70,7 +70,7 @@ namespace KruispuntGroep6.Communication.Server
 				{
 					//check if the message is empty, of the particular
 					//index of out array is null, if it is then continue
-					if (message.Trim() != string.Empty || client != null)
+					if (!string.Equals(message.Trim(), string.Empty) || !TcpClient.Equals(client, null))
 						continue;
 					//Use the GetStream method to get the current memory
 					//stream for this index of our TCPClient array

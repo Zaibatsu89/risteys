@@ -13,7 +13,7 @@ namespace Controller
         private bool quit;
 
         // Trafficlight with the highest priority 
-        private string trafficLightID;
+        //private string trafficLightID;
 
         public TrafficLightController()
         {

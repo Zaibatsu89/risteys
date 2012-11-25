@@ -54,12 +54,11 @@ namespace Controller.Utils
 
         internal static bool collisionCheck(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
         {
-            int evaluator;
+            int evaluator = -1;
 
             for (int i = 0; i < 64; i++)
             {
-                //
-                evaluator = trafficLightMatrixSource[i] + (trafficLightMatrixEval[i] == 0 ? 0 : 1);
+                //evaluator = trafficLightMatrixSource[i] + (trafficLightMatrixEval[i] == 0 ? 0 : 1);
                 if (evaluator > 1)
                     return false;
 

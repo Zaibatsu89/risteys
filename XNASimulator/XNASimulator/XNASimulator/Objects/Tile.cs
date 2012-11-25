@@ -28,9 +28,9 @@ namespace XNASimulator
         public Rectangle CollisionRectangle { get; private set; }
 
         //Information
-        public int TileID;
-        public int TrafficLightID;
-        public Tile[] adjacentTiles;
+        //public int TileID;
+        //public int TrafficLightID;
+        //public Tile[] adjacentTiles;
 
         public string OccupiedID { get; set; }
 

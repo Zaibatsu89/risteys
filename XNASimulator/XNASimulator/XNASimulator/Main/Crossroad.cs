@@ -46,10 +46,10 @@ namespace XNASimulator
             {
                 string line = reader.ReadLine();
                 width = line.Length;
-                while (line != null)
+                while (!string.Equals(line, null))
                 {
                     lines.Add(line);
-                    if (line.Length != width)
+                    if (!Int32.Equals(line.Length, width))
                         throw new Exception(String.Format("The length of line {0} is different from all preceeding lines.", lines.Count));
                     line = reader.ReadLine();
                 }
@@ -149,7 +149,7 @@ namespace XNASimulator
                 for (int x = 0; x < Width; ++x)
                 {
                     // If there is a visible tile in that position
-                    if (tiles[x, y].Texture != null)
+                    if (!Texture2D.Equals(tiles[x, y].Texture, null))
                     {
                         // Draw it in screen space.                     
                         spriteBatch.Draw(tiles[x,y].Texture,

@@ -29,7 +29,7 @@ namespace KruispuntGroep6.Communication.Client
 		private static TcpClient tcpClient;
 		private TextBox tbConStatus, tbJsonGenerator, tbNewText;
 		private Thread thrReadForever;
-		private System.Timers.Timer timer = new System.Timers.Timer(1000);
+		private System.Timers.Timer timer;
 
 		public Client()
 		{
@@ -198,11 +198,9 @@ namespace KruispuntGroep6.Communication.Client
 			thrReadForever = new Thread(new ThreadStart(ReadForever));
 			thrReadForever.Start();
 
-			// Read JSON input file
-			readJSON();
-
-			// Send start time to controller
-			sendStartTime();
+			// Read JSON input file and if that's a success, send start time to controller
+			if (readJSON())
+				sendStartTime();
 		}
 
 		/// <summary>
@@ -219,14 +217,17 @@ namespace KruispuntGroep6.Communication.Client
 				{
 					string message = reader.ReadLine();
 
-					if (message != string.Empty)
+					if (!string.Equals(message, null))
 					{
-						backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
-								"Received: " + message));
+						if (!string.Equals(message, string.Empty))
+						{
+							backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+									"Received: " + message));
+						}
 					}
 				}
 			}
-			catch (ThreadAbortException tae) { }
+			catch (ThreadAbortException) { }
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
@@ -236,16 +237,33 @@ namespace KruispuntGroep6.Communication.Client
 		/// <summary>
 		/// Read JSON input file.
 		/// </summary>
-		private void readJSON()
+		private bool readJSON()
 		{
+			bool success = true;
+
 			backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
 						"Reading JSON input file..."));
 
-			inputJSON = File.ReadAllLines(@"..\..\..\input.json");
-			inputJSONnumber = 0;
+			try
+			{
+				inputJSON = File.ReadAllLines(@"..\..\..\input.json");
+				inputJSONnumber = 0;
+			}
+			catch (FileNotFoundException)
+			{
+				backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+							"Couldn't find JSON input file."));
+				backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+							"Did you already generate one below with specified amount of inputs?"));
+				success = false;
+				Disconnect();
+			}
+			
+			if (success)
+				backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
+							"Done reading JSON input file."));
 
-			backgroundWorker_Set(new Tuple<string, dynamic>("lbResults",
-						"Done reading JSON input file."));
+			return success;
 		}
 
 		/// <summary>
@@ -258,6 +276,7 @@ namespace KruispuntGroep6.Communication.Client
 			SendToController(jsonStartTime);
 
 			previousTime = 0;
+			timer = new System.Timers.Timer(1000);
 			timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
 			timer.Start();
 		}
@@ -292,12 +311,6 @@ namespace KruispuntGroep6.Communication.Client
 				}
 			}
 
-			if (timer.Enabled)
-			{
-				SendToController(inputJSON[inputJSONnumber]);
-				inputJSONnumber++;
-			}
-
 			if (inputJSONnumber < inputJSON.Length)
 			{
 				previousTime = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
@@ -316,6 +329,11 @@ namespace KruispuntGroep6.Communication.Client
 		private void btnDisconnect_Click(object sender, EventArgs e)
 		{
 			SendToController(strings.Exit);
+			Disconnect();	
+		}
+
+		private void Disconnect()
+		{
 			thrReadForever.Abort();
 			timer.Stop();
 
@@ -344,7 +362,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			bool onlyNumbers = true;
 
-			if (tbJsonGenerator.Text != String.Empty)
+			if (!string.Equals(tbJsonGenerator.Text, string.Empty))
 			{
 				foreach (char c in tbJsonGenerator.Text)
 				{

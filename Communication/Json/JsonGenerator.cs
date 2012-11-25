@@ -28,19 +28,22 @@ namespace KruispuntGroep6.Communication.Json
 		/// <returns>String used to contain JSON.</returns>
 		public string GenerateJSON(int count, int total)
 		{
-			if (count == 0)
+			if (Int32.Equals(count, 0))
 			{
 				index = 0;
 				jsons = new string[total];
 			}
 
-			float floatTrafficDensity = ((float)count / (float)total) * 4f + 2;
+			float floatTrafficDensity = ((float)count / (float)total) * 3f + 1;
 			int intTrafficDensity = (int)Math.Round(floatTrafficDensity, 0);
+
 			int randomInt = random.Next(intTrafficDensity);
 			if (randomInt > 0)
 				count -= index++;
 			else if (index > 0)
 				count -= index - 1;
+			else
+				index++;
 
 			string json = @"{";
 			VehicleType vehicleType = getRandomVehicleType();
@@ -76,10 +79,8 @@ namespace KruispuntGroep6.Communication.Json
 
 			try
 			{
-				// Write input.json in main folder KruispuntGroep6
-				#if DEBUG
+				// Write input.json in main folder of KruispuntGroep6 called XNASimulator
 				File.WriteAllLines(@"..\..\..\input.json", jsons);
-				#endif
 			}
 			catch (Exception e)
 			{
@@ -180,7 +181,7 @@ namespace KruispuntGroep6.Communication.Json
 				case VehicleType.Default:
 					// Unknown vehicle can come from every lane, except 6.
 					int defaultLane = random.Next(8);
-					while (defaultLane != 6)
+					while (!Int32.Equals(defaultLane, 6))
 					{
 						lane = defaultLane.ToString();
 						defaultLane = random.Next(8);
@@ -438,7 +439,7 @@ namespace KruispuntGroep6.Communication.Json
 				case VehicleType.Pedestrian:
 					direction = from.Substring(0, 1);
 
-					if (from.Substring(1, 1) == "0")
+					if (string.Equals(from.Substring(1, 1), "0"))
 						lane = "7";
 					else
 						lane = "0";

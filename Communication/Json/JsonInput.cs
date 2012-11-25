@@ -55,15 +55,15 @@ namespace KruispuntGroep6.Communication.Json
 			JsonType jsonType = getType(json);
 			string waarde = string.Empty;
 
-			if (jsonType == JsonType.Input)
+			if (Enum.Equals(jsonType, JsonType.Input))
 				waarde = json.type.ToString();
-			else if (jsonType == JsonType.Stoplight)
+			else if (Enum.Equals(jsonType, JsonType.Stoplight))
 				waarde = json.state.ToString();
-			else if (jsonType == JsonType.Detector)
+			else if (Enum.Equals(jsonType, JsonType.Detector))
 				waarde = json.loop.ToString();
-			else if (jsonType == JsonType.Start)
+			else if (Enum.Equals(jsonType, JsonType.Start))
 				waarde = json.starttime.ToString();
-			else if (jsonType == JsonType.Multiplier)
+			else if (Enum.Equals(jsonType, JsonType.Multiplier))
 				waarde = json.multiplier.ToString();
 			else
 				waarde = "Unknown JSON";

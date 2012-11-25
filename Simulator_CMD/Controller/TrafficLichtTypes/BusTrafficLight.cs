@@ -57,9 +57,9 @@ namespace Controller.TrafficLichtTypes
         /// <summary>
         /// 
         /// </summary>
-        public void TurnLightGreen()
+        public override void TurnLightGreen()
         {
-            this.SetLight(1); // turn the light green
+            this.SetTrafficLight(1); // turn the light green
             greenTimer.Elapsed += new ElapsedEventHandler(TurnLightOrange); // after the time is elapsed turn the light orange
             greenTimer.Interval = this.rand.Next(this.minGreenTime, this.maxGreenTime); 	// generates a random greentime between min and max greentime
             greenTimer.AutoReset = false;
@@ -71,9 +71,9 @@ namespace Controller.TrafficLichtTypes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void TurnLightOrange(object sender, ElapsedEventArgs args)
+        public override void TurnLightOrange(object sender, ElapsedEventArgs args)
         {
-            this.SetLight(2);
+            this.SetTrafficLight(2);
             orangeTimer.Elapsed += new ElapsedEventHandler(TurnLightRed);
             orangeTimer.Interval = this.orangeTime;
             orangeTimer.AutoReset = false;
@@ -85,15 +85,15 @@ namespace Controller.TrafficLichtTypes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void TurnLightRed(object sender, ElapsedEventArgs args)
+        public override void TurnLightRed(object sender, ElapsedEventArgs args)
         {
-            this.SetLight(3);
+            this.SetTrafficLight(3);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void TurnLightOff()
+        public override void TurnLightOff()
         {
 
         }
@@ -102,7 +102,7 @@ namespace Controller.TrafficLichtTypes
         /// 
         /// </summary>
         /// <param name="lightId"></param>
-        private void SetLight(int lightId)
+        public override void SetTrafficLight(int lightId)
         {
 
 

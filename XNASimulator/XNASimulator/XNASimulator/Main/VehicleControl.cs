@@ -128,7 +128,7 @@ namespace XNASimulator.Main
             {
                 if (vehicle.collission.Intersects(tile.CollisionRectangle))
                 {
-                    if (tile.isOccupied && tile.OccupiedID != vehicle.ID)
+                    if (tile.isOccupied && !string.Equals(tile.OccupiedID, vehicle.ID))
                     {
                         vehicle.stopCar = true;
                     }

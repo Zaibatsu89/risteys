@@ -94,7 +94,8 @@ namespace KruispuntGroep6.Communication.Json
 
         private static JsonType GetJsonType(object obj)
         {
-            if (obj == null) return JsonType.@null;
+            if (Object.Equals(obj, null))
+				return JsonType.@null;
 
             switch (Type.GetTypeCode(obj.GetType()))
             {
@@ -202,20 +203,20 @@ namespace KruispuntGroep6.Communication.Json
         /// <summary>has property or not</summary>
         public bool IsDefined(string name)
         {
-            return IsObject && (xml.Element(name) != null);
+            return IsObject && (!XElement.Equals(xml.Element(name), null));
         }
 
         /// <summary>has property or not</summary>
         public bool IsDefined(int index)
         {
-            return IsArray && (xml.Elements().ElementAtOrDefault(index) != null);
+            return IsArray && (!XElement.Equals(xml.Elements().ElementAtOrDefault(index), null));
         }
 
         /// <summary>delete property</summary>
         public bool Delete(string name)
         {
             var elem = xml.Element(name);
-            if (elem != null)
+            if (!string.Equals(elem, null))
             {
                 elem.Remove();
                 return true;
@@ -227,7 +228,7 @@ namespace KruispuntGroep6.Communication.Json
         public bool Delete(int index)
         {
             var elem = xml.Elements().ElementAtOrDefault(index);
-            if (elem != null)
+            if (!string.Equals(elem, null))
             {
                 elem.Remove();
                 return true;
@@ -329,7 +330,7 @@ namespace KruispuntGroep6.Communication.Json
         // Deserialize or foreach(IEnumerable)
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
-            if (binder.Type == typeof(IEnumerable) || binder.Type == typeof(object[]))
+            if (Type.Equals(binder.Type, typeof(IEnumerable)) || binder.Type == typeof(object[]))
             {
                 var ie = (IsArray)
                     ? xml.Elements().Select(x => ToValue(x))
@@ -345,7 +346,7 @@ namespace KruispuntGroep6.Communication.Json
 
         private bool TryGet(XElement element, out object result)
         {
-            if (element == null)
+            if (XElement.Equals(element, null))
             {
                 result = null;
                 return false;
@@ -373,7 +374,7 @@ namespace KruispuntGroep6.Communication.Json
         {
             var type = GetJsonType(value);
             var element = xml.Element(name);
-            if (element == null)
+            if (XElement.Equals(element, null))
             {
                 xml.Add(new XElement(name, CreateTypeAttr(type), CreateJsonNode(value)));
             }
@@ -428,7 +429,7 @@ namespace KruispuntGroep6.Communication.Json
         public override string ToString()
         {
             // <foo type="null"></foo> is can't serialize. replace to <foo type="null" />
-            foreach (var elem in xml.Descendants().Where(x => x.Attribute("type").Value == "null"))
+            foreach (var elem in xml.Descendants().Where(x => string.Equals(x.Attribute("type").Value, "null")))
             {
                 elem.RemoveNodes();
             }

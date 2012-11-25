@@ -7,7 +7,7 @@ namespace XNASimulator.Objects
 {
     class Lane
     {
-        private Tile[] laneTiles;
+        //private Tile[] laneTiles;
 
         public Lane()
         {
