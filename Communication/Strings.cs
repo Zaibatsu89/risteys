@@ -10,9 +10,44 @@
 			get { return "127.0.0.1"; }
 		}
 
+		public string BooleanJsonGenerator
+		{
+			get { return "boolJsonGenerator"; }
+		}
+
+		public string BooleanNewText
+		{
+			get { return "boolNewText"; }
+		}
+
 		public string Broken
 		{
 			get { return "The connection is broken!"; }
+		}
+
+		public string ButtonClear
+		{
+			get { return "btnClear"; }
+		}
+
+		public string ButtonConnect
+		{
+			get { return "btnConnect"; }
+		}
+
+		public string ButtonDisconnect
+		{
+			get { return "btnDisconnect"; }
+		}
+
+		public string ButtonJsonGenerator
+		{
+			get { return "btnJsonGenerator"; }
+		}
+
+		public string ButtonSend
+		{
+			get { return "btnSend"; }
 		}
 
 		public string Clear
@@ -35,6 +70,11 @@
 			get { return "Connecting..."; }
 		}
 
+		public string ConnectionAttempt
+		{
+			get { return "Connecting attempt {0}..."; }
+		}
+
 		public string ConnectionError
 		{
 			get { return "Connection error"; }
@@ -43,6 +83,11 @@
 		public string ConnectionStatus
 		{
 			get { return "Connection status"; }
+		}
+
+		public string DateTimeFormat
+		{
+			get { return "HH:mm"; }
 		}
 
 		public string Disconnect
@@ -90,6 +135,21 @@
 			get { return "How many inputs?"; }
 		}
 
+		public string JsonInputFilePath
+		{
+			get { return @"..\..\..\input.json"; }
+		}
+
+		public string JsonReadingError1
+		{
+			get { return "Couldn't find JSON input file."; }
+		}
+
+		public string JsonReadingError2
+		{
+			get { return "Did you already generate one below with specified amount of inputs?"; }
+		}
+
 		public string JsonSaved
 		{
 			get { return "JSON file saved as input.json"; }
@@ -98,6 +158,11 @@
 		public string JsonSavingError
 		{
 			get { return "Error saving JSON file as input.json"; }
+		}
+
+		public string ListBoxResults
+		{
+			get { return "lbResults"; }
 		}
 
 		public string NewText
@@ -138,6 +203,21 @@
 		public string Stopped
 		{
 			get { return "\nThe controller stopped. Press <enter> to continue."; }
+		}
+
+		public string TextBoxConStatus
+		{
+			get { return "tbConStatus"; }
+		}
+
+		public string TextBoxJsonGenerator
+		{
+			get { return "tbJsonGenerator"; }
+		}
+
+		public string TextBoxNewText
+		{
+			get { return "tbNewText"; }
 		}
 
 		public string TcpClient
