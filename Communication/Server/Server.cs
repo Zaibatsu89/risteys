@@ -82,7 +82,7 @@ namespace KruispuntGroep6.Communication.Server
 					//dispose of our writer
 					writer = null;
 					//show message in console
-					Console.WriteLine(String.Format(strings.Sent, strings.HiIAmController));
+					Console.WriteLine(String.Format(strings.Sent, message));
 				}
 				catch (Exception)
 				{

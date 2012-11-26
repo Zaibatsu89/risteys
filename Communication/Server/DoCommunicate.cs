@@ -29,7 +29,7 @@ namespace KruispuntGroep6.Communication.Server
 			try
 			{
 				//set out line variable to an empty string
-				string data = "";
+				string data = string.Empty;
 				while (true)
 				{
 					//read the current line
@@ -53,8 +53,26 @@ namespace KruispuntGroep6.Communication.Server
 						// Show the data on the console.
 						Console.WriteLine(String.Format(strings.Received, data));
 					}
+
+					string strSend = string.Empty;
+
+					// If String is welcome message.
+					if (data.Equals(strings.HiIAmSimulator))
+					{
+						// Send a welcome message back to the client.
+						strSend = strings.HiIAmController;
+
+						// Show the message on the console.
+						Console.WriteLine(String.Format(strings.Sent, strSend));
+					}
+					else
+					{
+						// Echo the data back to the client.
+						strSend = data;
+					}
+
 					//send our message
-					Server.SendMessage(strings.HiIAmController);
+					Server.SendMessage(strSend);
 				}
 			}
 			catch (Exception)

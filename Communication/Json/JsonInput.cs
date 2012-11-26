@@ -80,6 +80,8 @@ namespace KruispuntGroep6.Communication.Json
         {
 			JsonType jsonType = JsonType.Default;
 
+			// IsDefined is a dynamic function,
+			// so a switch instead of if/else is not possible.
             if (json.IsDefined("time"))
                 jsonType = JsonType.Input;
             else if (json.IsDefined("state"))

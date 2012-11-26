@@ -264,7 +264,10 @@ namespace KruispuntGroep6.Communication.Client
 
 				//reset current input json number, if the whole JSON input file is sent already
 				if (inputJSONnumber >= inputJSON.Length)
+				{
 					inputJSONnumber = 0;
+					previousTime = 0;
+				}
 
 				// if the whole JSON input file isn't sent already,
 				// continue with the inputJSONnumber from before the
@@ -297,7 +300,6 @@ namespace KruispuntGroep6.Communication.Client
 				SendToController(jsonStartTime);
 			}
 
-			previousTime = 0;
 			timerJson = new System.Timers.Timer(1000);
 			timerJson.Elapsed += new ElapsedEventHandler(timer_Elapsed);
 			timerJson.Start();
