@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace KruispuntGroep6.Communication.Json
 {
@@ -79,39 +80,39 @@ namespace KruispuntGroep6.Communication.Json
 				case "input":
 					message = DynamicJson.Serialize(new
 					{
-						time = getParameter(message, 0),
-						type = getParameter(message, 1),
-						from = getParameter(message, 2),
-						to = getParameter(message, 3),
+						time = getParameter(message, 1),
+						type = getParameter(message, 2),
+						from = getParameter(message, 3),
+						to = getParameter(message, 4),
 					});
 					break;
 				case "stoplight":
 					message = DynamicJson.Serialize(new
 					{
-						light = getParameter(message, 0),
-						state = getParameter(message, 1),
+						light = getParameter(message, 1),
+						state = getParameter(message, 2),
 					});
 					break;
 				case "detector":
 					message = DynamicJson.Serialize(new
 					{
-						light = getParameter(message, 0),
-						type = getParameter(message, 1),
-						loop = getParameter(message, 2),
-						empty = getParameter(message, 3),
-						to = getParameter(message, 4),
+						light = getParameter(message, 1),
+						type = getParameter(message, 2),
+						loop = getParameter(message, 3),
+						empty = getParameter(message, 4),
+						to = getParameter(message, 5),
 					});
 					break;
 				case "start":
 					message = DynamicJson.Serialize(new
 					{
-						starttime = getParameter(message, 0)
+						starttime = getParameter(message, 1)
 					});
 					break;
 				case "multiplier":
 					message = DynamicJson.Serialize(new
 					{
-						multiplier = getParameter(message, 0)
+						multiplier = getParameter(message, 1)
 					});
 					break;
 				default:
@@ -125,27 +126,18 @@ namespace KruispuntGroep6.Communication.Json
 		{
 			string parameter = string.Empty;
 
-			int index = which;
-			if (which.Equals(1))
-				index = json.IndexOf(':', json.IndexOf(':') + 1);
-			if (which.Equals(2))
-				index = json.IndexOf(':', json.IndexOf(':', json.IndexOf(':') + 1) + 1);
-			if (which.Equals(3))
-				index = json.IndexOf(':', json.IndexOf(':', json.IndexOf(':', json.IndexOf(':') + 1) + 1) + 1);
-			if (which.Equals(4))
-				index = json.IndexOf(':', json.IndexOf(':', json.IndexOf(':', json.IndexOf(':', json.IndexOf(':') + 1) + 1) + 1) + 1);
-
-			int doublePoint = json.IndexOf(':', index) + 1;
-			int doublePoint2 = json.IndexOf(',', doublePoint);
+			int doublePoint = nthOccurence(json, ':', which);
 			int endPoint = json.IndexOf('}');
-			if (doublePoint2 < 1)
+			int separatorPoint = json.IndexOf(',', doublePoint);
+
+			if (separatorPoint > 0)
+				parameter = json.Substring(doublePoint, separatorPoint - doublePoint);
+			else
 				parameter = json.Substring(doublePoint, endPoint - doublePoint);
-			else if (doublePoint < doublePoint2)
-				parameter = json.Substring(doublePoint, doublePoint2 - doublePoint);
 
 			// Remove trash
 			parameter = parameter.Remove(parameter.Length - 1);
-			parameter = parameter.Remove(0, 1);
+			parameter = parameter.Remove(0, 2);
 
 			return parameter;
 		}
@@ -171,6 +163,11 @@ namespace KruispuntGroep6.Communication.Json
 				jsonType = "multiplier";
 
 			return jsonType;
+		}
+
+		private static int nthOccurence(string s, char t, int n)
+		{
+			return s.TakeWhile(c => ((n -= (c == t ? 1 : 0))) > 0).Count();
 		}
     }
 }
