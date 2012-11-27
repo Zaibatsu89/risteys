@@ -52,7 +52,6 @@ namespace XNASimulator
         protected override void Initialize()
         {
 			communication = new Communication();
-			communication.Begin();
 
             crossroad = new Crossroad(Services);
             vehicleControl = new VehicleControl(this.GraphicsDevice, crossroad);
@@ -62,7 +61,6 @@ namespace XNASimulator
             this.IsMouseVisible = true;
 
             base.Initialize();
-
         }
 
         /// <summary>

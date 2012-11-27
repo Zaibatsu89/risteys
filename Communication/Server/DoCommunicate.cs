@@ -45,39 +45,29 @@ namespace KruispuntGroep6.Communication.Server
 					// If String isn't welcome message, display him as JSON.
 					else if (!data.Equals(strings.HiIAmSimulator) && (data.StartsWith("{") || data.StartsWith("[")))
 					{
-						string message = JsonConverter.MessageToJson(data);
-						Console.WriteLine(String.Format(strings.Received, message));
+						data = JsonConverter.MessageToJson(data);
+						Console.WriteLine(String.Format(strings.ReceivedByClient, data));
 					}
 					else
 					{
 						// Show the data on the console.
-						Console.WriteLine(String.Format(strings.Received, data));
+						Console.WriteLine(String.Format(strings.ReceivedByClient, data));
 					}
-
-					string strSend = string.Empty;
 
 					// If String is welcome message.
 					if (data.Equals(strings.HiIAmSimulator))
 					{
 						// Send a welcome message back to the client.
-						strSend = strings.HiIAmController;
-
-						// Show the message on the console.
-						Console.WriteLine(String.Format(strings.Sent, strSend));
-					}
-					else
-					{
-						// Echo the data back to the client.
-						strSend = data;
+						data = strings.HiIAmController;
 					}
 
 					//send our message
-					Server.SendMessage(strSend);
+					Server.SendMessage(data);
 				}
 			}
 			catch (Exception)
 			{
-				Console.WriteLine("Cannot receive from a client.");
+				Console.WriteLine(strings.ReceiveError);
 			}
 		}
 

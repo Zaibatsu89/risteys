@@ -40,12 +40,12 @@ namespace XNASimulator.Main
 
             foreach (Tile tile in crossroad.tiles)
             {
-                if (tile.Texture.Equals(spawnTexture))
-                {
-                    i += 1;   
-                    vehicleID = "V" + i;
-                    vehicles.Add(LoadVehicle(tile, vehicleID));
-                }
+				if (tile.Texture.Equals(spawnTexture))
+				{
+					i += 1;
+					vehicleID = "V" + i;
+					vehicles.Add(LoadVehicle(tile, vehicleID));
+				}
             }
         }
 
@@ -148,5 +148,55 @@ namespace XNASimulator.Main
                 }
             }
         }
-    }
+
+		public static void Spawn(string from)
+		{
+			//TODO: spawn car
+
+			switch (from[0])
+			{
+				case 'N':
+					// spawn car at north, facing south
+
+					break;
+				case 'E':
+					// spawn car at east, facing west
+
+					break;
+				case 'S':
+					// spawn car at south, facing north
+
+					break;
+				case 'W':
+					// spawn car at west, facing east
+
+					break;
+			}
+		}
+
+		public static void Drive(string to)
+		{
+			//TODO: drive car
+
+			switch (to[0])
+			{
+				case 'N':
+					// drive car to north
+
+					break;
+				case 'E':
+					// drive car to east
+
+					break;
+				case 'S':
+					// drive car to south
+
+					break;
+				case 'W':
+					// drive car to west
+
+					break;
+			}
+		}
+	}
 }

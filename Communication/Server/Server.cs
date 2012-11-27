@@ -71,18 +71,17 @@ namespace KruispuntGroep6.Communication.Server
 					//check if the message is empty, of the particular
 					//index of out array is null, if it is then continue
 					if (!string.Equals(message.Trim(), string.Empty) || !TcpClient.Equals(client, null))
-						continue;
-					//Use the GetStream method to get the current memory
-					//stream for this index of our TCPClient array
-					writer = new StreamWriter(client.GetStream());
-					//send our message
-					writer.WriteLine(message);
-					//make sure the buffer is empty
-					writer.Flush();
-					//dispose of our writer
-					writer = null;
-					//show message in console
-					Console.WriteLine(String.Format(strings.Sent, message));
+					{
+						//Use the GetStream method to get the current memory
+						//stream for this index of our TCPClient array
+						writer = new StreamWriter(client.GetStream());
+						//send our message
+						writer.WriteLine(message);
+						//make sure the buffer is empty
+						writer.Flush();
+						//dispose of our writer
+						writer = null;
+					}
 				}
 				catch (Exception)
 				{
@@ -90,6 +89,8 @@ namespace KruispuntGroep6.Communication.Server
 					clients.Remove(client);
 				}
 			}
+			//show message in console
+			Console.WriteLine(String.Format(strings.Sent, message));
 		}
 	}
 }

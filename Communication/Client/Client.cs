@@ -297,7 +297,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (Int32.Equals(previousInputJSONnumber, 0))
 			{
-				SendToController(jsonStartTime);
+				SendToController(JsonConverter.JsonToMessage(jsonStartTime));
 			}
 
 			timerJson = new System.Timers.Timer(1000);
@@ -330,18 +330,18 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (timerJson.Enabled)
 			{
-				time = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
+				time = Int32.Parse(DynamicJson.Parse(inputJSON[inputJSONnumber]).time);
 			}
 
 			while (time.Equals(previousTime))
 			{
-				SendToController(inputJSON[inputJSONnumber]);
+				SendToController(JsonConverter.JsonToMessage(inputJSON[inputJSONnumber]));
 
 				inputJSONnumber++;
 
 				if (inputJSONnumber < inputJSON.Length)
 				{
-					time = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
+					time = Int32.Parse(DynamicJson.Parse(inputJSON[inputJSONnumber]).time);
 				}
 				else
 				{
@@ -352,7 +352,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (inputJSONnumber < inputJSON.Length)
 			{
-				previousTime = (int)DynamicJson.Parse(inputJSON[inputJSONnumber]).time;
+				previousTime = Int32.Parse(DynamicJson.Parse(inputJSON[inputJSONnumber]).time);
 			}
 			else
 			{

@@ -180,6 +180,16 @@
 			get { return "Received: {0}"; }
 		}
 
+		public string ReceivedByClient
+		{
+			get { return "Received by client: {0}"; }
+		}
+
+		public string ReceiveError
+		{
+			get { return "Cannot receive from a client."; }
+		}
+
 		public string Send
 		{
 			get { return "Send"; }

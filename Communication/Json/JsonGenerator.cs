@@ -50,9 +50,9 @@ namespace KruispuntGroep6.Communication.Json
 			string positionFrom = getRandomPositionFrom(vehicleType);
 			string positionTo = getRandomPositionTo(vehicleType, positionFrom);
 
-			json += @"""time"":";
+			json += @"""time"":""";
 			json += count.ToString();
-			json += @", ""type"":""";
+			json += @""", ""type"":""";
 			json += vehicleType.ToString().ToLower();
 			json += @""", ""from"":""";
 			json += positionFrom;

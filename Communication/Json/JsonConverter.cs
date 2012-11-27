@@ -16,20 +16,51 @@ namespace KruispuntGroep6.Communication.Json
 		{
 			string json = message;
 
-			/* For later...
 			var dynJson = DynamicJson.Parse(message);
 
-			switch (getMessageType(message))
+			json = (getType(json));
+
+			switch (json)
 			{
-				case "starttime":
-					json = dynJson.starttime;
+				case "input":
+					json += ",";
+					json += dynJson.time;
+					json +=	",";
+					json +=	dynJson.type;
+					json +=	",";
+					json +=	dynJson.from;
+					json +=	",";
+					json +=	dynJson.to;
 					break;
-				case "time":
-					json = Convert.ToString(dynJson.time);
+				case "stoplight":
+					json += ",";
+					json += dynJson.light;
+					json += ",";
+					json += dynJson.state;
+					break;
+				case "detector":
+					json += ",";
+					json += dynJson.light;
+					json += ",";
+					json += dynJson.type;
+					json += ",";
+					json += dynJson.loop;
+					json += ",";
+					json += dynJson.empty;
+					json += ",";
+					json += dynJson.to;
+					break;
+				case "start":
+					json += ",";
+					json += dynJson.starttime;
+					break;
+				case "multiplier":
+					json += ",";
+					json += dynJson.multiplier;
 					break;
 				default:
-					throw new Exception(String.Format("{0} is niet bekend als type!", getMessageType(message)));
-			}*/
+					throw new Exception(String.Format("Message {0} heeft geen herkenbaar type!", getType(json)));
+			}
 
 			return json;
 		}
@@ -43,20 +74,80 @@ namespace KruispuntGroep6.Communication.Json
 		{
 			string message = json;
 
-			/* For later...
-			switch (getJsonType(json))
+			switch (getType(json))
 			{
-				case "starttime":
-					message = DynamicJson.Serialize(new {starttime = message});
+				case "input":
+					message = DynamicJson.Serialize(new
+					{
+						time = getParameter(message, 0),
+						type = getParameter(message, 1),
+						from = getParameter(message, 2),
+						to = getParameter(message, 3),
+					});
 					break;
-				case "time":
-					message = DynamicJson.Serialize(new {time = message, type = "car", from = "N3", to = "S6"});
+				case "stoplight":
+					message = DynamicJson.Serialize(new
+					{
+						light = getParameter(message, 0),
+						state = getParameter(message, 1),
+					});
+					break;
+				case "detector":
+					message = DynamicJson.Serialize(new
+					{
+						light = getParameter(message, 0),
+						type = getParameter(message, 1),
+						loop = getParameter(message, 2),
+						empty = getParameter(message, 3),
+						to = getParameter(message, 4),
+					});
+					break;
+				case "start":
+					message = DynamicJson.Serialize(new
+					{
+						starttime = getParameter(message, 0)
+					});
+					break;
+				case "multiplier":
+					message = DynamicJson.Serialize(new
+					{
+						multiplier = getParameter(message, 0)
+					});
 					break;
 				default:
-					throw new Exception(String.Format("{0} is niet bekend als type!", getJsonType(json)));
-			}*/
+					throw new Exception(String.Format("Json {0} heeft geen herkenbaar type!", getType(json)));
+			}
 
 			return message;
+		}
+
+		private static string getParameter(string json, int which)
+		{
+			string parameter = string.Empty;
+
+			int index = which;
+			if (which.Equals(1))
+				index = json.IndexOf(':', json.IndexOf(':') + 1);
+			if (which.Equals(2))
+				index = json.IndexOf(':', json.IndexOf(':', json.IndexOf(':') + 1) + 1);
+			if (which.Equals(3))
+				index = json.IndexOf(':', json.IndexOf(':', json.IndexOf(':', json.IndexOf(':') + 1) + 1) + 1);
+			if (which.Equals(4))
+				index = json.IndexOf(':', json.IndexOf(':', json.IndexOf(':', json.IndexOf(':', json.IndexOf(':') + 1) + 1) + 1) + 1);
+
+			int doublePoint = json.IndexOf(':', index) + 1;
+			int doublePoint2 = json.IndexOf(',', doublePoint);
+			int endPoint = json.IndexOf('}');
+			if (doublePoint2 < 1)
+				parameter = json.Substring(doublePoint, endPoint - doublePoint);
+			else if (doublePoint < doublePoint2)
+				parameter = json.Substring(doublePoint, doublePoint2 - doublePoint);
+
+			// Remove trash
+			parameter = parameter.Remove(parameter.Length - 1);
+			parameter = parameter.Remove(0, 1);
+
+			return parameter;
 		}
 
 		/// <summary>
@@ -64,20 +155,22 @@ namespace KruispuntGroep6.Communication.Json
 		/// </summary>
 		/// <param name="message">String used to contain a dynamic json.</param>
 		/// <returns>String used to contain the json type.</returns>
-		public static string getJsonType(string message)
+		private static string getType(string message)
 		{
-			// TODO: return the json type.
-			return message;
-		}
+			string jsonType = string.Empty;
+			
+			if (message.Contains("from"))
+				jsonType = "input";
+			else if (message.Contains("state"))
+				jsonType = "stoplight";
+			else if (message.Contains("loop"))
+				jsonType = "detector";
+			else if (message.Contains("starttime"))
+				jsonType = "start";
+			else if (message.Contains("multiplier"))
+				jsonType = "multiplier";
 
-		/// <summary>
-		/// Gets the json type of a readable message.
-		/// </summary>
-		/// <param name="message">String used to contain a readable message.</param>
-		/// <returns>String used to contain the json type.</returns>
-		public static string getMessageType(string message)
-		{
-			return message.Equals(string.Empty) ? string.Empty : (message.Split('"'))[1];
+			return jsonType;
 		}
     }
 }

@@ -26,7 +26,7 @@ namespace KruispuntGroep6.Communication.Client
 				//create a StreamWriter based on the current NetworkStream
 				StreamWriter writer = new StreamWriter(tcpClient.GetStream());
 				//write our message
-				writer.WriteLine(JsonConverter.JsonToMessage(message));
+				writer.WriteLine(message);
 				//ensure the buffer is empty
 				writer.Flush();
 			}
