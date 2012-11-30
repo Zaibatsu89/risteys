@@ -9,23 +9,22 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using XNASimulator.Enums;
+using XNASimulator.Globals;
 
 namespace XNASimulator
 {
     class Vehicle
     {
-        public string ID;
-        public Texture2D sprite;
-        public Tile spawntile;
-        public Vector2 position;
-        public RotationEnum rotation;
-        public Vector2 origin;
-        public Vector2 velocity;
-        public Rectangle collission;
-        public bool alive;
-        public bool stopCar;
-        public bool stopRedLight;
+        public string ID {get; set;}
+        public Texture2D sprite { get; set; }
+        public Tile spawntile { get; set; }
+        public Vector2 position { get; set; }
+        public RotationEnum rotation { get; set; }
+        public Vector2 origin { get; set; }
+        public Rectangle collission { get; set; }
+        public bool alive { get; set; }
+        public bool stopCar { get; set; }
+        public bool stopRedLight { get; set; }
         
         public Vehicle(Texture2D texture, string ID)
         {
@@ -34,7 +33,6 @@ namespace XNASimulator
             position = Vector2.Zero;
             sprite = texture;
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
-            velocity = Vector2.Zero;
             alive = false;
             stopCar = false;
             stopRedLight = false;

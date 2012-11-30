@@ -117,12 +117,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\Rotation.cs" />
-    <Compile Include="Enums\TileType.cs" />
+    <Compile Include="Globals\Rotation.cs" />
+    <Compile Include="Globals\Textures.cs" />
     <Compile Include="Main\Audio.cs" />
     <Compile Include="Events\Communication.cs" />
-    <Compile Include="Main\Crossroad.cs" />
-    <Compile Include="Main\VehicleControl.cs" />
+    <Compile Include="Main\LevelBuilder.cs" />
+    <Compile Include="Globals\Lists.cs" />
+    <Compile Include="ObjectControllers\LaneControl.cs" />
+    <Compile Include="ObjectControllers\TileControl.cs" />
+    <Compile Include="ObjectControllers\VehicleControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Objects\Lane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

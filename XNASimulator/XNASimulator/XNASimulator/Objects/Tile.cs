@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using XNASimulator.Enums;
+using XNASimulator.Globals;
 
 namespace XNASimulator
 {
@@ -25,7 +25,7 @@ namespace XNASimulator
         public Vector2 Origin { get; private set; }
         public Vector2 Position {get; set; }
         public Vector2 DrawPosition { get; set; }
-        public Rectangle CollisionRectangle { get; private set; }
+        public Rectangle CollisionRectangle { get; set; }
 
         //Information
         //public int TileID;
@@ -52,37 +52,6 @@ namespace XNASimulator
             this.Rotation = rotation;
 
             this.OccupiedID = "";
-        }
-
-        public void setCollisionRectangle(Vector2 position)
-        {
-            this.CollisionRectangle = new Rectangle((int)position.X, (int)position.Y, this.Width, this.Height);
-        }
-
-        public void UpdateOccupied(List<Vehicle> vehicles)
-        {
-            //TODO check vehicle id for release of occupied
-
-            foreach (Vehicle vehicle in vehicles)
-            {
-                if (vehicle.ID == this.OccupiedID)
-                {
-                    //if occupying vehicle no longer occupies...
-                    if (!vehicle.collission.Intersects(this.CollisionRectangle))
-                    {
-                        //release tile
-                        this.isOccupied = false;
-                        this.OccupiedID = "";
-                    }
-                }
-
-                //if not occupied and vehicle enters...
-                if (!this.isOccupied && vehicle.collission.Intersects(this.CollisionRectangle))
-                {
-                    this.isOccupied = true;
-                    this.OccupiedID = vehicle.ID;
-                }
-            }
         }
     }
 }

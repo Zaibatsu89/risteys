@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using XNASimulator.Main;
+using XNASimulator.ObjectControllers;
+using XNASimulator.Globals;
 
 namespace XNASimulator
 {
@@ -20,19 +22,27 @@ namespace XNASimulator
     {
 		private Communication communication;
 
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
 
         private int tilesHor = 11;
         private int tilesVer = 11;
 
-        private Crossroad crossroad;
-        private VehicleControl vehicleControl;
+        private LevelBuilder levelBuilder;
         private Audio audio;
+        private Lists lists;
+
+        private VehicleControl vehicleControl;
+        private TileControl tileControl;
+        private LaneControl laneControl;
 
         private MouseState mouseStateCurrent;
         private MouseState mouseStatePrevious;
         private Vector2 mousePosition;
+
+        #region tileloading
+
+        #endregion
 
         public MainGame()
         {
@@ -53,10 +63,15 @@ namespace XNASimulator
         {
 			communication = new Communication();
 
-            crossroad = new Crossroad(Services);
-            vehicleControl = new VehicleControl(this.GraphicsDevice, crossroad);
+            lists = new Lists();
 
-            audio = new Audio(Services);
+            levelBuilder = new LevelBuilder(lists);
+
+            vehicleControl = new VehicleControl(this.GraphicsDevice, lists);
+            tileControl = new TileControl(lists);
+            laneControl = new LaneControl(lists);
+
+            //audio = new Audio(Services);
 
             this.IsMouseVisible = true;
 
@@ -72,10 +87,19 @@ namespace XNASimulator
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Textures.RedLight = Content.Load<Texture2D>("Tiles/LightsRed64x64");
+            Textures.GreenLight = Content.Load<Texture2D>("Tiles/LightsGreen64x64");
+            Textures.Crossing = Content.Load<Texture2D>("Tiles/Crossing64x64");
+            Textures.Grass = Content.Load<Texture2D>("Tiles/Grass64x64");
+            Textures.RedCar = Content.Load<Texture2D>("Sprites/RedCar64x64DU");
+            Textures.Road = Content.Load<Texture2D>("Tiles/Road64x64");
+            Textures.SideWalk = Content.Load<Texture2D>("Tiles/Sidewalk64x64");
+            Textures.Spawn = Content.Load<Texture2D>("Tiles/Spawn64x64");
+
             this.LoadCrossroad("Content/Grids/TestGrid2.txt");
             vehicleControl.LoadVehicles();
 
-            audio.PlayBackgroundMusic();
+            //audio.PlayBackgroundMusic();
 
         }
 
@@ -103,11 +127,14 @@ namespace XNASimulator
             if (mouseStateCurrent.LeftButton == ButtonState.Pressed && mouseStatePrevious.LeftButton != ButtonState.Pressed)
             {
                 mousePosition = new Vector2(mouseStateCurrent.X, mouseStateCurrent.Y);
-                crossroad.CheckMouseCollision(mousePosition);
+                tileControl.CheckMouseCollision(mousePosition);
             }
 
             mouseStatePrevious = mouseStateCurrent;
-            vehicleControl.UpdateVehicles();
+
+            tileControl.Update(gameTime);
+            vehicleControl.Update(gameTime);
+            laneControl.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -121,8 +148,9 @@ namespace XNASimulator
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            crossroad.Draw(gameTime, spriteBatch);
-            vehicleControl.DrawVehicles(gameTime, spriteBatch);
+            tileControl.Draw(gameTime, spriteBatch);
+            vehicleControl.Draw(gameTime, spriteBatch);
+            laneControl.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -131,7 +159,7 @@ namespace XNASimulator
         private void LoadCrossroad(string path)
         {
             if (File.Exists(path))
-                crossroad.LoadLevel(path);
+                levelBuilder.LoadLevel(path);
             else throw new Exception("No Level Detected");
         }
     }
