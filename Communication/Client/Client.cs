@@ -252,30 +252,30 @@ namespace KruispuntGroep6.Communication.Client
 
 			try
 			{
+				// if inputJSON isn't born yet, setting this boolean false forces
+				// reading the json input file and resetting the input json number
+				bool inputFilesAreEqual = false;
+
+				// if inputJSON exists, set the real value of inputFilesAreEqual
 				if (!Object.Equals(inputJSON, null))
 				{
-					bool inputFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(strings.JsonInputFilePath), inputJSON);
-
-					//when the user generates a new json input file, and the client handles the previous file,
-					//abort that file and make the new file his
-					if (!inputFilesAreEqual)
-					{
-						inputJSON = File.ReadAllLines(strings.JsonInputFilePath);
-						inputJSONnumber = 0;
-					}
-					//else don't read the inputJSON file, because it is already read earlier
+					inputFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(strings.JsonInputFilePath), inputJSON);
 				}
-				else
+
+				//when the user generates a new json input file,
+				//and the client handles the previous file,
+				//abort that file and make the new file his
+				if (!inputFilesAreEqual)
 				{
-					// inputJSON isn't born yet, so read the json input file
 					inputJSON = File.ReadAllLines(strings.JsonInputFilePath);
+					inputJSONnumber = 0;
 				}
 
-				//reset current input json number, if the whole JSON input file is sent already
+				//reset current input json number,
+				//if the whole JSON input file is sent already
 				if (inputJSONnumber >= inputJSON.Length)
 				{
 					inputJSONnumber = 0;
-					previousTime = 0;
 				}
 
 				// if the whole JSON input file isn't sent already,
