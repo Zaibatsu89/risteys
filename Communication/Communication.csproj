@@ -52,9 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Json\DynamicJson.cs" />
-    <Compile Include="Json\Enums.cs" />
     <Compile Include="Json\JsonGenerator.cs" />
-    <Compile Include="Json\JsonInput.cs" />
     <Compile Include="Client\Send.cs" />
     <Compile Include="Json\JsonConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -213,17 +214,10 @@ namespace KruispuntGroep6.Communication.Client
 			previousInputJSONnumber = 0;
 			//stop connection timer
 			timerConnection.Stop();
-			//create message
+			//create welcome message
 			string message = strings.HiIAmSimulator;
-			//create a StreamWriter based on the current NetworkStream
-			StreamWriter writer = new StreamWriter(tcpClient.GetStream());
-			//write our message
-			writer.WriteLine(message);
-			//ensure the buffer is empty
-			writer.Flush();
-
-			backgroundWorker_Set(new Tuple<string, dynamic>(strings.ListBoxResults,
-				string.Format(strings.Sent, message)));
+			//send this message to controller
+			SendToController(message);
 
 			// Update GUI
 			backgroundWorker_Set(new Tuple<string, dynamic>(strings.ButtonConnect, false));
@@ -258,9 +252,24 @@ namespace KruispuntGroep6.Communication.Client
 
 			try
 			{
-				//don't read the inputJSON file, if it is already read earlier
-				if (Object.Equals(inputJSON, null))
+				if (!Object.Equals(inputJSON, null))
+				{
+					bool inputFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(strings.JsonInputFilePath), inputJSON);
+
+					//when the user generates a new json input file, and the client handles the previous file,
+					//abort that file and make the new file his
+					if (!inputFilesAreEqual)
+					{
+						inputJSON = File.ReadAllLines(strings.JsonInputFilePath);
+						inputJSONnumber = 0;
+					}
+					//else don't read the inputJSON file, because it is already read earlier
+				}
+				else
+				{
+					// inputJSON isn't born yet, so read the json input file
 					inputJSON = File.ReadAllLines(strings.JsonInputFilePath);
+				}
 
 				//reset current input json number, if the whole JSON input file is sent already
 				if (inputJSONnumber >= inputJSON.Length)
@@ -653,6 +662,9 @@ namespace KruispuntGroep6.Communication.Client
 
 					this.btnSend.Enabled = argument.Item2;
 					break;
+				default:
+					throw new Exception(String.Format("Argument {0} of {1} wordt niet herkend!",
+						argument.Item1, argument.Item2));
 			}
 		}
 

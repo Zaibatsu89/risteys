@@ -19,7 +19,7 @@ namespace KruispuntGroep6.Communication.Json
 
 			var dynJson = DynamicJson.Parse(message);
 
-			json = (getType(json));
+			json = getType(json);
 
 			switch (json)
 			{

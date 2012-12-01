@@ -42,23 +42,16 @@ namespace KruispuntGroep6.Communication.Server
 						client.Close();
 						break;
 					}
-					// If String isn't welcome message, display him as JSON.
-					else if (!data.Equals(strings.HiIAmSimulator) && (data.StartsWith("{") || data.StartsWith("[")))
-					{
-						data = JsonConverter.MessageToJson(data);
-						Console.WriteLine(String.Format(strings.ReceivedByClient, data));
-					}
-					else
-					{
-						// Show the data on the console.
-						Console.WriteLine(String.Format(strings.ReceivedByClient, data));
-					}
-
 					// If String is welcome message.
-					if (data.Equals(strings.HiIAmSimulator))
+					else if (data.StartsWith("Hi"))
 					{
 						// Send a welcome message back to the client.
 						data = strings.HiIAmController;
+					}
+					// If String isn't welcome message, display him as JSON.
+					else if (data.StartsWith("{"))
+					{
+						data = JsonConverter.MessageToJson(data);
 					}
 
 					//send our message

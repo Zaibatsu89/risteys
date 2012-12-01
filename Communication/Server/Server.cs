@@ -42,13 +42,6 @@ namespace KruispuntGroep6.Communication.Server
 					client = server.AcceptTcpClient();
 					//add client to clients
 					clients.Add(client);
-					//display a message letting the user know they're connected
-					StreamWriter writer = new StreamWriter(client.GetStream());
-					writer.WriteLine(strings.HiIAmController);
-					Console.WriteLine(String.Format(strings.Sent, strings.HiIAmController));
-					//display what the connection has to say
-					StreamReader reader = new StreamReader(client.GetStream());
-					Console.WriteLine(String.Format(strings.Received, reader.ReadLine()));
 					//create a new DoCommunicate Object
 					DoCommunicate comm = new DoCommunicate(client);
 				}
@@ -63,6 +56,10 @@ namespace KruispuntGroep6.Communication.Server
 		{
 			//create our StreamWriter object
 			StreamWriter writer;
+
+			//create client to be removed
+			TcpClient clientToBeRemoved = null;
+
             //loop through and write any messages to the window
 			foreach (TcpClient client in clients)
 			{
@@ -86,9 +83,16 @@ namespace KruispuntGroep6.Communication.Server
 				catch (Exception)
 				{
 					// Remove client
-					clients.Remove(client);
+					clientToBeRemoved = client;
 				}
 			}
+
+			//if client to be removed isn't null, then remove that client for clients list
+			if (!TcpClient.Equals(clientToBeRemoved, null))
+			{
+				clients.Remove(clientToBeRemoved);
+			}
+
 			//show message in console
 			Console.WriteLine(String.Format(strings.Sent, message));
 		}

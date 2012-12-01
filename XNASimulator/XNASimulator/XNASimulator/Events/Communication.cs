@@ -73,15 +73,13 @@ namespace XNASimulator
 			//stop connection timer
 			timerConnection.Stop();
 			//create message
-			string message = "Hi, I am communication!";
+			string message = "Hi, I am communication";
 			//create a StreamWriter based on the current NetworkStream
 			StreamWriter writer = new StreamWriter(tcpClient.GetStream());
 			//write our message
 			writer.WriteLine(message);
 			//ensure the buffer is empty
 			writer.Flush();
-
-			Console.WriteLine("Sent from communication: " + message);
 
 			// Read messages forever
 			thrReadForever = new Thread(new ThreadStart(ReadForever));
@@ -106,8 +104,6 @@ namespace XNASimulator
 					{
 						if (!string.Equals(message, string.Empty))
 						{
-							Console.WriteLine("Received by communication: " + message);
-
 							// Pass message to Decrypter
 							Decrypter(message);
 						}

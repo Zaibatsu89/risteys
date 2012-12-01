@@ -115,6 +115,11 @@
 			get { return "Generate JSON input data file"; }
 		}
 
+		public string HiIAmCommunication
+		{
+			get { return "Hi, I am communication"; }
+		}
+
 		public string HiIAmController
 		{
 			get { return "Hi, I am controller"; }
@@ -178,11 +183,6 @@
 		public string Received
 		{
 			get { return "Received: {0}"; }
-		}
-
-		public string ReceivedByClient
-		{
-			get { return "Received by client: {0}"; }
 		}
 
 		public string ReceiveError

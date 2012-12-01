@@ -46,14 +46,14 @@ namespace KruispuntGroep6.Communication.Json
 				index++;
 
 			string json = @"{";
-			VehicleType vehicleType = getRandomVehicleType();
+			string vehicleType = getRandomVehicleType();
 			string positionFrom = getRandomPositionFrom(vehicleType);
 			string positionTo = getRandomPositionTo(vehicleType, positionFrom);
 
 			json += @"""time"":""";
 			json += count.ToString();
 			json += @""", ""type"":""";
-			json += vehicleType.ToString().ToLower();
+			json += vehicleType;
 			json += @""", ""from"":""";
 			json += positionFrom;
 			json += @""", ""to"":""";
@@ -95,35 +95,37 @@ namespace KruispuntGroep6.Communication.Json
 		/// Gets random vehicle type (bike, bus, car, godzilla, pedestrian or truck).
 		/// </summary>
 		/// <returns>VehicleType used to contain the vehicle type value.</returns>
-		private VehicleType getRandomVehicleType()
+		private string getRandomVehicleType()
 		{
-			int randomInt = random.Next(6);
-			VehicleType randomType = VehicleType.Default;
+			int intRandom = random.Next(6);
+			string randomType = string.Empty;
 
-			switch (randomInt)
+			switch (intRandom)
 			{
 				case 0:
-					randomType = VehicleType.Bike;
+					randomType = "bike";
 					break;
 				case 1:
-					randomType = VehicleType.Bus;
+					randomType = "bus";
 					break;
 				case 2:
-					randomType = VehicleType.Car;
+					randomType = "car";
 					break;
 				case 3:
 					// Chance at getting Godzilla is 12 times less than getting other vehicles.
 					if (random.Next(12) < 1)
-						randomType = VehicleType.Godzilla;
+						randomType = "godzilla";
 					else
 						randomType = getRandomVehicleType();
 					break;
 				case 4:
-					randomType = VehicleType.Pedestrian;
+					randomType = "pedestrian";
 					break;
 				case 5:
-					randomType = VehicleType.Truck;
+					randomType = "truck";
 					break;
+				default:
+					throw new Exception(String.Format("Random int {0} wordt niet herkend!", intRandom));
 			}
 
 			return randomType;
@@ -152,6 +154,8 @@ namespace KruispuntGroep6.Communication.Json
 				case 3:
 					stringDirection = "W";
 					break;
+				default:
+					throw new Exception(String.Format("Direction int {0} wordt niet herkend!", intDirection));
 			}
 			return stringDirection;
 		}
@@ -161,24 +165,39 @@ namespace KruispuntGroep6.Communication.Json
 		/// </summary>
 		/// <param name="vehicleType">VehicleType used to contain the vehicle type value.</param>
 		/// <returns>String used to contain the position in two chars: first is direction, second is lane number.</returns>
-		private string getRandomPositionFrom(VehicleType vehicleType)
+		private string getRandomPositionFrom(string vehicleType)
 		{
 			string direction = getRandomPosition();
 			string lane = string.Empty;
 
 			switch (vehicleType)
 			{
-				case VehicleType.Bike:
+				case "bike":
 					lane = "1";
 					break;
-				case VehicleType.Bus:
+				case "bus":
 					lane = "2";
 					break;
-				case VehicleType.Car:
+				case "car":
 					// Car can come from lane 3, 4 or 5.
 					lane = random.Next(3, 6).ToString();
 					break;
-				case VehicleType.Default:
+				case "godzilla":
+					// Godzilla comes from the output lane, hehe :P.
+					lane = "6";
+					break;
+				case "pedestrian":
+					// Pedestrian has equal change to come from lane 0 or 7.
+					if (random.Next(2) < 1)
+						lane = "0";
+					else
+						lane = "7";
+					break;
+				case "truck":
+					// Truck can come from lane 3, 4 or 5.
+					lane = random.Next(3, 6).ToString();
+					break;
+				default:
 					// Unknown vehicle can come from every lane, except 6.
 					int defaultLane = random.Next(8);
 					while (!Int32.Equals(defaultLane, 6))
@@ -186,21 +205,6 @@ namespace KruispuntGroep6.Communication.Json
 						lane = defaultLane.ToString();
 						defaultLane = random.Next(8);
 					}
-					break;
-				case VehicleType.Godzilla:
-					// Godzilla comes from the output lane, hehe :P.
-					lane = "6";
-					break;
-				case VehicleType.Pedestrian:
-					// Pedestrian has equal change to come from lane 0 or 7.
-					if (random.Next(2) < 1)
-						lane = "0";
-					else
-						lane = "7";
-					break;
-				case VehicleType.Truck:
-					// Truck can come from lane 3, 4 or 5.
-					lane = random.Next(3, 6).ToString();
 					break;
 			}
 
@@ -213,7 +217,7 @@ namespace KruispuntGroep6.Communication.Json
 		/// <param name="vehicleType">VehicleType used to contain the vehicle type value.</param>
 		/// <param name="from">String used to contain the position from where the vehicle comes from.</param>
 		/// <returns>String used to contain the position in two chars: first is direction, second is lane number.</returns>
-		private string getRandomPositionTo(VehicleType vehicleType, string from)
+		private string getRandomPositionTo(string vehicleType, string from)
 		{
 			string direction = string.Empty;
 			string lane = string.Empty;
@@ -223,7 +227,7 @@ namespace KruispuntGroep6.Communication.Json
 			switch (vehicleType)
 			{
 				// Bike can go from every direction and lane 1 and go to every direction and lane 6.
-				case VehicleType.Bike:
+				case "bike":
 					switch (from.Substring(0, 1))
 					{
 						case "N":
@@ -286,7 +290,7 @@ namespace KruispuntGroep6.Communication.Json
 					lane = "6";
 					break;
 				// Bus can go from every direction and lane 2 and go to every direction and lane 6.
-				case VehicleType.Bus:
+				case "bus":
 					switch (from.Substring(0, 1))
 					{
 						case "N":
@@ -349,7 +353,7 @@ namespace KruispuntGroep6.Communication.Json
 					lane = "6";
 					break;
 				// Car can go from every direction and lane 3, 4 or 5 and go to every direction and lane 6.
-				case VehicleType.Car:
+				case "car":
 					switch (from.Substring(0, 1))
 					{
 						case "N":
@@ -412,12 +416,12 @@ namespace KruispuntGroep6.Communication.Json
 					lane = "6";
 					break;
 				// Unknown vehicle can go from every direction and every lane and go to every direction and every lane.
-				case VehicleType.Default:
+				case "":
 					direction = getRandomPosition();
 					lane = random.Next(8).ToString();
 					break;
 				// Godzilla can go from every direction and lane 6 and go to the opposite direction and lane 6.
-				case VehicleType.Godzilla:
+				case "godzilla":
 					switch (from.Substring(0, 1))
 					{
 						case "N":
@@ -436,7 +440,7 @@ namespace KruispuntGroep6.Communication.Json
 					lane = "6";
 					break;
 				// Pedestrian can go from every direction and lane 0 or 7 and go to every direction and the other lane.
-				case VehicleType.Pedestrian:
+				case "pedestrian":
 					direction = from.Substring(0, 1);
 
 					if (string.Equals(from.Substring(1, 1), "0"))
@@ -445,7 +449,7 @@ namespace KruispuntGroep6.Communication.Json
 						lane = "0";
 					break;
 				// Truck can go from every direction and lane 3, 4 or 5 and go to every direction and lane 6.
-				case VehicleType.Truck:
+				case "truck":
 					switch (from.Substring(0, 1))
 					{
 						case "N":
@@ -507,6 +511,8 @@ namespace KruispuntGroep6.Communication.Json
 					}
 					lane = "6";
 					break;
+				default:
+					throw new Exception(String.Format("Vehicle type {0} wordt niet herkend!", vehicleType));
 			}
 
 			return direction + lane;
