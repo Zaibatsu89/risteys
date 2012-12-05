@@ -1,8 +1,9 @@
 using System.Threading;
 using KruispuntGroep6.Communication.Client;
 using KruispuntGroep6.Communication.Server;
+using KruispuntGroep6.Simulator.Main;
 
-namespace XNASimulator
+namespace KruispuntGroep6.Simulator
 {
 	public static class Program
 	{
@@ -13,16 +14,23 @@ namespace XNASimulator
 		{
 			var serverThread = new Thread(ServerTask);
 			serverThread.Start();
-
+			
 			var clientThread = new Thread(ClientTask);
 			clientThread.Start();
+			
+			string address = string.Empty;
 
-			using (MainGame game = new MainGame())
+			while (address.Equals(string.Empty))
+			{
+				address = Client.GetAddress();
+			}
+
+			using (MainGame game = new MainGame(address))
 			{
 				game.Run();
 			}
 		}
-
+		
 		public static void ClientTask()
 		{
 			Client client = new Client();

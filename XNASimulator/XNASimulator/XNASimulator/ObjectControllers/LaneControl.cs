@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using XNASimulator.Globals;
+﻿using KruispuntGroep6.Simulator.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace XNASimulator.ObjectControllers
+namespace KruispuntGroep6.Simulator.ObjectControllers
 {
     class LaneControl
     {

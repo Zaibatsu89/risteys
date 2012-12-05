@@ -1,26 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using KruispuntGroep6.Simulator.Globals;
+using KruispuntGroep6.Simulator.ObjectControllers;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using XNASimulator.Main;
-using XNASimulator.ObjectControllers;
-using XNASimulator.Globals;
 
-namespace XNASimulator
+namespace KruispuntGroep6.Simulator.Main
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
     public class MainGame : Microsoft.Xna.Framework.Game
     {
-		private Communication communication;
+		private string address;
+
+		private KruispuntGroep6.Simulator.Events.Communication communication;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -32,7 +27,7 @@ namespace XNASimulator
         private Audio audio;
         private Lists lists;
 
-        private VehicleControl vehicleControl;
+		private VehicleControl vehicleControl;
         private TileControl tileControl;
         private LaneControl laneControl;
 
@@ -44,8 +39,10 @@ namespace XNASimulator
 
         #endregion
 
-        public MainGame()
+        public MainGame(string address)
         {
+			this.address = address;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
@@ -61,13 +58,13 @@ namespace XNASimulator
         /// </summary>
         protected override void Initialize()
         {
-			communication = new Communication();
+			communication = new KruispuntGroep6.Simulator.Events.Communication(address);
 
             lists = new Lists();
 
             levelBuilder = new LevelBuilder(lists);
 
-            vehicleControl = new VehicleControl(this.GraphicsDevice, lists);
+			vehicleControl = new VehicleControl(this.GraphicsDevice, lists);
             tileControl = new TileControl(lists);
             laneControl = new LaneControl(lists);
 

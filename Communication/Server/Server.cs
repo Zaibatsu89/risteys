@@ -11,6 +11,7 @@ namespace KruispuntGroep6.Communication.Server
 	/// </summary>
 	public class Server
 	{
+		private static string address;					// String used to contain the IP address of the internet connection.
 		private static List<TcpClient> clients;			// List<TcpClient> used to contain list of connected clients.
 		private static TcpListener server;				// TcpListener used to contain the server.
 		private static Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
@@ -25,14 +26,29 @@ namespace KruispuntGroep6.Communication.Server
 
 			// Create new list of clients
 			clients = new List<TcpClient>();
+			// Set address
+			SetAddress();
+
+			// inform the human being
+			Console.WriteLine(string.Format(strings.HiIAmController +
+				" and I serve from {0}:1337 forever", address));
 			//create our TCPListener object
-			server = new System.Net.Sockets.TcpListener(IPAddress.Parse(strings.Address), strings.Port);
+			server = new System.Net.Sockets.TcpListener(IPAddress.Parse(address), strings.Port);
 			//check to see if the server is running
 			//while (true) do the commands
 			while (true)
 			{
-				//start the chat server
-				server.Start();
+				try
+				{
+					//start the server
+					server.Start();
+				}
+				catch (SocketException)
+				{
+					Console.WriteLine(strings.OneServer);
+					Console.ReadKey();
+					break;
+				}
 				//create a null connection
 				TcpClient client = null;
 				//check if there are any pending connection requests
@@ -95,6 +111,26 @@ namespace KruispuntGroep6.Communication.Server
 
 			//show message in console
 			Console.WriteLine(String.Format(strings.Sent, message));
+		}
+
+		private static void SetAddress()
+		{
+			// Get internet IP address
+			address = string.Empty;
+			IPHostEntry host;
+			host = Dns.GetHostEntry(Dns.GetHostName());
+			foreach (IPAddress ip in host.AddressList)
+			{
+				if (ip.AddressFamily.ToString().Equals(strings.Internet))
+				{
+					address = ip.ToString();
+				}
+			}
+			// If there is no internet, use localhost
+			if (address.Equals(string.Empty))
+			{
+				address = strings.Localhost;
+			}
 		}
 	}
 }

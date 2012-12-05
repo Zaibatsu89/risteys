@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using KruispuntGroep6.Simulator.Globals;
+using KruispuntGroep6.Simulator.Objects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using XNASimulator.Main;
-using XNASimulator.Globals;
 
-namespace XNASimulator
+namespace KruispuntGroep6.Simulator.Main
 {
     class LevelBuilder
     {
@@ -51,7 +44,7 @@ namespace XNASimulator
                 {
                     lines.Add(line);
                     if (!Int32.Equals(line.Length, width))
-                        throw new Exception(String.Format("The length of line {0} is different from all preceeding lines.", lines.Count));
+                        throw new Exception(string.Format("The length of line {0} is different from all preceeding lines.", lines.Count));
                     line = reader.ReadLine();
                 }
             }
@@ -82,7 +75,7 @@ namespace XNASimulator
             }
         }
 
-        private Tile LoadTile(char tileType, int x, int y)
+		private Tile LoadTile(char tileType, int x, int y)
         {
             switch (tileType)
             {
@@ -113,13 +106,13 @@ namespace XNASimulator
 
                 // Unknown tile type character
                 default:
-                    throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y));
+                    throw new NotSupportedException(string.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
 
-        private Tile LoadTile(Texture2D texture, RotationEnum rotation)
+		private Tile LoadTile(Texture2D texture, RotationEnum rotation)
         {
-            return new Tile(texture, rotation);
+			return new Tile(texture, rotation);
         }
     }
 }

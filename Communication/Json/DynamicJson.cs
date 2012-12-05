@@ -31,13 +31,13 @@ namespace KruispuntGroep6.Communication.Json
 
         // public static methods
 
-        /// <summary>from JsonString to DynamicJson</summary>
+        /// <summary>from JsonSring to DynamicJson</summary>
         public static dynamic Parse(string json)
         {
             return Parse(json, Encoding.Unicode);
         }
 
-        /// <summary>from JsonString to DynamicJson</summary>
+        /// <summary>from JsonSring to DynamicJson</summary>
         public static dynamic Parse(string json, Encoding encoding)
         {
             using (var reader = JsonReaderWriterFactory.CreateJsonReader(encoding.GetBytes(json), XmlDictionaryReaderQuotas.Max))
@@ -46,7 +46,7 @@ namespace KruispuntGroep6.Communication.Json
             }
         }
 
-        /// <summary>from JsonStringStream to DynamicJson</summary>
+        /// <summary>from JsonSringStream to DynamicJson</summary>
         public static dynamic Parse(Stream stream)
         {
             using (var reader = JsonReaderWriterFactory.CreateJsonReader(stream, XmlDictionaryReaderQuotas.Max))
@@ -55,7 +55,7 @@ namespace KruispuntGroep6.Communication.Json
             }
         }
 
-        /// <summary>from JsonStringStream to DynamicJson</summary>
+        /// <summary>from JsonSringStream to DynamicJson</summary>
         public static dynamic Parse(Stream stream, Encoding encoding)
         {
             using (var reader = JsonReaderWriterFactory.CreateJsonReader(stream, encoding, XmlDictionaryReaderQuotas.Max, _ => { }))
@@ -64,7 +64,7 @@ namespace KruispuntGroep6.Communication.Json
             }
         }
 
-        /// <summary>create JsonString from primitive or IEnumerable or Object({public property name:property value})</summary>
+        /// <summary>create JsonSring from primitive or IEnumerable or Object({public property name:property value})</summary>
         public static string Serialize(object obj)
         {
             return CreateJsonString(new XStreamingElement("root", CreateTypeAttr(GetJsonType(obj)), CreateJsonNode(obj)));
@@ -94,8 +94,7 @@ namespace KruispuntGroep6.Communication.Json
 
         private static JsonType GetJsonType(object obj)
         {
-            if (Object.Equals(obj, null))
-				return JsonType.@null;
+            if (obj == null) return JsonType.@null;
 
             switch (Type.GetTypeCode(obj.GetType()))
             {
@@ -203,20 +202,20 @@ namespace KruispuntGroep6.Communication.Json
         /// <summary>has property or not</summary>
         public bool IsDefined(string name)
         {
-            return IsObject && (!XElement.Equals(xml.Element(name), null));
+            return IsObject && (xml.Element(name) != null);
         }
 
         /// <summary>has property or not</summary>
         public bool IsDefined(int index)
         {
-            return IsArray && (!XElement.Equals(xml.Elements().ElementAtOrDefault(index), null));
+            return IsArray && (xml.Elements().ElementAtOrDefault(index) != null);
         }
 
         /// <summary>delete property</summary>
         public bool Delete(string name)
         {
             var elem = xml.Element(name);
-            if (!string.Equals(elem, null))
+            if (elem != null)
             {
                 elem.Remove();
                 return true;
@@ -228,7 +227,7 @@ namespace KruispuntGroep6.Communication.Json
         public bool Delete(int index)
         {
             var elem = xml.Elements().ElementAtOrDefault(index);
-            if (!string.Equals(elem, null))
+            if (elem != null)
             {
                 elem.Remove();
                 return true;
@@ -259,14 +258,7 @@ namespace KruispuntGroep6.Communication.Json
 
         private object DeserializeObject(Type targetType)
         {
-			var result = Activator.CreateInstance(targetType);
-			//var result = Activator.CreateInstance(targetType,
-			//     BindingFlags.CreateInstance |
-			//     BindingFlags.Public |
-			//     BindingFlags.Instance |
-			//     BindingFlags.OptionalParamBinding,
-			//     null, new Object[] { Type.Missing }, null);
-			//var result = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(targetType);
+            var result = Activator.CreateInstance(targetType);
             var dict = targetType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.CanWrite)
                 .ToDictionary(pi => pi.Name, pi => pi);
@@ -330,7 +322,7 @@ namespace KruispuntGroep6.Communication.Json
         // Deserialize or foreach(IEnumerable)
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
-            if (Type.Equals(binder.Type, typeof(IEnumerable)) || binder.Type == typeof(object[]))
+            if (binder.Type == typeof(IEnumerable) || binder.Type == typeof(object[]))
             {
                 var ie = (IsArray)
                     ? xml.Elements().Select(x => ToValue(x))
@@ -346,7 +338,7 @@ namespace KruispuntGroep6.Communication.Json
 
         private bool TryGet(XElement element, out object result)
         {
-            if (XElement.Equals(element, null))
+            if (element == null)
             {
                 result = null;
                 return false;
@@ -374,7 +366,7 @@ namespace KruispuntGroep6.Communication.Json
         {
             var type = GetJsonType(value);
             var element = xml.Element(name);
-            if (XElement.Equals(element, null))
+            if (element == null)
             {
                 xml.Add(new XElement(name, CreateTypeAttr(type), CreateJsonNode(value)));
             }
@@ -429,7 +421,7 @@ namespace KruispuntGroep6.Communication.Json
         public override string ToString()
         {
             // <foo type="null"></foo> is can't serialize. replace to <foo type="null" />
-            foreach (var elem in xml.Descendants().Where(x => string.Equals(x.Attribute("type").Value, "null")))
+            foreach (var elem in xml.Descendants().Where(x => x.Attribute("type").Value == "null"))
             {
                 elem.RemoveNodes();
             }

@@ -1,18 +1,16 @@
-﻿using System.Net;
-using System.Net.Sockets;
+﻿using System;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
-using System;
 using System.Windows.Forms;
-using System.Drawing;
-using System.ComponentModel;
-using KruispuntGroep6.Communication.Json;
-using XNASimulator.Main;
+using KruispuntGroep6.Simulator.ObjectControllers;
 
-namespace XNASimulator
+namespace KruispuntGroep6.Simulator.Events
 {
     class Communication
     {
+		private string address;
 		private int connectionAttempts;
 		private Form form;
 		private ListBox listBox;
@@ -20,10 +18,9 @@ namespace XNASimulator
 		private Thread thrReadForever;
 		private System.Timers.Timer timerConnection;
 
-		public Communication()
+		public Communication(string address)
 		{
-			// Create command-line client that connects with the server
-			tcpClient = new TcpClient();
+			this.address = address;
 
 			timerConnection = new System.Timers.Timer(5000);
 			timerConnection.Elapsed += new System.Timers.ElapsedEventHandler(timerConnection_Elapsed);
@@ -45,18 +42,22 @@ namespace XNASimulator
 		{
 			try
 			{
-				tcpClient.Connect(IPAddress.Parse("127.0.0.1"), 1337);
+				// Create command-line client that connects with the server
+				tcpClient = new TcpClient();
+				tcpClient.Connect(IPAddress.Parse(address), 1337);
 			}
 			catch (SocketException)
 			{
-				if (connectionAttempts > 11)
+				if (connectionAttempts > 8)
 				{
 					DisconnectWhileConnecting();
 				}
 			}
 
 			if (tcpClient.Connected)
+			{
 				Connected();
+			}
 		}
 
 		private void DisconnectWhileConnecting()
@@ -100,7 +101,7 @@ namespace XNASimulator
 				{
 					string message = reader.ReadLine();
 
-					if (!string.Equals(message, null))
+					if (!object.Equals(message, null))
 					{
 						if (!string.Equals(message, string.Empty))
 						{
@@ -113,22 +114,42 @@ namespace XNASimulator
 			catch (ThreadAbortException) { }
 			catch (Exception e)
 			{
-				Console.WriteLine("Error: " + e);
+				Console.WriteLine(e);
 			}
 		}
 
 		private void Decrypter(string message)
 		{
-			string[] json = message.Split(',');
-			if (json[0].Equals("input"))
-			{
-				if (json[2].Equals("car"))
-				{
-					// Spawn car at 'from'
-					VehicleControl.Spawn(json[3]);
+			string[] jsonArray = message.Split(']');
 
-					// Drive car to 'to'
-					VehicleControl.Drive(json[4]);
+			foreach (string jsonObjectWithBracket in jsonArray)
+			{
+				if (!jsonObjectWithBracket.Equals(string.Empty))
+				{
+					string jsonObject = string.Empty;
+
+					if (jsonObjectWithBracket.StartsWith(","))
+					{
+						jsonObject = jsonObjectWithBracket.Remove(0, 2);
+					}
+					else
+					{
+						jsonObject = jsonObjectWithBracket.Remove(0, 1);
+					}
+
+					string[] jsonParameters = jsonObject.Split(',');
+
+					if (jsonParameters[0].Equals("input"))
+					{
+						if (jsonParameters[2].Equals("car"))
+						{
+							// Spawn car at 'from'
+							VehicleControl.Spawn(jsonParameters[3]);
+
+							// Drive car to 'to'
+							VehicleControl.Drive(jsonParameters[4]);
+						}
+					}
 				}
 			}
 		}

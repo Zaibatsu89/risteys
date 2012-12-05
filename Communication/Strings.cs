@@ -7,17 +7,17 @@
 	{
 		public string Address
 		{
-			get { return "127.0.0.1"; }
+			get { return "Server IP address"; }
 		}
 
-		public string BooleanJsonGenerator
+		public string BraceOpen
 		{
-			get { return "boolJsonGenerator"; }
+			get { return "{"; }
 		}
 
-		public string BooleanNewText
+		public string BracketOpen
 		{
-			get { return "boolNewText"; }
+			get { return "["; }
 		}
 
 		public string Broken
@@ -25,29 +25,9 @@
 			get { return "The connection is broken!"; }
 		}
 
-		public string ButtonClear
-		{
-			get { return "btnClear"; }
-		}
-
-		public string ButtonConnect
-		{
-			get { return "btnConnect"; }
-		}
-
 		public string ButtonDisconnect
 		{
 			get { return "btnDisconnect"; }
-		}
-
-		public string ButtonJsonGenerator
-		{
-			get { return "btnJsonGenerator"; }
-		}
-
-		public string ButtonSend
-		{
-			get { return "btnSend"; }
 		}
 
 		public string Clear
@@ -62,12 +42,17 @@
 
 		public string Connected
 		{
-			get { return "Connected: "; }
+			get { return "Connected: {0}"; }
 		}
 
 		public string Connecting
 		{
 			get { return "Connecting..."; }
+		}
+
+		public string ConnectingAborted
+		{
+			get { return "Connecting aborted"; }
 		}
 
 		public string ConnectionAttempt
@@ -77,7 +62,7 @@
 
 		public string ConnectionError
 		{
-			get { return "Connection error"; }
+			get { return "No connection possible, check server IP address"; }
 		}
 
 		public string ConnectionStatus
@@ -97,7 +82,12 @@
 
 		public string Disconnected
 		{
-			get { return "Disconnected"; }
+			get { return "Disconnected: {0}"; }
+		}
+
+		public string Empty
+		{
+			get { return "-"; }
 		}
 
 		public string Exception
@@ -112,7 +102,12 @@
 
 		public string GenerateJSON
 		{
-			get { return "Generate JSON input data file"; }
+			get { return "Generate JSON file"; }
+		}
+
+		public string Hi
+		{
+			get { return "Hi"; }
 		}
 
 		public string HiIAmCommunication
@@ -130,6 +125,11 @@
 			get { return "Hi, I am simulator"; }
 		}
 
+		public string Internet
+		{
+			get { return "InterNetwork"; }
+		}
+
 		public string IOException
 		{
 			get { return "IOException: {0}"; }
@@ -137,12 +137,12 @@
 
 		public string JsonGenerator
 		{
-			get { return "How many inputs?"; }
+			get { return "How many JSONs?"; }
 		}
 
-		public string JsonInputFilePath
+		public string JsonInputFileExtension
 		{
-			get { return @"..\..\..\input.json"; }
+			get { return ".json"; }
 		}
 
 		public string JsonReadingError1
@@ -152,17 +152,42 @@
 
 		public string JsonReadingError2
 		{
-			get { return "Did you already generate one below with specified amount of inputs?"; }
+			get { return "Did you already generate one above with specified amount of inputs?"; }
 		}
 
 		public string JsonSaved
 		{
-			get { return "JSON file saved as input.json"; }
+			get { return "JSON file saved as "; }
 		}
 
 		public string JsonSavingError
 		{
-			get { return "Error saving JSON file as input.json"; }
+			get { return "Error saving JSON file as "; }
+		}
+
+		public string JsonSent
+		{
+			get { return "Sent last JSON from file"; }
+		}
+
+		public string JsonTypeDetector
+		{
+			get { return "detectors"; }
+		}
+
+		public string JsonTypeInput
+		{
+			get { return "inputs"; }
+		}
+
+		public string JsonTypeStoplight
+		{
+			get { return "stoplights"; }
+		}
+
+		public string LabelDisconnected
+		{
+			get { return "Disconnected"; }
 		}
 
 		public string ListBoxResults
@@ -170,9 +195,19 @@
 			get { return "lbResults"; }
 		}
 
+		public string Localhost
+		{
+			get { return "127.0.0.1"; }
+		}
+
 		public string NewText
 		{
-			get { return "Enter text string:"; }
+			get { return "Message"; }
+		}
+
+		public string OneServer
+		{
+			get { return "There can only be one server per IP address!"; }
 		}
 
 		public int Port
@@ -215,21 +250,6 @@
 			get { return "\nThe controller stopped. Press <enter> to continue."; }
 		}
 
-		public string TextBoxConStatus
-		{
-			get { return "tbConStatus"; }
-		}
-
-		public string TextBoxJsonGenerator
-		{
-			get { return "tbJsonGenerator"; }
-		}
-
-		public string TextBoxNewText
-		{
-			get { return "tbNewText"; }
-		}
-
 		public string TcpClient
 		{
 			get { return "Kruispunt Groep 6: TCP Client"; }
@@ -240,9 +260,19 @@
 			get { return "Kruispunt Groep 6: TCP Server"; }
 		}
 
+		public string TextBoxConnectionStatus
+		{
+			get { return "tbConStatus"; }
+		}
+
 		public string Waiting
 		{
 			get { return "Waiting for simulator..."; }
+		}
+
+		public string With
+		{
+			get { return " with "; }
 		}
 	}
 }

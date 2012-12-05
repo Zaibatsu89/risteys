@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace KruispuntGroep6.Communication.Json
 {
@@ -9,148 +11,14 @@ namespace KruispuntGroep6.Communication.Json
     public class JsonConverter
     {
 		/// <summary>
-		/// Converts readable message to dynamic json string.
-		/// </summary>
-		/// <param name="message">String used to contain a readable message.</param>
-		/// <returns>String used to contain a dynamic json.</returns>
-		public static string MessageToJson(string message)
-		{
-			string json = message;
-
-			var dynJson = DynamicJson.Parse(message);
-
-			json = getType(json);
-
-			switch (json)
-			{
-				case "input":
-					json += ",";
-					json += dynJson.time;
-					json +=	",";
-					json +=	dynJson.type;
-					json +=	",";
-					json +=	dynJson.from;
-					json +=	",";
-					json +=	dynJson.to;
-					break;
-				case "stoplight":
-					json += ",";
-					json += dynJson.light;
-					json += ",";
-					json += dynJson.state;
-					break;
-				case "detector":
-					json += ",";
-					json += dynJson.light;
-					json += ",";
-					json += dynJson.type;
-					json += ",";
-					json += dynJson.loop;
-					json += ",";
-					json += dynJson.empty;
-					json += ",";
-					json += dynJson.to;
-					break;
-				case "start":
-					json += ",";
-					json += dynJson.starttime;
-					break;
-				case "multiplier":
-					json += ",";
-					json += dynJson.multiplier;
-					break;
-				default:
-					throw new Exception(String.Format("Message {0} heeft geen herkenbaar type!", getType(json)));
-			}
-
-			return json;
-		}
-
-		/// <summary>
-		/// Converts dynamic json string to readable message.
-		/// </summary>
-		/// <param name="message">String used to contain a dynamic json.</param>
-		/// <returns>String used to contain a readable message.</returns>
-		public static string JsonToMessage(string json)
-		{
-			string message = json;
-
-			switch (getType(json))
-			{
-				case "input":
-					message = DynamicJson.Serialize(new
-					{
-						time = getParameter(message, 1),
-						type = getParameter(message, 2),
-						from = getParameter(message, 3),
-						to = getParameter(message, 4),
-					});
-					break;
-				case "stoplight":
-					message = DynamicJson.Serialize(new
-					{
-						light = getParameter(message, 1),
-						state = getParameter(message, 2),
-					});
-					break;
-				case "detector":
-					message = DynamicJson.Serialize(new
-					{
-						light = getParameter(message, 1),
-						type = getParameter(message, 2),
-						loop = getParameter(message, 3),
-						empty = getParameter(message, 4),
-						to = getParameter(message, 5),
-					});
-					break;
-				case "start":
-					message = DynamicJson.Serialize(new
-					{
-						starttime = getParameter(message, 1)
-					});
-					break;
-				case "multiplier":
-					message = DynamicJson.Serialize(new
-					{
-						multiplier = getParameter(message, 1)
-					});
-					break;
-				default:
-					throw new Exception(String.Format("Json {0} heeft geen herkenbaar type!", getType(json)));
-			}
-
-			return message;
-		}
-
-		private static string getParameter(string json, int which)
-		{
-			string parameter = string.Empty;
-
-			int doublePoint = nthOccurence(json, ':', which);
-			int endPoint = json.IndexOf('}');
-			int separatorPoint = json.IndexOf(',', doublePoint);
-
-			if (separatorPoint > 0)
-				parameter = json.Substring(doublePoint, separatorPoint - doublePoint);
-			else
-				parameter = json.Substring(doublePoint, endPoint - doublePoint);
-
-			// Remove trash
-			parameter = parameter.Remove(parameter.Length - 1);
-			parameter = parameter.Remove(0, 2);
-
-			return parameter;
-		}
-
-		/// <summary>
 		/// Gets the json type of a dynamic json string.
 		/// </summary>
 		/// <param name="message">String used to contain a dynamic json.</param>
 		/// <returns>String used to contain the json type.</returns>
-		private static string getType(string message)
+		private static string GetType(string message)
 		{
 			string jsonType = string.Empty;
-			
+
 			if (message.Contains("from"))
 				jsonType = "input";
 			else if (message.Contains("state"))
@@ -165,9 +33,262 @@ namespace KruispuntGroep6.Communication.Json
 			return jsonType;
 		}
 
-		private static int nthOccurence(string s, char t, int n)
+		/// <summary>
+		/// Converts dynamic json array string to readable message.
+		/// </summary>
+		/// <param name="json">String used to contain a dynamic json array.</param>
+		/// <returns>String used to contain a readable message.</returns>
+		public static string JsonArrayToMessage(string strJson)
 		{
-			return s.TakeWhile(c => ((n -= (c == t ? 1 : 0))) > 0).Count();
+			var json = DynamicJson.Parse(strJson);
+			string message = GetType(strJson);
+			var count = ((dynamic[])json).Count();
+
+			switch (message)
+			{
+				case "input":
+					var time = ((dynamic[])json).Select(d => d.time);
+					var type = ((dynamic[])json).Select(d => d.type);
+					var from = ((dynamic[])json).Select(d => d.from);
+					var to = ((dynamic[])json).Select(d => d.to);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strTime = time.ElementAt(i);
+						string strType = type.ElementAt(i);
+						string strFrom = from.ElementAt(i);
+						string strTo = to.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[input";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+
+						message += ",";
+						message += strTime;
+						message += ",";
+						message += strType;
+						message += ",";
+						message += strFrom;
+						message += ",";
+						message += strTo;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				case "stoplight":
+					var light = ((dynamic[])json).Select(d => d.light);
+					var state = ((dynamic[])json).Select(d => d.state);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strLight = light.ElementAt(i);
+						string strState = state.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[stoplight";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+
+						message += ",";
+						message += strLight;
+						message += ",";
+						message += strState;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				case "detector":
+					var dLight = ((dynamic[])json).Select(d => d.light);
+					var dType = ((dynamic[])json).Select(d => d.type);
+					var loop = ((dynamic[])json).Select(d => d.loop);
+					var empty = ((dynamic[])json).Select(d => d.empty);
+					var dTo = ((dynamic[])json).Select(d => d.to);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strLight = dLight.ElementAt(i);
+						string strType = dType.ElementAt(i);
+						string strLoop = loop.ElementAt(i);
+						string strEmpty = empty.ElementAt(i);
+						string strTo = dTo.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[detector";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+
+						message += ",";
+						message += strLight;
+						message += ",";
+						message += strType;
+						message += ",";
+						message += strLoop;
+						message += ",";
+						message += strEmpty;
+						message += ",";
+						message += strTo;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				case "start":
+					var starttime = ((dynamic[])json).Select(d => d.starttime);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strStarttime = starttime.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[starttime";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+						message += ",";
+						message += strStarttime;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				case "multiplier":
+					var multiplier = ((dynamic[])json).Select(d => d.multiplier);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strMultiplier = multiplier.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[multiplier";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+						message += ",";
+						message += strMultiplier;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				default:
+					throw new Exception(string.Format("JSON {0} heeft geen herkenbaar type!", strJson));
+			}
+
+			return message;
+		}
+
+		/// <summary>
+		/// Converts dynamic json object string to readable message.
+		/// </summary>
+		/// <param name="json">String used to contain a dynamic json object.</param>
+		/// <returns>String used to contain a readable message.</returns>
+		public static string JsonObjectToMessage(string strJson)
+		{
+			var json = DynamicJson.Parse(strJson);
+			string message = GetType(strJson);
+
+			switch (message)
+			{
+				case "input":
+					string strTime = json.time;
+					string strType = json.type;
+					string strFrom = json.from;
+					string strTo = json.to;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strTime;
+					message += ",";
+					message += strType;
+					message += ",";
+					message += strFrom;
+					message += ",";
+					message += strTo;
+					message += "]";
+
+					break;
+				case "stoplight":
+					string strLight = json.light;
+					string strState = json.state;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strLight;
+					message += ",";
+					message += strState;
+					message += "]";
+
+					break;
+				case "detector":
+					string strDetectorLight = json.light;
+					string strDetectorType = json.type;
+					string strLoop = json.loop;
+					string strEmpty = json.empty;
+					string strDetectorTo = json.to;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strDetectorLight;
+					message += ",";
+					message += strDetectorType;
+					message += ",";
+					message += strLoop;
+					message += ",";
+					message += strEmpty;
+					message += ",";
+					message += strDetectorTo;
+					message += "]";
+
+					break;
+				case "start":
+					string strStarttime = json.starttime;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strStarttime;
+					message += "]";
+
+					break;
+				case "multiplier":
+					string strMultiplier = json.multiplier;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strMultiplier;
+					message += "]";
+
+					break;
+				default:
+					throw new Exception(string.Format("JSON {0} heeft geen herkenbaar type!", strJson));
+			}
+
+			return message;
 		}
     }
 }

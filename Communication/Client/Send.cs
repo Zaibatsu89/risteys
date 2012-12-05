@@ -33,15 +33,15 @@ namespace KruispuntGroep6.Communication.Client
 			// Gonna catch 'em all... Pokémon!
 			catch (SocketException e)
 			{
-				Console.WriteLine(String.Format(strings.SocketException, e.Message));
+				Console.WriteLine(string.Format(strings.SocketException, e.Message));
 			}
 			catch (System.IO.IOException e)
 			{
-				Console.WriteLine(String.Format(strings.IOException, e.Message));
+				Console.WriteLine(string.Format(strings.IOException, e.Message));
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(String.Format(strings.Exception, e.Message));
+				Console.WriteLine(string.Format(strings.Exception, e.Message));
 			}
 		}
 	}

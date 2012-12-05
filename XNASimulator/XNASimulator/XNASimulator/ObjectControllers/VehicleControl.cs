@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using KruispuntGroep6.Simulator.Globals;
+using KruispuntGroep6.Simulator.Objects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using XNASimulator.Globals;
+using System;
 
-namespace XNASimulator.Main
+namespace KruispuntGroep6.Simulator.ObjectControllers
 {
     class VehicleControl
     {
         private Lists lists;
         private GraphicsDevice graphics;
+		private Random random;
 
         public VehicleControl(GraphicsDevice graphics, Lists lists)
         {
             this.lists = lists;
             this.graphics = graphics;
+
+			random = new Random();
         }
 
         public void LoadVehicles()
@@ -51,12 +47,12 @@ namespace XNASimulator.Main
                 {
                     if (vehicle.rotation == RotationEnum.Right)
                     {
-                        vehicle.position += new Vector2(1, 0);
+						vehicle.position += new Vector2(vehicle.speed, 0);
                         vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width / 2, vehicle.sprite.Height / 2);
                     }
                     else if (vehicle.rotation == RotationEnum.Down)
                     {
-                        vehicle.position += new Vector2(0, 1);
+						vehicle.position += new Vector2(0, vehicle.speed);
                         vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width / 2, vehicle.sprite.Height / 2);
                     }
                 }
@@ -131,11 +127,10 @@ namespace XNASimulator.Main
 					break;
 			}
 		}
-	
 
         private Vehicle LoadVehicle(Tile tile, string vehicleID)
         {
-            Vehicle vehicle = new Vehicle(Textures.RedCar, vehicleID);
+            Vehicle vehicle = new Vehicle(Textures.RedCar, vehicleID, random);
             vehicle.rotation = tile.Rotation;
             vehicle.position = tile.Position + tile.Origin;
             vehicle.spawntile = tile;
@@ -147,7 +142,7 @@ namespace XNASimulator.Main
             if (vehicle.alive)
             {
                 if (!graphics.PresentationParameters.Bounds.Contains(new Point((int)vehicle.position.X,
-                                                    (int)vehicle.position.Y)))
+                    (int)vehicle.position.Y)))
                 {
                     vehicle.alive = false;
                 }

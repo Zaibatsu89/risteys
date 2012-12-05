@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using XNASimulator.Objects;
+﻿using System.Collections.Generic;
+using KruispuntGroep6.Simulator.Objects;
 
-namespace XNASimulator.Globals
+namespace KruispuntGroep6.Simulator.Globals
 {
     class Lists
     {
