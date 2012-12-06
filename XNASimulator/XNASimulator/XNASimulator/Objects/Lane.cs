@@ -1,4 +1,6 @@
-﻿namespace KruispuntGroep6.Simulator.Objects
+﻿using System.Collections.Generic;
+
+namespace KruispuntGroep6.Simulator.Objects
 {
     class Lane
     {

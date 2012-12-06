@@ -485,6 +485,13 @@ namespace KruispuntGroep6.Communication.Client
 			Disconnect();
 		}
 
+		private int GetTime(string strJson)
+		{
+			strJson = strJson.Substring(strJson.IndexOf("{"), strJson.IndexOf("}") - strJson.IndexOf("{") + 1);
+			var json = DynamicJson.Parse(strJson);
+			return int.Parse(json.time);
+		}
+
 		/// <summary>
 		/// Reads messages from controller, forever.
 		/// </summary>
@@ -527,10 +534,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (timerJson.Enabled)
 			{
-				string strJson = inputJSON[inputJSONnumber];
-				strJson = strJson.Substring(strJson.IndexOf("{"), strJson.IndexOf("}") - strJson.IndexOf("{") + 1);
-				var json = DynamicJson.Parse(strJson);
-				time = int.Parse(json.time);
+				time = GetTime(inputJSON[inputJSONnumber]);
 			}
 
 			while (time.Equals(previousTime))
@@ -541,10 +545,7 @@ namespace KruispuntGroep6.Communication.Client
 
 				if (inputJSONnumber < inputJSON.Length)
 				{
-					string strJson = inputJSON[inputJSONnumber];
-					strJson = strJson.Substring(strJson.IndexOf("{"), strJson.IndexOf("}") - strJson.IndexOf("{") + 1);
-					var json = DynamicJson.Parse(strJson);
-					time = int.Parse(json.time);
+					time = GetTime(inputJSON[inputJSONnumber]);
 				}
 				else
 				{
@@ -555,10 +556,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (inputJSONnumber < inputJSON.Length)
 			{
-				string strJson = inputJSON[inputJSONnumber];
-				strJson = strJson.Substring(strJson.IndexOf("{"), strJson.IndexOf("}") - strJson.IndexOf("{") + 1);
-				var json = DynamicJson.Parse(strJson);
-				previousTime = int.Parse(json.time);
+				previousTime = GetTime(inputJSON[inputJSONnumber]);
 			}
 			else
 			{
@@ -572,9 +570,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		private void SendStartTime()
 		{
-			string jsonStartTime = DynamicJson.Serialize(new [] {
-				new { starttime = DateTime.UtcNow.ToString(strings.DateTimeFormat) }
-			});
+			string jsonStartTime = DynamicJson.Serialize(new { starttime = DateTime.UtcNow.ToString(strings.DateTimeFormat) });
 
 			if (Int32.Equals(previousInputJSONnumber, 0))
 			{
