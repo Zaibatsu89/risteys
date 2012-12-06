@@ -116,18 +116,11 @@ namespace KruispuntGroep6.Simulator.Main
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            mouseStateCurrent = Mouse.GetState();
-
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            if (mouseStateCurrent.LeftButton == ButtonState.Pressed && mouseStatePrevious.LeftButton != ButtonState.Pressed)
-            {
-                mousePosition = new Vector2(mouseStateCurrent.X, mouseStateCurrent.Y);
-                tileControl.CheckMouseCollision(mousePosition);
-            }
-
-            mouseStatePrevious = mouseStateCurrent;
+            
+            MouseButtonPress();
 
             tileControl.Update(gameTime);
             vehicleControl.Update(gameTime);
@@ -158,6 +151,19 @@ namespace KruispuntGroep6.Simulator.Main
             if (File.Exists(path))
                 levelBuilder.LoadLevel(path);
             else throw new Exception("No Level Detected");
+        }
+
+        private void MouseButtonPress()
+        {
+            mouseStateCurrent = Mouse.GetState();
+
+            if (mouseStateCurrent.LeftButton == ButtonState.Pressed && mouseStatePrevious.LeftButton != ButtonState.Pressed)
+            {
+                mousePosition = new Vector2(mouseStateCurrent.X, mouseStateCurrent.Y);
+                tileControl.CheckMouseCollision(mousePosition);
+            }
+
+            mouseStatePrevious = mouseStateCurrent;
         }
     }
 }

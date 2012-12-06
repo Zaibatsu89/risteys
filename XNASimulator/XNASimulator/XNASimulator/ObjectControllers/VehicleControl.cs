@@ -77,57 +77,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 }
             }
         }
-
-        public static void Spawn(string from)
-		{
-			//TODO: spawn car
-
-			switch (from[0])
-			{
-				case 'N':
-					// spawn car at north, facing south
-
-					break;
-				case 'E':
-					// spawn car at east, facing west
-
-					break;
-				case 'S':
-					// spawn car at south, facing north
-
-					break;
-				case 'W':
-					// spawn car at west, facing east
-
-					break;
-			}
-		}
-
-		public static void Drive(string to)
-		{
-			//TODO: drive car
-
-			switch (to[0])
-			{
-				case 'N':
-					// drive car to north
-
-					break;
-				case 'E':
-					// drive car to east
-
-					break;
-				case 'S':
-					// drive car to south
-
-					break;
-				case 'W':
-					// drive car to west
-
-					break;
-			}
-		}
-
         private Vehicle LoadVehicle(Tile tile, string vehicleID)
         {
             Vehicle vehicle = new Vehicle(Textures.RedCar, vehicleID, random);
@@ -178,6 +127,56 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                         vehicle.stopRedLight = false;
                     }
                 }
+            }
+        }
+
+        public static void Spawn(string from)
+        {
+            //TODO: spawn car
+
+            switch (from[0])
+            {
+                case 'N':
+                    // spawn car at north, facing south
+
+                    break;
+                case 'E':
+                    // spawn car at east, facing west
+
+                    break;
+                case 'S':
+                    // spawn car at south, facing north
+
+                    break;
+                case 'W':
+                    // spawn car at west, facing east
+
+                    break;
+            }
+        }
+
+        public static void Drive(string to)
+        {
+            //TODO: drive car
+
+            switch (to[0])
+            {
+                case 'N':
+                    // drive car to north
+
+                    break;
+                case 'E':
+                    // drive car to east
+
+                    break;
+                case 'S':
+                    // drive car to south
+
+                    break;
+                case 'W':
+                    // drive car to west
+
+                    break;
             }
         }
     }
