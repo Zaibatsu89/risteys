@@ -20,8 +20,8 @@ namespace KruispuntGroep6.Simulator.Main
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        private int tilesHor = 11;
-        private int tilesVer = 11;
+        private int tilesHor = 20;
+        private int tilesVer = 20;
 
         private LevelBuilder levelBuilder;
         private Audio audio;
@@ -35,10 +35,6 @@ namespace KruispuntGroep6.Simulator.Main
         private MouseState mouseStatePrevious;
         private Vector2 mousePosition;
 
-        #region tileloading
-
-        #endregion
-
         public MainGame(string address)
         {
 			this.address = address;
@@ -46,8 +42,8 @@ namespace KruispuntGroep6.Simulator.Main
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferHeight = this.tilesHor * 64;
-            graphics.PreferredBackBufferWidth = this.tilesVer * 64;
+            graphics.PreferredBackBufferHeight = this.tilesHor * 32;
+            graphics.PreferredBackBufferWidth = this.tilesVer * 32;
         }
 
         /// <summary>
@@ -84,16 +80,33 @@ namespace KruispuntGroep6.Simulator.Main
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Textures.RedLight = Content.Load<Texture2D>("Tiles/LightsRed64x64");
-            Textures.GreenLight = Content.Load<Texture2D>("Tiles/LightsGreen64x64");
-            Textures.Crossing = Content.Load<Texture2D>("Tiles/Crossing64x64");
-            Textures.Grass = Content.Load<Texture2D>("Tiles/Grass64x64");
-            Textures.RedCar = Content.Load<Texture2D>("Sprites/RedCar64x64DU");
-            Textures.Road = Content.Load<Texture2D>("Tiles/Road64x64");
-            Textures.SideWalk = Content.Load<Texture2D>("Tiles/Sidewalk64x64");
-            Textures.Spawn = Content.Load<Texture2D>("Tiles/Spawn64x64");
+            #region Textures
+            Textures.RedLight = Content.Load<Texture2D>("Tiles/32p/RedLight32x32");
+            Textures.GreenLight = Content.Load<Texture2D>("Tiles/32p/GreenLight32x32");
 
-            this.LoadCrossroad("Content/Grids/TestGrid2.txt");
+            Textures.Sidewalk2Red = Content.Load<Texture2D>("Tiles/32p/Sidewalk2Red32x32");
+            Textures.Sidewalk2Green = Content.Load<Texture2D>("Tiles/32p/Sidewalk2Green32x32");
+            Textures.SidewalkRightRed = Content.Load<Texture2D>("Tiles/32p/SidewalkRightRed32x32");
+            Textures.SidewalkDownRed = Content.Load<Texture2D>("Tiles/32p/SidewalkDownRed32x32");
+
+            Textures.Bikelane = Content.Load<Texture2D>("Tiles/32p/SortBike32x32");
+            Textures.Buslane = Content.Load<Texture2D>("Tiles/32p/SortBus32x32");
+            Textures.CarSortDown = Content.Load<Texture2D>("Tiles/32p/SortDown32x32");
+            Textures.CarSortLeft = Content.Load<Texture2D>("Tiles/32p/SortLeft32x32");
+            Textures.CarSortRight = Content.Load<Texture2D>("Tiles/32p/SortRight32x32");
+
+            Textures.Road = Content.Load<Texture2D>("Tiles/32p/Road32x32");
+            Textures.RoadCenter = Content.Load<Texture2D>("Tiles/32p/RoadCenter32x32");
+
+            Textures.Crossing = Content.Load<Texture2D>("Tiles/32p/Crossing32x32");
+            Textures.Grass = Content.Load<Texture2D>("Tiles/32p/Grass32x32");
+            Textures.Sidewalk = Content.Load<Texture2D>("Tiles/32p/Sidewalk32x32");
+            #endregion
+
+            Textures.Car = Content.Load<Texture2D>("Sprites/Car32x32");
+
+            this.LoadCrossroad("Content/Grids/Crossroad.txt");
+            laneControl.LoadLanes();
             vehicleControl.LoadVehicles();
 
             //audio.PlayBackgroundMusic();

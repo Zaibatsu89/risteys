@@ -25,13 +25,15 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             string vehicleID = "";
             int i = 0;
 
-            foreach (Tile tile in lists.Tiles)
+            foreach (Lane lane in lists.Lanes)
             {
-                if (tile.Texture.Equals(Textures.Spawn))
+                if (lane.spawnTile != null)
                 {
                     i += 1;
                     vehicleID = "V" + i;
-                    lists.Vehicles.Add(LoadVehicle(tile, vehicleID));
+                    Vehicle vehicle = LoadVehicle(lane.spawnTile, vehicleID);
+                    lists.Vehicles.Add(vehicle);
+                    lane.laneVehicles.Add(vehicle);
                 }
             }
         }
@@ -79,7 +81,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         }
         private Vehicle LoadVehicle(Tile tile, string vehicleID)
         {
-            Vehicle vehicle = new Vehicle(Textures.RedCar, vehicleID, random);
+            Vehicle vehicle = new Vehicle(Textures.Car, vehicleID, random);
             vehicle.rotation = tile.Rotation;
             vehicle.position = tile.Position + tile.Origin;
             vehicle.spawntile = tile;

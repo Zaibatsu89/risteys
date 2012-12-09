@@ -55,19 +55,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Crossing128x128.jpg">
+    <Compile Include="Tiles\128p\Crossing128x128.jpg">
       <Name>Crossing128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Tiles\Road128x128.jpg">
+    <Compile Include="Tiles\128p\Road128x128.jpg">
       <Name>Road128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Tiles\Sidewalk128x128.jpg">
+    <Compile Include="Tiles\128p\Sidewalk128x128.jpg">
       <Name>Sidewalk128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -86,21 +86,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\RedCar64x64LR.png">
-      <Name>RedCar64x64LR</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\RedCar64x64RL.png">
-      <Name>RedCar64x64RL</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\RedCar64x64UD.png">
-      <Name>RedCar64x64UD</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\Music\backgroundmusic.wav">
@@ -111,76 +96,171 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Lights128x128.jpg">
+    <Compile Include="Tiles\128p\Lights128x128.jpg">
       <Name>Lights128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Crossing64x64.jpg">
+    <Compile Include="Tiles\64p\Crossing64x64.jpg">
       <Name>Crossing64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\Lights64x64.jpg">
+    <Compile Include="Tiles\64p\Lights64x64.jpg">
       <Name>Lights64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\Road64x64.jpg">
+    <Compile Include="Tiles\64p\Road64x64.jpg">
       <Name>Road64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\Sidewalk64x64.jpg">
+    <Compile Include="Tiles\64p\Sidewalk64x64.jpg">
       <Name>Sidewalk64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Grass128x128.jpg">
+    <Compile Include="Tiles\128p\Grass128x128.jpg">
       <Name>Grass128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\Grass64x64.jpg">
+    <Compile Include="Tiles\64p\Grass64x64.jpg">
       <Name>Grass64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\LightsGreen128x128.jpg">
+    <Compile Include="Tiles\128p\LightsGreen128x128.jpg">
       <Name>LightsGreen128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\LightsGreen64x64.jpg">
+    <Compile Include="Tiles\64p\LightsGreen64x64.jpg">
       <Name>LightsGreen64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\LightsRed128x128.jpg">
+    <Compile Include="Tiles\128p\LightsRed128x128.jpg">
       <Name>LightsRed128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\LightsRed64x64.jpg">
+    <Compile Include="Tiles\64p\LightsRed64x64.jpg">
       <Name>LightsRed64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\Spawn128x128.jpg">
+    <Compile Include="Tiles\128p\Spawn128x128.jpg">
       <Name>Spawn128x128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Tiles\Spawn64x64.jpg">
+    <Compile Include="Tiles\64p\Spawn64x64.jpg">
       <Name>Spawn64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\32p\Crossing32x32.jpg">
+      <Name>Crossing32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\Grass32x32.jpg">
+      <Name>Grass32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\GreenLight32x32.jpg">
+      <Name>GreenLight32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\RedLight32x32.jpg">
+      <Name>RedLight32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\Road32x32.jpg">
+      <Name>Road32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\RoadCenter32x32.jpg">
+      <Name>RoadCenter32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\Sidewalk2Green32x32.jpg">
+      <Name>Sidewalk2Green32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\Sidewalk2Red32x32.jpg">
+      <Name>Sidewalk2Red32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\Sidewalk32x32.jpg">
+      <Name>Sidewalk32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SidewalkDownRed32x32.jpg">
+      <Name>SidewalkDownRed32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SidewalkRightRed32x32.jpg">
+      <Name>SidewalkRightRed32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SortBike32x32.jpg">
+      <Name>SortBike32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SortBus32x32.jpg">
+      <Name>SortBus32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SortDown32x32.jpg">
+      <Name>SortDown32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SortLeft32x32.jpg">
+      <Name>SortLeft32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\32p\SortRight32x32.jpg">
+      <Name>SortRight32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Grids\Crossroad.txt">
+      <Name>Crossroad</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Car32x32.PNG">
+      <Name>Car32x32</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

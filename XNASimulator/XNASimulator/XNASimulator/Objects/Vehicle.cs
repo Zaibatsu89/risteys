@@ -7,7 +7,7 @@ namespace KruispuntGroep6.Simulator.Objects
 {
     class Vehicle
     {
-		public string ID {get; set;}
+		public string ID {get; private set;}
         public Texture2D sprite { get; set; }
         public Tile spawntile { get; set; }
         public Vector2 position { get; set; }
