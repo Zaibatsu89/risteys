@@ -562,6 +562,11 @@ namespace KruispuntGroep6.Communication.Client
 			{
 				timerJson.Stop();
 				OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSent);
+
+				// Enable generation of JSON file
+				OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType());
+				OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType());
+				OnMessageChanged(cbJsonType, cbJsonType.GetType());
 			}
 		}
 
