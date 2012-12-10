@@ -30,7 +30,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
             // For each tile position
             for (int y = 0; y < LevelHeight; ++y)
             {
@@ -71,7 +70,9 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         {
             foreach (Tile tile in lists.Tiles)
             {
-                foreach (Vehicle vehicle in lists.Vehicles)
+                var VehicleList = lists.Vehicles;
+
+                foreach (Vehicle vehicle in VehicleList)
                 {
                     //check if vehicle is the one occupying the tile...
                     if (vehicle.ID == tile.OccupiedID)
@@ -92,6 +93,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                         tile.OccupiedID = vehicle.ID;
                     }
                 }
+
+                lists.Vehicles = VehicleList;
             }
         }
 

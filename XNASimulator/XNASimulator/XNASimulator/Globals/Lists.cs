@@ -6,27 +6,9 @@ namespace KruispuntGroep6.Simulator.Globals
 {
     class Lists
     {
-        public List<Vehicle> Vehicles
-        {
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            get { return Vehicles; }
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            set { Vehicles = value; }
-        }
-        public List<Lane> Lanes 
-        {
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            get { return Lanes; }
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            set { Lanes = value; }
-        }
-        public Tile[,] Tiles
-        {
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            get { return Tiles; }
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            set { Tiles = value; }
-        }
+        public List<Vehicle> Vehicles {get; set;}
+        public List<Lane> Lanes {get; set;}
+        public Tile[,] Tiles { get; set; }
 
         public Lists()
         {

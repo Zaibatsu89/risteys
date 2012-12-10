@@ -43,7 +43,9 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
         public void Update(GameTime gameTime)
         {
-            foreach (Vehicle vehicle in lists.Vehicles)
+            var VehicleList = lists.Vehicles;
+
+            foreach (Vehicle vehicle in VehicleList)
             {
                 this.CheckAlive(vehicle);
                 this.CheckCollission(vehicle);
@@ -55,7 +57,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                         case RotationEnum.Up:
                             vehicle.position -= new Vector2(0, vehicle.speed);
                             vehicle.drawposition -= new Vector2(0, vehicle.speed);
-                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
+                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height -32);
                             break;
                         case RotationEnum.Right:
                             vehicle.position += new Vector2(vehicle.speed, 0);
@@ -65,7 +67,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                         case RotationEnum.Left:
                             vehicle.position -= new Vector2(vehicle.speed, 0);
                             vehicle.drawposition -= new Vector2(vehicle.speed, 0);
-                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
+                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width -32, vehicle.sprite.Height);
                             break;
                         case RotationEnum.Down:
                             vehicle.position += new Vector2(0, vehicle.speed);
@@ -75,11 +77,15 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     }
                 }
             }
+
+            lists.Vehicles = VehicleList;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (Vehicle vehicle in lists.Vehicles)
+            var VehicleList = lists.Vehicles;
+
+            foreach (Vehicle vehicle in VehicleList)
             {
                 if (vehicle.alive)
                 {
@@ -94,6 +100,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                                             0.0f);
                 }
             }
+
+            lists.Vehicles = VehicleList;
         }
         private Vehicle LoadVehicle(Tile tile, string vehicleID)
         {
@@ -113,12 +121,14 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     (int)vehicle.position.Y)))
                 {
                     vehicle.alive = false;
+                    //lists.Vehicles.Remove(vehicle);
                 }
             }
             else
             {
                 vehicle.alive = true;
-                //vehicle.position = vehicle.spawntile.Position + vehicle.spawntile.Origin;
+                //vehicle.position = vehicle.spawntile.Position;
+                //vehicle.drawposition = vehicle.spawntile.DrawPosition;
             }
         }
 
