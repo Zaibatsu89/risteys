@@ -69,7 +69,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     break;
                 case "N5": LoadLane(new Vector2(11, 0), lane);
                     break;
-                case "N6": LoadLane(new Vector2(12, 0), lane);
+                case "N6": //LoadLane(new Vector2(12, 0), lane);
                     break;
                 case "N7":
                     break;
@@ -86,41 +86,41 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     break;
                 case "E5": LoadLane(new Vector2(19, 11), lane);
                     break;
-                case "E6": LoadLane(new Vector2(19, 12), lane);
+                case "E6": //LoadLane(new Vector2(19, 12), lane);
                     break;
                 case "E7":
                     break;
 
                 case "W0":
                     break;
-                case "W1": LoadLane(new Vector2(0, 7), lane);
+                case "W1": LoadLane(new Vector2(0, 12), lane);
                     break;
-                case "W2": LoadLane(new Vector2(0, 8), lane);
+                case "W2": LoadLane(new Vector2(0, 11), lane);
                     break;
-                case "W3": LoadLane(new Vector2(0, 9), lane);
+                case "W3": LoadLane(new Vector2(0, 10), lane);
                     break;
-                case "W4": LoadLane(new Vector2(0, 10), lane);
+                case "W4": LoadLane(new Vector2(0, 9), lane);
                     break;
-                case "W5": LoadLane(new Vector2(0, 11), lane);
+                case "W5": LoadLane(new Vector2(0, 8), lane);
                     break;
-                case "W6": LoadLane(new Vector2(0, 12), lane);
+                case "W6": //LoadLane(new Vector2(0, 7), lane);
                     break;
                 case "W7":
                     break;
 
                 case "S0":
                     break;
-                case "S1": LoadLane(new Vector2(7, 19), lane);
+                case "S1": LoadLane(new Vector2(12, 19), lane);
                     break;
-                case "S2": LoadLane(new Vector2(8, 19), lane);
+                case "S2": LoadLane(new Vector2(11, 19), lane);
                     break;
-                case "S3": LoadLane(new Vector2(9, 19), lane);
+                case "S3": LoadLane(new Vector2(10, 19), lane);
                     break;
-                case "S4": LoadLane(new Vector2(10, 19), lane);
+                case "S4": LoadLane(new Vector2(9, 19), lane);
                     break;
-                case "S5": LoadLane(new Vector2(11, 19), lane);
+                case "S5": LoadLane(new Vector2(8, 19), lane);
                     break;
-                case "S6": LoadLane(new Vector2(12, 19), lane);
+                case "S6": //LoadLane(new Vector2(7, 19), lane);
                     break;
                 case "S7": 
                     break;
@@ -131,35 +131,57 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         {
             Tile startTile = lists.Tiles[(int)gridposition.X, (int)gridposition.Y];
 
+            //Add all tiles to the lane
+
             lane.laneTiles.Add(startTile);
-            lane.spawnTile = (startTile);
 
             if (lane.laneID.Contains("N"))
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < (Lane.LaneLength + 1); i++)
                 {
                     lane.laneTiles.Add(lists.Tiles[(int)gridposition.X, i]);
                 }
             }
             else if (lane.laneID.Contains("E"))
             {
-                for (int i = 19; i > 13; i--)
+                for (int i = 19; i > (19 - Lane.LaneLength); i--)
                 {
                     lane.laneTiles.Add(lists.Tiles[i, (int)gridposition.Y]);
                 }
             }
             else if (lane.laneID.Contains("W"))
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < (Lane.LaneLength + 1); i++)
                 {
                     lane.laneTiles.Add(lists.Tiles[i, (int)gridposition.Y]);
                 }
             }
             else if (lane.laneID.Contains("S"))
             {
-                for (int i = 19; i > 13; i--)
+                for (int i = 19; i > (19 - Lane.LaneLength); i--)
                 {
                     lane.laneTiles.Add(lists.Tiles[(int)gridposition.X, i]);
+                }
+            }
+
+            //Set up specific tiles
+
+            lane.spawnTile = startTile;
+            lane.detectionFar = startTile;
+
+            foreach(Tile tile in lane.laneTiles)
+            {          
+                if (tile.Texture.Equals(Textures.RedLight))
+                {
+                    lane.trafficLight = tile;
+                }
+                else if (tile.Texture.Equals(Textures.CarSortDown) || 
+                        tile.Texture.Equals(Textures.CarSortLeft) ||
+                        tile.Texture.Equals(Textures.CarSortRight) ||
+                        tile.Texture.Equals(Textures.Buslane) ||
+                        tile.Texture.Equals(Textures.Bikelane))
+                {
+                    lane.detectionClose = tile;
                 }
             }
         }

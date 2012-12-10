@@ -11,8 +11,9 @@ namespace KruispuntGroep6.Simulator.Objects
         public Texture2D sprite { get; set; }
         public Tile spawntile { get; set; }
         public Vector2 position { get; set; }
+        public Vector2 drawposition { get; set; }
         public RotationEnum rotation { get; set; }
-        public Vector2 origin { get; set; }
+        public Vector2 origin { get; private set; }
         public Rectangle collission { get; set; }
         public bool alive { get; set; }
 		public float speed { get; set; }
@@ -24,6 +25,7 @@ namespace KruispuntGroep6.Simulator.Objects
             this.ID = ID;
             rotation = RotationEnum.Up;
             position = Vector2.Zero;
+            drawposition = Vector2.Zero;
             sprite = texture;
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
             alive = false;

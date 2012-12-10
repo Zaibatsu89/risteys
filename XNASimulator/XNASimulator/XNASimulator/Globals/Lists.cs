@@ -6,8 +6,8 @@ namespace KruispuntGroep6.Simulator.Globals
     class Lists
     {
         public List<Vehicle> Vehicles {get; set;}
-        public Tile[,] Tiles { get; set; }
         public List<Lane> Lanes { get; set; }
+        public Tile[,] Tiles { get; set; }
 
         public Lists()
         {

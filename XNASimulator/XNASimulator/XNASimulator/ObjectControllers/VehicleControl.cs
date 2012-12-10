@@ -12,10 +12,13 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         private GraphicsDevice graphics;
 		private Random random;
 
+        private int vehicleIDCounter;
+
         public VehicleControl(GraphicsDevice graphics, Lists lists)
         {
             this.lists = lists;
             this.graphics = graphics;
+            this.vehicleIDCounter = 0;
 
 			random = new Random();
         }
@@ -47,15 +50,28 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
                 if (!vehicle.stopRedLight && !vehicle.stopCar)
                 {
-                    if (vehicle.rotation == RotationEnum.Right)
+                    switch (vehicle.rotation)
                     {
-						vehicle.position += new Vector2(vehicle.speed, 0);
-                        vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width / 2, vehicle.sprite.Height / 2);
-                    }
-                    else if (vehicle.rotation == RotationEnum.Down)
-                    {
-						vehicle.position += new Vector2(0, vehicle.speed);
-                        vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width / 2, vehicle.sprite.Height / 2);
+                        case RotationEnum.Up:
+                            vehicle.position -= new Vector2(0, vehicle.speed);
+                            vehicle.drawposition -= new Vector2(0, vehicle.speed);
+                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
+                            break;
+                        case RotationEnum.Right:
+                            vehicle.position += new Vector2(vehicle.speed, 0);
+                            vehicle.drawposition += new Vector2(vehicle.speed, 0);
+                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
+                            break;
+                        case RotationEnum.Left:
+                            vehicle.position -= new Vector2(vehicle.speed, 0);
+                            vehicle.drawposition -= new Vector2(vehicle.speed, 0);
+                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
+                            break;
+                        case RotationEnum.Down:
+                            vehicle.position += new Vector2(0, vehicle.speed);
+                            vehicle.drawposition += new Vector2(0, vehicle.speed);
+                            vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
+                            break;
                     }
                 }
             }
@@ -68,7 +84,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 if (vehicle.alive)
                 {
                     spriteBatch.Draw(vehicle.sprite,
-                                            vehicle.position,
+                                            vehicle.drawposition,
                                             null,
                                             Color.White,
                                             Rotation.getRotation(vehicle.rotation),
@@ -83,7 +99,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         {
             Vehicle vehicle = new Vehicle(Textures.Car, vehicleID, random);
             vehicle.rotation = tile.Rotation;
-            vehicle.position = tile.Position + tile.Origin;
+            vehicle.position = tile.Position;
+            vehicle.drawposition = tile.DrawPosition;
             vehicle.spawntile = tile;
             return vehicle;
         }
@@ -101,7 +118,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             else
             {
                 vehicle.alive = true;
-                vehicle.position = vehicle.spawntile.Position + vehicle.spawntile.Origin;
+                //vehicle.position = vehicle.spawntile.Position + vehicle.spawntile.Origin;
             }
         }
 
@@ -132,32 +149,21 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             }
         }
 
-        public static void Spawn(string from)
+        public void Spawn(string from)
         {
-            //TODO: spawn car
-
-            switch (from[0])
+            foreach (Lane lane in lists.Lanes)
             {
-                case 'N':
-                    // spawn car at north, facing south
-
-                    break;
-                case 'E':
-                    // spawn car at east, facing west
-
-                    break;
-                case 'S':
-                    // spawn car at south, facing north
-
-                    break;
-                case 'W':
-                    // spawn car at west, facing east
-
-                    break;
+                if(lane.laneID.Equals(from))
+                {
+                    this.vehicleIDCounter += 1;
+                    Vehicle vehicle = LoadVehicle(lane.spawnTile, "V" + vehicleIDCounter);
+                    lists.Vehicles.Add(vehicle);
+                    lane.laneVehicles.Add(vehicle);
+                }             
             }
         }
 
-        public static void Drive(string to)
+        public void Drive(string to)
         {
             //TODO: drive car
 

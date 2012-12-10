@@ -54,8 +54,6 @@ namespace KruispuntGroep6.Simulator.Main
         /// </summary>
         protected override void Initialize()
         {
-			communication = new KruispuntGroep6.Simulator.Events.Communication(address);
-
             lists = new Lists();
 
             levelBuilder = new LevelBuilder(lists);
@@ -63,6 +61,9 @@ namespace KruispuntGroep6.Simulator.Main
 			vehicleControl = new VehicleControl(this.GraphicsDevice, lists);
             tileControl = new TileControl(lists);
             laneControl = new LaneControl(lists);
+
+            communication = new KruispuntGroep6.Simulator.Events.Communication(address, vehicleControl);
+
 
             //audio = new Audio(Services);
 
@@ -107,7 +108,7 @@ namespace KruispuntGroep6.Simulator.Main
 
             this.LoadCrossroad("Content/Grids/Crossroad.txt");
             laneControl.LoadLanes();
-            vehicleControl.LoadVehicles();
+            //vehicleControl.LoadVehicles();
 
             //audio.PlayBackgroundMusic();
 

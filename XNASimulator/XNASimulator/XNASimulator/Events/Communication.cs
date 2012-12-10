@@ -18,8 +18,11 @@ namespace KruispuntGroep6.Simulator.Events
 		private Thread thrReadForever;
 		private System.Timers.Timer timerConnection;
 
-		public Communication(string address)
+        private VehicleControl vehicleControl;
+
+		public Communication(string address, VehicleControl vehicleControl)
 		{
+            this.vehicleControl = vehicleControl;
 			this.address = address;
 
 			timerConnection = new System.Timers.Timer(5000);
@@ -144,10 +147,10 @@ namespace KruispuntGroep6.Simulator.Events
 						if (jsonParameters[2].Equals("car"))
 						{
 							// Spawn car at 'from'
-							VehicleControl.Spawn(jsonParameters[3]);
+							vehicleControl.Spawn(jsonParameters[3]);
 
 							// Drive car to 'to'
-							VehicleControl.Drive(jsonParameters[4]);
+							vehicleControl.Drive(jsonParameters[4]);
 						}
 					}
 				}

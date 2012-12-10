@@ -4,6 +4,8 @@ namespace KruispuntGroep6.Simulator.Objects
 {
     class Lane
     {
+        public static int LaneLength = 6;
+
         public List<Tile> laneTiles { get; set; }
         public List<Vehicle> laneVehicles { get; set; }
 

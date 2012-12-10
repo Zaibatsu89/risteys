@@ -17,6 +17,7 @@ namespace KruispuntGroep6.Simulator.Objects
         public Vector2 Position {get; set; }
         public Vector2 DrawPosition { get; set; }
         public Rectangle CollisionRectangle { get; set; }
+        public Vector2 GridCoordinates { get; set; }
 
         //Information
         //public int TileID;
@@ -31,10 +32,11 @@ namespace KruispuntGroep6.Simulator.Objects
         public bool isWalkway = false;
         public bool isSpawn = false;
 
-        public Tile(Texture2D texture, RotationEnum rotation)
+        public Tile(Texture2D texture, RotationEnum rotation, Vector2 gridposition)
         {
             this.Height = texture.Height;
             this.Width = texture.Width;
+            this.GridCoordinates = gridposition;
 
             this.Size = new Vector2(Width, Height);
             this.Origin = new Vector2(Width / 2, Height / 2);
