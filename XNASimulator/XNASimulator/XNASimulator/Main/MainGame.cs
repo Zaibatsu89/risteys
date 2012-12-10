@@ -5,6 +5,7 @@ using KruispuntGroep6.Simulator.ObjectControllers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace KruispuntGroep6.Simulator.Main
 {
@@ -26,6 +27,8 @@ namespace KruispuntGroep6.Simulator.Main
         private LevelBuilder levelBuilder;
         private Audio audio;
         private Lists lists;
+
+		private PathfinderLoader pathfinderLoader;
 
 		private VehicleControl vehicleControl;
         private TileControl tileControl;
@@ -57,6 +60,7 @@ namespace KruispuntGroep6.Simulator.Main
             lists = new Lists();
 
             levelBuilder = new LevelBuilder(lists);
+			pathfinderLoader = new PathfinderLoader(lists);
 
 			vehicleControl = new VehicleControl(this.GraphicsDevice, lists);
             tileControl = new TileControl(lists);
@@ -107,6 +111,8 @@ namespace KruispuntGroep6.Simulator.Main
             Textures.Car = Content.Load<Texture2D>("Sprites/Car32x32");
 
             this.LoadCrossroad("Content/Grids/Crossroad.txt");
+			this.LoadPathfinding("Content/Grids/Pathfinding.txt");
+
             laneControl.LoadLanes();
             //vehicleControl.LoadVehicles();
 
@@ -166,6 +172,20 @@ namespace KruispuntGroep6.Simulator.Main
                 levelBuilder.LoadLevel(path);
             else throw new Exception("No Level Detected");
         }
+
+		private void LoadPathfinding(string filePath)
+		{
+			if (File.Exists(filePath))
+				pathfinderLoader.LoadLevel(filePath);
+			else throw new Exception("No Level Detected");
+
+			// Simple implementation of pathfinder
+			Map map = new Map(pathfinderLoader.GetLayout());
+			Pathfinder pathfinder = new Pathfinder(map);
+			Point pntDeparture = new Point(0, 0);
+			Point pntArrival = new Point(3, 3);
+			List<Vector2> path = pathfinder.FindPath(pntDeparture, pntArrival);
+		}
 
         private void MouseButtonPress()
         {

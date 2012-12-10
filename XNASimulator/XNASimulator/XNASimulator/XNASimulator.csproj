@@ -123,6 +123,9 @@
     <Compile Include="Events\Communication.cs" />
     <Compile Include="Main\LevelBuilder.cs" />
     <Compile Include="Globals\Lists.cs" />
+    <Compile Include="Main\Map.cs" />
+    <Compile Include="Main\Pathfinder.cs" />
+    <Compile Include="Main\PathfinderLoader.cs" />
     <Compile Include="ObjectControllers\LaneControl.cs" />
     <Compile Include="ObjectControllers\TileControl.cs" />
     <Compile Include="ObjectControllers\VehicleControl.cs" />
