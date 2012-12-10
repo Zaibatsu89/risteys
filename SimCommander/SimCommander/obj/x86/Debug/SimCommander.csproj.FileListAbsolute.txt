@@ -1,0 +1,11 @@
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\bin\Debug\SimCommander.exe
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\bin\Debug\SimCommander.pdb
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\bin\Debug\SimCommander.Communication.dll
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\bin\Debug\SimCommander.Communication.pdb
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\obj\x86\Debug\SimCommander.csprojResolveAssemblyReference.cache
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\obj\x86\Debug\SimCommander.exe
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\obj\x86\Debug\SimCommander.pdb
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\bin\Debug\SharedObjects.dll
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\bin\Debug\SharedObjects.pdb
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\obj\x86\Debug\SimCommander.Statistics.resources
+C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander\obj\x86\Debug\SimCommander.csproj.GenerateResource.Cache
