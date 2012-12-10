@@ -340,10 +340,13 @@ namespace SimCommander
                 }
                 else
                 {
-                    this.time = DateTime.Parse(value);
-                    TimerCallback tc = ClockTick;
-                    AutoResetEvent are = new AutoResetEvent(false);
-                    clock = new Timer(tc, are, 1000, 1000 / multiplier);
+                    if (value != null)
+                    {
+                        this.time = DateTime.Parse(value);
+                        TimerCallback tc = ClockTick;
+                        AutoResetEvent are = new AutoResetEvent(false);
+                        clock = new Timer(tc, are, 1000, 1000 / multiplier);
+                    }
                 }
             }
             get
@@ -440,13 +443,13 @@ namespace SimCommander
         /// </summary>
         private void produceTrafficLightMessage()
         {
-                    Thread.CurrentThread.Name= "trafficLightController-Thread";
+            Thread.CurrentThread.Name= "trafficLightController-Thread";
+            //Thread t;
             Bootstrapper.MessageLoop.Enqueue("DEBUG: produceTrafficLightMessage started");
             // get a the first trafficlight to start with.
             TrafficLight old = TRAFFICLIGHTS["N1"];
             while (!Quit)
             {
-                // lengthe of immutabledictionary must be used.
                 foreach (string tl in TRAFFICLIGHTS.Keys)
                 {
                     if (tl != old.Name && TRAFFICLIGHTS[tl].CompareTo(old) > 0)
@@ -458,8 +461,13 @@ namespace SimCommander
                 {
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
                     new Thread(new ThreadStart(old.TurnLightGreen)).Start();
+                    //t = new Thread(new ParameterizedThreadStart(old.TurnLightGreen));
+                    ////t.Start("hallo");
+                    //t.Start(new object[] { "Hallo" });
+                    // FIX: Otherwise the same trafficlight will be set again before it sets teh isGreen flag to true
                     Thread.Sleep(250);
                 }
+                // reset the current selected trafficlight to the first one in the dictionary
                 old = TRAFFICLIGHTS["N1"];
             }
         }

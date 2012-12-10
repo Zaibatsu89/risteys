@@ -21,10 +21,16 @@ namespace SimCommander
             tlc.trafficLightChanged += new ControllerDelegates.trafficLightChangedEventHandler(tlc_trafficLightChanged);
             com = new Communication.Communication();
             //com.MultiplierChanged += new MultiplierChangedHandler(com_MultiplierChanged);
-            com.TimeMessage += new TimerMsgHandler(com_TimeMessage);
-            com.DetectionLoopMessage += new DetectionLoopMsgHandler(com_DetectionLoopMessage);
+            com.TimeMessage += new delegates.TimerMsgHandler(com_TimeMessage);
+            com.DetectionLoopMessage += new delegates.DetectionLoopMsgHandler(com_DetectionLoopMessage);
+            com.InfoMessageChanged += new delegates.OnInfoMessageHandler(com_InfoMessageChanged);
 
             Quit = false;
+        }
+
+        void com_InfoMessageChanged(string Message)
+        {
+            Bootstrapper.MessageLoop.Enqueue(Message);
         }
 
         void tlc_trafficLightChanged(string sender, TrafficLightPackage tlp)

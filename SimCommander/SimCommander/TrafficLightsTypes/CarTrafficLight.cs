@@ -42,11 +42,13 @@ namespace SimCommander.TrafficLichtTypes
 
             numberOfWaitingEntities--;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public override void TurnLightGreen()
         {
-            this.SetTrafficLight(1); // turn the light green
             this.isGreen = true;
+            this.SetTrafficLight(1); // turn the light green
             Thread.Sleep(this.rand.Next(this.minGreenTime / multiplier, this.maxGreenTime / multiplier));
             TurnLightOrange();
         }
@@ -65,11 +67,18 @@ namespace SimCommander.TrafficLichtTypes
             this.SetTrafficLight(3);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void TurnLightOff()
         {
             this.SetTrafficLight(4);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lightId"></param>
         protected override void SetTrafficLight(int lightId)
         {
             switch (lightId)

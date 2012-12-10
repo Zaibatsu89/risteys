@@ -23,7 +23,7 @@ namespace SimCommander.TrafficLichtTypes
         #region public members
 
         /// <summary>
-        /// 
+        /// adds a entity from the trafficlight list 
         /// </summary>
         public override void add()
         {
@@ -38,7 +38,7 @@ namespace SimCommander.TrafficLichtTypes
         }
 
         /// <summary>
-        /// 
+        /// removes a entity from the trafficlight list
         /// </summary>
         public override void remove()
         {
@@ -48,22 +48,23 @@ namespace SimCommander.TrafficLichtTypes
             Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
-        /// <summary>
-        /// used to see what's the direction of (in this case the next bus) the next verhilce
-        /// </summary>
-        /// <returns>at this moment a wrong type</returns>
-        public bool peek()
-        {
-            return true;
-        }
+        // TODO: needs to be implemented
+        ///// <summary>
+        ///// used to see what's the direction of (in this case the next bus) the next verhilce
+        ///// </summary>
+        ///// <returns>at this moment a wrong type</returns>
+        //public bool peek()
+        //{
+        //    return true;
+        //}
 
         /// <summary>
         /// 
         /// </summary>
         public override void TurnLightGreen()
         {
-            this.SetTrafficLight(1); // turn the light green
             this.isGreen = true;
+            this.SetTrafficLight(1); // turn the light green
             Thread.Sleep(this.rand.Next(this.minGreenTime / multiplier, this.maxGreenTime / multiplier));
             TurnLightOrange();
             //greenTimer.Elapsed += new ElapsedEventHandler(TurnLightOrange); // after the time is elapsed turn the light orange
@@ -75,8 +76,27 @@ namespace SimCommander.TrafficLichtTypes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+        public void TurnLightGreen(object str)
+        {
+            object[] o = (object[])str;
+
+            Bootstrapper.MessageLoop.Enqueue((string)o[0]);
+
+            this.isGreen = true;
+            this.SetTrafficLight(1); // turn the light green
+            Thread.Sleep(this.rand.Next(this.minGreenTime / multiplier, this.maxGreenTime / multiplier));
+            TurnLightOrange();
+            //greenTimer.Elapsed += new ElapsedEventHandler(TurnLightOrange); // after the time is elapsed turn the light orange
+            //greenTimer.Interval = this.rand.Next(this.minGreenTime/multiplier, this.maxGreenTime/multiplier); 	// generates a random greentime between min and max greentime
+            //greenTimer.AutoReset = false;
+            //greenTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="args"></param>
         //public override void TurnLightOrange(object sender, ElapsedEventArgs args)
         public override void TurnLightOrange()
         {
@@ -92,8 +112,8 @@ namespace SimCommander.TrafficLichtTypes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+        ///// <param name="sender"></param>
+        ///// <param name="args"></param>
         //public override void TurnLightRed(object sender, ElapsedEventArgs args)
         public override void TurnLightRed()
         {

@@ -1,7 +1,0 @@
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\bin\Debug\SimCommander.Communication.dll
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\bin\Debug\SimCommander.Communication.pdb
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\obj\Debug\SimCommander.Communication.dll
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\obj\Debug\SimCommander.Communication.pdb
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\obj\Debug\SimCommander.Communication.csprojResolveAssemblyReference.cache
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\bin\Debug\SharedObjects.dll
-C:\Users\DJohn\Documents\School Projects\SEN\SimCommander\SimCommander.Communication\bin\Debug\SharedObjects.pdb

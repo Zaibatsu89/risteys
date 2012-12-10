@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SimCommander.Communication.Strings">
+    <Position X="13.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAABAAAECAAAAAAAIAAAAAIAAAA=</HashCode>
+      <FileName>Strings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimCommander.Communication.Server">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="SimCommander.Communication.Server.ClientReader">
+        <TypeIdentifier>
+          <NewMemberFileName>Server.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAgBIAAAAgAAIAAAAAESABgAAAACY=</HashCode>
+      <FileName>Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimCommander.Communication.delegates">
+    <Position X="9" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="SimCommander.Communication.delegates.TimerMsgHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>delegates.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SimCommander.Communication.delegates.DetectionLoopMsgHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>delegates.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SimCommander.Communication.delegates.MultiplierChangedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>delegates.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SimCommander.Communication.delegates.OnInfoMessageHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>delegates.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SimCommander.Communication.delegates.OnMessageRecievedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>delegates.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>delegates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimCommander.Communication.Communication">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAIAAAAAAAAAAAAQAAEAAgAAAAAAEgFIAAAAAAAGA=</HashCode>
+      <FileName>Communication.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimCommander.Communication.Json.DynamicJson">
+    <Position X="6.25" Y="0.5" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="SimCommander.Communication.Json.DynamicJson.JsonType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Json\DynamicJson.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAlAABJAAgBAAgEBEAAhIBCCDlCAAIAABADABBAAAA=</HashCode>
+      <FileName>Json\DynamicJson.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimCommander.Communication.Json.JsonConverter">
+    <Position X="9" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAABAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Json\JsonConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

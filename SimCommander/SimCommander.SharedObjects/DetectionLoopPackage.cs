@@ -13,6 +13,15 @@ namespace SimCommander.SharedObjects
         private bool isEmpty = true;
         private string destination = "Null";
 
+        public DetectionLoopPackage(string light, string type, string distance, string isEmtpy, string detination)
+        {
+            this.light = light;
+            this.type = type;
+            this.distance = distance;
+            this.IsEmpty = isEmtpy;
+            this.Destination = destination;
+        }
+
         public string getMatrixId()
         {
             return light;

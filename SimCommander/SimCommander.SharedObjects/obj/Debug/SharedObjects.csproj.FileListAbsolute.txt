@@ -1,4 +1,0 @@
-C:\Users\DJohn\Documents\School Projects\SEN\Simulator\Simulator_CMD\SharedObjects\bin\Debug\SharedObjects.dll
-C:\Users\DJohn\Documents\School Projects\SEN\Simulator\Simulator_CMD\SharedObjects\bin\Debug\SharedObjects.pdb
-C:\Users\DJohn\Documents\School Projects\SEN\Simulator\Simulator_CMD\SharedObjects\obj\Debug\SharedObjects.dll
-C:\Users\DJohn\Documents\School Projects\SEN\Simulator\Simulator_CMD\SharedObjects\obj\Debug\SharedObjects.pdb

@@ -45,8 +45,8 @@ namespace SimCommander.TrafficLichtTypes
 
         public override void TurnLightGreen()
         {
-            this.SetTrafficLight(1); // turn the light green
             this.isGreen = true;
+            this.SetTrafficLight(1); // turn the light green
             Thread.Sleep(this.rand.Next(this.minGreenTime / multiplier, this.maxGreenTime / multiplier));
             TurnLightOrange();
         }
