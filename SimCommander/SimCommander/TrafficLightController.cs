@@ -248,34 +248,64 @@ namespace SimCommander
 
             #endregion
 
+            #region old trafficlights
+            /// <summary>
+            /// An immutable dictionary witch contains all the traffic light's.
+            /// </summary>
+            //TRAFFICLIGHTS = new ImmutableDictionary<string, TrafficLight>(
+            //    new SortedDictionary<string, TrafficLight>()
+            //{
+            //    {"N1", new BusTrafficLight("N1", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"N2", new BusTrafficLight("N2", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"N3", new BusTrafficLight("N3", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"N4", new BusTrafficLight("N4", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"E1", new BusTrafficLight("E1", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"E2", new BusTrafficLight("E2", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"E3", new BusTrafficLight("E3", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"E4", new BusTrafficLight("E4", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"S1", new BusTrafficLight("S1", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"S2", new BusTrafficLight("S2", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"S3", new BusTrafficLight("S3", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"S4", new BusTrafficLight("S4", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"W1", new BusTrafficLight("W1", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"W2", new BusTrafficLight("W2", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"W3", new BusTrafficLight("W3", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"W4", new BusTrafficLight("W4", multiplier, TRAFFICLGHTMATRICES)},
+            //    {"W5", new BusTrafficLight("W5", multiplier, TRAFFICLGHTMATRICES)}
+            //});
+
+            #endregion
+
             /// <summary>
             /// An immutable dictionary witch contains all the traffic light's.
             /// </summary>
             TRAFFICLIGHTS = new ImmutableDictionary<string, TrafficLight>(
                 new SortedDictionary<string, TrafficLight>()
             {
-                {"N1", new BusTrafficLight("N1", multiplier, TRAFFICLGHTMATRICES)},
-                {"N2", new BusTrafficLight("N2", multiplier, TRAFFICLGHTMATRICES)},
-                {"N3", new BusTrafficLight("N3", multiplier, TRAFFICLGHTMATRICES)},
-                {"N4", new BusTrafficLight("N4", multiplier, TRAFFICLGHTMATRICES)},
-                {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLGHTMATRICES)},
-                {"E1", new BusTrafficLight("E1", multiplier, TRAFFICLGHTMATRICES)},
-                {"E2", new BusTrafficLight("E2", multiplier, TRAFFICLGHTMATRICES)},
-                {"E3", new BusTrafficLight("E3", multiplier, TRAFFICLGHTMATRICES)},
-                {"E4", new BusTrafficLight("E4", multiplier, TRAFFICLGHTMATRICES)},
-                {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLGHTMATRICES)},
-                {"S1", new BusTrafficLight("S1", multiplier, TRAFFICLGHTMATRICES)},
-                {"S2", new BusTrafficLight("S2", multiplier, TRAFFICLGHTMATRICES)},
-                {"S3", new BusTrafficLight("S3", multiplier, TRAFFICLGHTMATRICES)},
-                {"S4", new BusTrafficLight("S4", multiplier, TRAFFICLGHTMATRICES)},
-                {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLGHTMATRICES)},
-                {"W1", new BusTrafficLight("W1", multiplier, TRAFFICLGHTMATRICES)},
-                {"W2", new BusTrafficLight("W2", multiplier, TRAFFICLGHTMATRICES)},
-                {"W3", new BusTrafficLight("W3", multiplier, TRAFFICLGHTMATRICES)},
-                {"W4", new BusTrafficLight("W4", multiplier, TRAFFICLGHTMATRICES)},
-                {"W5", new BusTrafficLight("W5", multiplier, TRAFFICLGHTMATRICES)}
+                {"N1", new BusTrafficLight("N1", multiplier, TRAFFICLGHTMATRICES["N1"])},
+                {"N2", new BusTrafficLight("N2", multiplier, TRAFFICLGHTMATRICES["N2"])},
+                {"N3", new BusTrafficLight("N3", multiplier, TRAFFICLGHTMATRICES["N3"])},
+                {"N4", new BusTrafficLight("N4", multiplier, TRAFFICLGHTMATRICES["N4"])},
+                {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLGHTMATRICES["N5"])},
+                {"E1", new BusTrafficLight("E1", multiplier, TRAFFICLGHTMATRICES["E1"])},
+                {"E2", new BusTrafficLight("E2", multiplier, TRAFFICLGHTMATRICES["E2"])},
+                {"E3", new BusTrafficLight("E3", multiplier, TRAFFICLGHTMATRICES["E3"])},
+                {"E4", new BusTrafficLight("E4", multiplier, TRAFFICLGHTMATRICES["E4"])},
+                {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLGHTMATRICES["E5"])},
+                {"S1", new BusTrafficLight("S1", multiplier, TRAFFICLGHTMATRICES["S1"])},
+                {"S2", new BusTrafficLight("S2", multiplier, TRAFFICLGHTMATRICES["S2"])},
+                {"S3", new BusTrafficLight("S3", multiplier, TRAFFICLGHTMATRICES["S3"])},
+                {"S4", new BusTrafficLight("S4", multiplier, TRAFFICLGHTMATRICES["S4"])},
+                {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLGHTMATRICES["S5"])},
+                {"W1", new BusTrafficLight("W1", multiplier, TRAFFICLGHTMATRICES["W1"])},
+                {"W2", new BusTrafficLight("W2", multiplier, TRAFFICLGHTMATRICES["W2"])},
+                {"W3", new BusTrafficLight("W3", multiplier, TRAFFICLGHTMATRICES["W3"])},
+                {"W4", new BusTrafficLight("W4", multiplier, TRAFFICLGHTMATRICES["W4"])},
+                {"W5", new BusTrafficLight("W5", multiplier, TRAFFICLGHTMATRICES["W5"])}
             });
-
 
             foreach (KeyValuePair<string, TrafficLight> tl in TRAFFICLIGHTS)
             {
@@ -392,16 +422,15 @@ namespace SimCommander
                 if (this.DetectionQueue.Count > 0)
                 {
                     DetectionLoopPackage dlm = this.DetectionQueue.Dequeue();
-                    Bootstrapper.MessageLoop.Enqueue("hellow");
-                //
-                // for safety reason we try to change the type to lowercase in 
-                // case one team uses it with a capital char at the front.
-                 if(dlm.Distance.ToLower() == "far")
-                     this.TRAFFICLIGHTS[dlm.Light.ToUpper()].add();
-                 else if (dlm.Distance.ToLower() == "close" && this.TRAFFICLIGHTS[dlm.Light.ToUpper()].NumberOfWaitingEntities > 0)
-                 {
-                     this.TRAFFICLIGHTS[dlm.Light.ToUpper()].remove();
-                 }
+
+                    // for safety reason we try to change the type to lowercase in 
+                    // case one team uses it with a capital char at the front.
+                    if(dlm.Distance.ToLower() == "far")
+                        this.TRAFFICLIGHTS[dlm.Light.ToUpper()].add();
+                    else if (dlm.Distance.ToLower() == "close" && this.TRAFFICLIGHTS[dlm.Light.ToUpper()].NumberOfWaitingEntities > 0)
+                    {
+                        this.TRAFFICLIGHTS[dlm.Light.ToUpper()].remove();
+                    }
                 }
             }
         }
@@ -423,10 +452,10 @@ namespace SimCommander
                     if (tl != old.Name && TRAFFICLIGHTS[tl].CompareTo(old) > 0)
                         old = TRAFFICLIGHTS[tl];
                 }
-                Thread.Sleep(2500);
+
                 if (old.NumberOfWaitingEntities > 0 && old.isGreen == false)
                 {
-                    Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
+                    //Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
                     new Thread(new ThreadStart(old.TurnLightGreen)).Start();
                 }
                 old = TRAFFICLIGHTS["N1"];

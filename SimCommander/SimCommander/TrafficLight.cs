@@ -24,33 +24,36 @@ namespace SimCommander
         protected int maxGreenTime;
         protected int orangeTime;
 
-        protected System.Timers.Timer greenTimer;
-        protected System.Timers.Timer orangeTimer;
+        //protected System.Timers.Timer greenTimer;
+        //protected System.Timers.Timer orangeTimer;
 
         protected Random rand;
         protected ImmutableDictionary<string, int[]> TrafficLightMatrices;
 
+        //public TrafficLight(double typeMultiplier, string name,
+        //int minGreenTime, int maxGreenTime, int orangeTime, ImmutableDictionary<string, int[]> TrafficLightMatrices)
+
         public TrafficLight(double typeMultiplier, string name,
-        int minGreenTime, int maxGreenTime, int orangeTime, ImmutableDictionary<string, int[]> TrafficLightMatrices)
+        int minGreenTime, int maxGreenTime, int orangeTime, int[] TrafficLightMatrix)
         {
             // this multiplier is used to multiply the number of entities 
             // how bigger it's result how greater the priority will be.
             this.typeMultiplier = typeMultiplier>=0.1?typeMultiplier: 1;
             this.Name = name;
-            this.TrafficLightMatrices = TrafficLightMatrices;
+            //this.TrafficLightMatrices = TrafficLightMatrices;
+            this.trafficLightMatrix = TrafficLightMatrix;
 
-
-            this.minGreenTime = minGreenTime;
-            this.maxGreenTime = maxGreenTime;
-            this.orangeTime = orangeTime;
-            this.greenTimer = new System.Timers.Timer(maxGreenTime);
-            //this.greenTimer.Interval = maxGreenTime;
-            this.greenTimer.AutoReset = false;
-            this.greenTimer.Enabled = true;
-            this.orangeTimer = new System.Timers.Timer(orangeTime);
-            //this.orangeTimer.Interval = orangeTime;
-            this.orangeTimer.AutoReset = false;
-            this.orangeTimer.Enabled = true;
+            this.minGreenTime = minGreenTime*100;
+            this.maxGreenTime = maxGreenTime*100;
+            this.orangeTime = orangeTime*100;
+            //this.greenTimer = new System.Timers.Timer(maxGreenTime);
+            ////this.greenTimer.Interval = maxGreenTime;
+            //this.greenTimer.AutoReset = false;
+            //this.greenTimer.Enabled = true;
+            //this.orangeTimer = new System.Timers.Timer(orangeTime);
+            ////this.orangeTimer.Interval = orangeTime;
+            //this.orangeTimer.AutoReset = false;
+            //this.orangeTimer.Enabled = true;
             this.numberOfWaitingEntities = 0;
             this.rand = new Random();
 
@@ -95,6 +98,14 @@ namespace SimCommander
             get
             {
                 return numberOfWaitingEntities;
+            }
+        }
+
+        public double priority
+        {
+            get
+            {
+                return numberOfWaitingEntities * typeMultiplier;
             }
         }
 
@@ -144,15 +155,6 @@ namespace SimCommander
             numberOfWaitingEntities--;
         }
 
-
-        public double priority
-        {
-            get
-            {
-                return numberOfWaitingEntities * typeMultiplier;
-            }
-        }
-
         #endregion
 
         #region public abstract methods
@@ -167,14 +169,16 @@ namespace SimCommander
         /// </summary>
         /// <param name="sender">TrafficLight id</param>
         /// <param name="args">Timer event arguments</param>
-        public abstract void TurnLightOrange(object sender, ElapsedEventArgs args);
+        //public abstract void TurnLightOrange(object sender, ElapsedEventArgs args);
+        public abstract void TurnLightOrange();
 
         /// <summary>
         /// Turns this trafficLight Red
         /// </summary>
         /// <param name="sender">TrafficLight id</param>
         /// <param name="args">Timer event arguments</param>
-        public abstract void TurnLightRed(object sender, ElapsedEventArgs args);
+        //public abstract void TurnLightRed(object sender, ElapsedEventArgs args);
+        public abstract void TurnLightRed();
 
         /// <summary>
         /// Turns this trafficLight in it's off (blinking) state

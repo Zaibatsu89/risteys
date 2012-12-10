@@ -9,40 +9,35 @@ namespace SimCommander.Utils
 {
     public class Utils
     {
-
-        internal static int[] addMatrix(int[] trafficLightMatrix, int[] matrix)
+        static bool collisionCheck(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
         {
-            for (int i = 0; i < 64; i++)
-            {
-                trafficLightMatrix[i] = +matrix[i];
-            }
-            return trafficLightMatrix;
-        }
-
-        internal static bool collisionCheck(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
-        {
-            int evaluator;
+            int[] evaluator = new int[64];
 
             for (int i = 0; i < 64; i++)
             {
-                //
-                evaluator = trafficLightMatrixSource[i] + (trafficLightMatrixEval[i] == 0 ? 0 : 1);
-                if (evaluator > 1)
+
+                evaluator[i] = trafficLightMatrixSource[i] + (trafficLightMatrixEval[i] == 0 ? 0 : 1);
+                if (evaluator[i] > 1)
                     return false;
-
-                trafficLightMatrixSource[i] = evaluator;
             }
 
+            trafficLightMatrixSource = evaluator;
             return true;
         }
 
-        internal static int[] removeMatrix(int[] trafficLightMatrix, int[] matrix)
+
+        static void removeCollisionMatrix(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
         {
+            int[] evaluator = new int[64];
+
             for (int i = 0; i < 64; i++)
             {
-                trafficLightMatrix[i] = -matrix[i];
+
+                evaluator[i] = trafficLightMatrixSource[i] - (trafficLightMatrixEval[i] == 0 ? 0 : 1);
+               
             }
-            return trafficLightMatrix;
+
+            trafficLightMatrixSource = evaluator;
         }
     }
 }
