@@ -24,7 +24,7 @@ namespace SimCommander.TrafficLichtTypes
         public override void add()
         {
             // to check if the matrix has the right dimention of 8*8=64 element.
-            if (TrafficLightMatrices.Count != 64)
+            if (trafficLightMatrix.Length != 64)
                 throw new InvalidTrafficLightMatrix("the number of an trafficLightMatrix needs to represent exectly 64 element");
 
             //MyTrafficLightMatrices.Enqueue(new ValuePair(TrafficLightMatrices[dlp.Light], dlp.Destination));

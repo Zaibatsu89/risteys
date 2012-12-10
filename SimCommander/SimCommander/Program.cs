@@ -13,9 +13,9 @@ namespace SimCommander
         static void Main(string[] args)
         {
             new Thread(new ThreadStart(Bootstrapper.run)).Start();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Statistics());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Statistics());
             
         }
     }

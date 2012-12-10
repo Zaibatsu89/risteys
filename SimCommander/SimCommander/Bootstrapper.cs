@@ -29,7 +29,7 @@ namespace SimCommander
 
         void tlc_trafficLightChanged(string sender, TrafficLightPackage tlp)
         {
-            Bootstrapper.MessageLoop.Enqueue("trafficlightChanged eventhandler triggerd");
+            Bootstrapper.MessageLoop.Enqueue("trafficlightChanged eventhandler triggerd: " + tlp.Light +" changed into: " + tlp.State);
         }
 
         public static void run()

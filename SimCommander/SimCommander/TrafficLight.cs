@@ -28,7 +28,7 @@ namespace SimCommander
         //protected System.Timers.Timer orangeTimer;
 
         protected Random rand;
-        protected ImmutableDictionary<string, int[]> TrafficLightMatrices;
+        //protected ImmutableDictionary<string, int[]> TrafficLightMatrices;
 
         //public TrafficLight(double typeMultiplier, string name,
         //int minGreenTime, int maxGreenTime, int orangeTime, ImmutableDictionary<string, int[]> TrafficLightMatrices)
@@ -137,9 +137,9 @@ namespace SimCommander
             //// to check if the matrix has the right dimention of 8*8=64 element.
             //if (this.TrafficLightMatrices[name].Length != 64)
             //    throw new InvalidTrafficLightMatrix("the number of an trafficLightMatrix needs to represent exectly 64 element");
-            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
             // increment the number of waiting entities.
             numberOfWaitingEntities++;
+            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         /// <summary>
@@ -153,6 +153,7 @@ namespace SimCommander
 
             //decrease the number of waiting entities.
             numberOfWaitingEntities--;
+            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         #endregion

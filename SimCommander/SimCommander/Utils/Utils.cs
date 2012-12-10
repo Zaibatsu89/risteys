@@ -9,7 +9,21 @@ namespace SimCommander.Utils
 {
     public class Utils
     {
-        static bool collisionCheck(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
+        public static bool collisionCheck(int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
+        {
+            int evaluator;
+
+            for (int i = 0; i < 64; i++)
+            {
+
+                evaluator = trafficLightMatrixSource[i] + (trafficLightMatrixEval[i] == 0 ? 0 : 1);
+                if (evaluator > 1)
+                    return false;
+            }
+            return true;
+        }
+
+        public static void addCollisionCheck(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
         {
             int[] evaluator = new int[64];
 
@@ -18,15 +32,13 @@ namespace SimCommander.Utils
 
                 evaluator[i] = trafficLightMatrixSource[i] + (trafficLightMatrixEval[i] == 0 ? 0 : 1);
                 if (evaluator[i] > 1)
-                    return false;
+                    return;
             }
 
             trafficLightMatrixSource = evaluator;
-            return true;
         }
 
-
-        static void removeCollisionMatrix(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
+        public static void removeCollisionMatrix(ref int[] trafficLightMatrixSource, int[] trafficLightMatrixEval)
         {
             int[] evaluator = new int[64];
 

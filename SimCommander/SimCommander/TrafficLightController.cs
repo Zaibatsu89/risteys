@@ -453,10 +453,12 @@ namespace SimCommander
                         old = TRAFFICLIGHTS[tl];
                 }
 
+                //if (old.NumberOfWaitingEntities > 0 && old.isGreen == false && Utils.Utils.collisionCheck(ControllerMatrix, old.TrafficLightMatrix))
                 if (old.NumberOfWaitingEntities > 0 && old.isGreen == false)
                 {
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
                     new Thread(new ThreadStart(old.TurnLightGreen)).Start();
+                    Thread.Sleep(250);
                 }
                 old = TRAFFICLIGHTS["N1"];
             }
