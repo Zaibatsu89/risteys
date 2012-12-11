@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using KruispuntGroep6.Communication.Client;
 using KruispuntGroep6.Communication.Server;
@@ -8,6 +7,7 @@ namespace KruispuntGroep6.Simulator
 {
 	public static class Program
 	{
+		private static string address;
 		private static MainGame game;
 
 		/// <summary>
@@ -21,6 +21,13 @@ namespace KruispuntGroep6.Simulator
             var clientThread = new Thread(ClientTask);
             clientThread.Start();
 
+			address = string.Empty;
+
+			while (address.Equals(string.Empty))
+			{
+				address = Client.GetAddress();
+			}
+
 			while (true)
 			{
 				var simulatorThread = new Thread(SimulatorTask);
@@ -33,8 +40,9 @@ namespace KruispuntGroep6.Simulator
 					disconnected = Client.GetDisconnected();
 				}
 
+				Client.SetDisconnected(false);
+
 				game.Exit();
-				simulatorThread.Abort();
 			}
 		}
 		
@@ -51,13 +59,6 @@ namespace KruispuntGroep6.Simulator
 
 		public static void SimulatorTask()
 		{
-			string address = string.Empty;
-
-			while (address.Equals(string.Empty))
-			{
-				address = Client.GetAddress();
-			}
-
 			using (game = new MainGame(address))
 			{
 				game.Run();

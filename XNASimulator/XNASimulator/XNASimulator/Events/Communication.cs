@@ -21,7 +21,7 @@ namespace KruispuntGroep6.Simulator.Events
             this.vehicleControl = vehicleControl;
 			this.address = address;
 
-			timerConnection = new System.Timers.Timer(6000);
+			timerConnection = new System.Timers.Timer(5000);
 			timerConnection.Elapsed += new System.Timers.ElapsedEventHandler(timerConnection_Elapsed);
 			timerConnection.Start();
 

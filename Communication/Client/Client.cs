@@ -267,6 +267,8 @@ namespace KruispuntGroep6.Communication.Client
 		/// <param name="e">EventArgs used to determine event arguments.</param>
 		private void btnDisconnect_Click(object sender, EventArgs e)
 		{
+			disconnected = true;
+
 			if (!Thread.Equals(thrReadForever, null))
 			{
 				thrReadForever.Abort();
@@ -284,8 +286,6 @@ namespace KruispuntGroep6.Communication.Client
 			{
 				DisconnectWhileConnecting();
 			}
-
-			disconnected = true;
 		}
 
 		/// <summary>
@@ -427,8 +427,6 @@ namespace KruispuntGroep6.Communication.Client
 		// Connected to controller.
 		private void Connected()
 		{
-			//reset disconnected
-			disconnected = false;
 			//reset connection attempts
 			connectionAttempts = 0;
 			//reset previous input json number
@@ -692,14 +690,12 @@ namespace KruispuntGroep6.Communication.Client
 
 		public static bool GetDisconnected()
 		{
-			if (disconnected)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return disconnected ? true : false;
+		}
+
+		public static void SetDisconnected(bool disco)
+		{
+			disconnected = disco;
 		}
 	}
 }
