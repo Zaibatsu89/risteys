@@ -6,6 +6,9 @@ using System.Threading;
 using SimCommander.SharedObjects;
 using SimCommander.TrafficLichtTypes;
 using SimCommander.ControllerDelegates;
+// use a namespace aliase otherwise there is a 
+// collision between System.Windows.Forms.Timer
+// and System.Threading.Timer
 using form = System.Windows.Forms;
 
 namespace SimCommander
@@ -18,6 +21,8 @@ namespace SimCommander
         protected int multiplier;
         protected Timer clock;
         protected DateTime time;
+
+        object lockthis = new object();
 
         #region immutable trafficlight dictionaries
 
@@ -44,12 +49,21 @@ namespace SimCommander
             multiplier = 1;
             Quit = false;
             time = new DateTime(1970, 01, 01, 00, 00, 00);
+            this.trafficLightChanged += new trafficLightChangedEventHandler(TrafficLightController_trafficLightChanged);
 
             initTrafficLights();
 
             new Thread(new ThreadStart(processDetectionMessage)).Start();
             new Thread(new ThreadStart(produceTrafficLightMessage)).Start();
 
+        }
+
+        void TrafficLightController_trafficLightChanged(string sender, TrafficLightPackage tlp)
+        {
+            lock (lockthis)
+            {
+                Utils.Utils.removeCollisionMatrix(ref ControllerMatrix, TRAFFICLGHTMATRICES[sender]);
+            }
         }
 
         /// <summary>
@@ -325,6 +339,9 @@ namespace SimCommander
             time = time.AddMilliseconds(1000/multiplier);
         }
 
+
+        #region properties
+
         /// <summary>
         /// 
         /// </summary>
@@ -363,6 +380,8 @@ namespace SimCommander
             get;
             set;
         }
+
+        #endregion
 
         /// <summary>
         /// 
@@ -444,8 +463,8 @@ namespace SimCommander
         private void produceTrafficLightMessage()
         {
             Thread.CurrentThread.Name= "trafficLightController-Thread";
-            //Thread t;
             Bootstrapper.MessageLoop.Enqueue("DEBUG: produceTrafficLightMessage started");
+
             // get a the first trafficlight to start with.
             TrafficLight old = TRAFFICLIGHTS["N1"];
             while (!Quit)
@@ -455,34 +474,38 @@ namespace SimCommander
                     if (tl != old.Name && TRAFFICLIGHTS[tl].CompareTo(old) > 0)
                         old = TRAFFICLIGHTS[tl];
                 }
-
-                //if (old.NumberOfWaitingEntities > 0 && old.isGreen == false && Utils.Utils.collisionCheck(ControllerMatrix, old.TrafficLightMatrix))
-                if (old.NumberOfWaitingEntities > 0 && old.isGreen == false)
+                lock (lockthis)
                 {
-                    //Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
-                    new Thread(new ThreadStart(old.TurnLightGreen)).Start();
-                    //t = new Thread(new ParameterizedThreadStart(old.TurnLightGreen));
-                    ////t.Start("hallo");
-                    //t.Start(new object[] { "Hallo" });
-                    // FIX: Otherwise the same trafficlight will be set again before it sets teh isGreen flag to true
-                    Thread.Sleep(250);
+                    //if (old.NumberOfWaitingEntities > 0 && old.isGreen == false)
+                    if (old.NumberOfWaitingEntities > 0 && old.isGreen == false && Utils.Utils.collisionCheck(ControllerMatrix, old.TrafficLightMatrix))
+                    {
+                        Utils.Utils.addCollisionCheck(ref ControllerMatrix, old.TrafficLightMatrix);
+                        //Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
+                        new Thread(new ThreadStart(old.TurnLightGreen)).Start();
+                    }
+                    // reset the current selected trafficlight to the first one in the dictionary
+                    old = TRAFFICLIGHTS["N1"];
                 }
-                // reset the current selected trafficlight to the first one in the dictionary
-                old = TRAFFICLIGHTS["N1"];
             }
         }
 
-        // create an event to send trafficlightChanges
+
+        #region Events
 
         public event trafficLightChangedEventHandler trafficLightChanged;
 
         protected virtual void OnTrafficLightChanged(string sender, TrafficLightPackage tlp)
         {
-            form.Control target = trafficLightChanged.Target as form.Control;
-            if (target != null && target.InvokeRequired)
-                target.Invoke(trafficLightChanged, new object[] {sender, tlp });
-            else
-                trafficLightChanged(sender, tlp);
+            if (trafficLightChanged != null)
+            {
+                form.Control target = trafficLightChanged.Target as form.Control;
+                if (target != null && target.InvokeRequired)
+                    target.Invoke(trafficLightChanged, new object[] { sender, tlp });
+                else
+                    trafficLightChanged(sender, tlp);
+            }
         }
+
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace SimCommander
         public TrafficLightController tlc;
         public Communication.Communication com;
         public static Queue<String> MessageLoop = new Queue<string>();
-        public static Boolean Quit;
+        public static volatile Boolean Quit;
 
         public Bootstrapper()
         {

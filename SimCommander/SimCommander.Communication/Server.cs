@@ -15,7 +15,7 @@ namespace SimCommander.Communication
         private List<TcpClient> clients;
         private TcpListener server;
         private string address;
-        public static bool quit;
+        public static volatile bool quit;
         public Queue<String> message;
 
         public Server()
