@@ -1,6 +1,0 @@
-C:\Users\DJohn\Documents\School Projects\SEN\sen\Communication\bin\Debug\KruispuntGroep6Communication.dll
-C:\Users\DJohn\Documents\School Projects\SEN\sen\Communication\bin\Debug\KruispuntGroep6Communication.pdb
-C:\Users\DJohn\Documents\School Projects\SEN\sen\Communication\obj\Debug\KruispuntGroep6.Communication.Client.Client.resources
-C:\Users\DJohn\Documents\School Projects\SEN\sen\Communication\obj\Debug\Communication.csproj.GenerateResource.Cache
-C:\Users\DJohn\Documents\School Projects\SEN\sen\Communication\obj\Debug\KruispuntGroep6Communication.dll
-C:\Users\DJohn\Documents\School Projects\SEN\sen\Communication\obj\Debug\KruispuntGroep6Communication.pdb

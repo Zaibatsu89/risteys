@@ -114,7 +114,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 {
                     vehicle.alive = false;
                     //lists.Vehicles.Remove(vehicle);
-                    lists.Vehicles[vehicle.ID[1]].ID = string.Empty;
+                    lists.Vehicles[vehicle.ID[1]] = new Vehicle(string.Empty);
                 }
             }
             else

@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Windows.Forms;
 using KruispuntGroep6.Simulator.ObjectControllers;
 
 namespace KruispuntGroep6.Simulator.Events
@@ -12,12 +11,9 @@ namespace KruispuntGroep6.Simulator.Events
     {
 		private string address;
 		private int connectionAttempts;
-		private Form form;
-		private ListBox listBox;
 		private TcpClient tcpClient;
 		private Thread thrReadForever;
 		private System.Timers.Timer timerConnection;
-
         private VehicleControl vehicleControl;
 
 		public Communication(string address, VehicleControl vehicleControl)
@@ -25,7 +21,7 @@ namespace KruispuntGroep6.Simulator.Events
             this.vehicleControl = vehicleControl;
 			this.address = address;
 
-			timerConnection = new System.Timers.Timer(5000);
+			timerConnection = new System.Timers.Timer(6000);
 			timerConnection.Elapsed += new System.Timers.ElapsedEventHandler(timerConnection_Elapsed);
 			timerConnection.Start();
 

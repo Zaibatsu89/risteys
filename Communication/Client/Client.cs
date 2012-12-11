@@ -20,6 +20,7 @@ namespace KruispuntGroep6.Communication.Client
 		private Button btnClear, btnConnect, btnDisconnect, btnJsonGenerator, btnSend;	// Buttons used to contain buttons.
 		private ComboBox cbJsonType;	// ComboBox used to contain the three JSON types that can be generated.
 		private int connectionAttempts;	// Integer used to contain the current connection attempt number.
+		private static bool disconnected;	// Boolean used in the test session.
 		private bool hasRealAddress;	// Boolean used to contain the server address that the user has put in.
 		private string[] inputJSON;		// String array used to contain all lines of the JSON input data file.
 		private int inputJSONnumber;	// Integer used to contain the current input JSON number.
@@ -283,6 +284,8 @@ namespace KruispuntGroep6.Communication.Client
 			{
 				DisconnectWhileConnecting();
 			}
+
+			disconnected = true;
 		}
 
 		/// <summary>
@@ -424,6 +427,8 @@ namespace KruispuntGroep6.Communication.Client
 		// Connected to controller.
 		private void Connected()
 		{
+			//reset disconnected
+			disconnected = false;
 			//reset connection attempts
 			connectionAttempts = 0;
 			//reset previous input json number
@@ -682,6 +687,18 @@ namespace KruispuntGroep6.Communication.Client
 			else
 			{
 				return string.Empty;
+			}
+		}
+
+		public static bool GetDisconnected()
+		{
+			if (disconnected)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 	}
