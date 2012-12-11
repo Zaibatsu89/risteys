@@ -70,31 +70,31 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         {
             foreach (Tile tile in lists.Tiles)
             {
-                var VehicleList = lists.Vehicles;
-
-                foreach (Vehicle vehicle in VehicleList)
+                foreach (Vehicle vehicle in lists.Vehicles)
                 {
-                    //check if vehicle is the one occupying the tile...
-                    if (vehicle.ID == tile.OccupiedID)
+                    //check if vehicle exists
+                    if (!vehicle.ID.Equals(string.Empty))
                     {
-                        //if occupying vehicle no longer occupies...
-                        if (!vehicle.collission.Intersects(tile.CollisionRectangle))
+                        //check if vehicle is the one occupying the tile...
+                        if (vehicle.ID == tile.OccupiedID)
                         {
-                            //release tile
-                            tile.isOccupied = false;
-                            tile.OccupiedID = "";
+                            //if occupying vehicle no longer occupies...
+                            if (!vehicle.collission.Intersects(tile.CollisionRectangle))
+                            {
+                                //release tile
+                                tile.isOccupied = false;
+                                tile.OccupiedID = "";
+                            }
+                        }
+
+                        //if not occupied and vehicle enters...
+                        if (!tile.isOccupied && vehicle.collission.Intersects(tile.CollisionRectangle))
+                        {
+                            tile.isOccupied = true;
+                            tile.OccupiedID = vehicle.ID;
                         }
                     }
-
-                    //if not occupied and vehicle enters...
-                    if (!tile.isOccupied && vehicle.collission.Intersects(tile.CollisionRectangle))
-                    {
-                        tile.isOccupied = true;
-                        tile.OccupiedID = vehicle.ID;
-                    }
                 }
-
-                lists.Vehicles = VehicleList;
             }
         }
 

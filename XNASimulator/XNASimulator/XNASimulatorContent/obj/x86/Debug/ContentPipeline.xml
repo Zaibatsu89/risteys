@@ -7,35 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\background.xnb</Output>
-      <Time>2012-11-19T11:41:21.789+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\Crossing128x128.jpg</Source>
-      <Name>Tiles\128p\Crossing128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Crossing128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\Road128x128.jpg</Source>
-      <Name>Tiles\128p\Road128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Road128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\Sidewalk128x128.jpg</Source>
-      <Name>Tiles\128p\Sidewalk128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Sidewalk128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\background.xnb</Output>
+      <Time>2012-10-15T09:55:33.609375+02:00</Time>
     </Item>
     <Item>
       <Source>Sprites\RedCar64x64DU.png</Source>
@@ -43,278 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Sprites\RedCar64x64DU.xnb</Output>
-      <Time>2012-11-19T11:41:21.789+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\Lights128x128.jpg</Source>
-      <Name>Tiles\128p\Lights128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Lights128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\Crossing64x64.jpg</Source>
-      <Name>Tiles\64p\Crossing64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Crossing64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\Lights64x64.jpg</Source>
-      <Name>Tiles\64p\Lights64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Lights64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\Road64x64.jpg</Source>
-      <Name>Tiles\64p\Road64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Road64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\Sidewalk64x64.jpg</Source>
-      <Name>Tiles\64p\Sidewalk64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Sidewalk64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\Grass128x128.jpg</Source>
-      <Name>Tiles\128p\Grass128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Grass128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\Grass64x64.jpg</Source>
-      <Name>Tiles\64p\Grass64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Grass64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\LightsGreen128x128.jpg</Source>
-      <Name>Tiles\128p\LightsGreen128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\LightsGreen128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\LightsGreen64x64.jpg</Source>
-      <Name>Tiles\64p\LightsGreen64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\LightsGreen64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\LightsRed128x128.jpg</Source>
-      <Name>Tiles\128p\LightsRed128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\LightsRed128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\LightsRed64x64.jpg</Source>
-      <Name>Tiles\64p\LightsRed64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\LightsRed64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\128p\Spawn128x128.jpg</Source>
-      <Name>Tiles\128p\Spawn128x128</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Spawn128x128.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\64p\Spawn64x64.jpg</Source>
-      <Name>Tiles\64p\Spawn64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Spawn64x64.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\Crossing32x32.jpg</Source>
-      <Name>Tiles\32p\Crossing32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Crossing32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\Grass32x32.jpg</Source>
-      <Name>Tiles\32p\Grass32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Grass32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\GreenLight32x32.jpg</Source>
-      <Name>Tiles\32p\GreenLight32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\GreenLight32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\RedLight32x32.jpg</Source>
-      <Name>Tiles\32p\RedLight32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\RedLight32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\Road32x32.jpg</Source>
-      <Name>Tiles\32p\Road32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Road32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\RoadCenter32x32.jpg</Source>
-      <Name>Tiles\32p\RoadCenter32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\RoadCenter32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\Sidewalk2Green32x32.jpg</Source>
-      <Name>Tiles\32p\Sidewalk2Green32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Sidewalk2Green32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\Sidewalk2Red32x32.jpg</Source>
-      <Name>Tiles\32p\Sidewalk2Red32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Sidewalk2Red32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\Sidewalk32x32.jpg</Source>
-      <Name>Tiles\32p\Sidewalk32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Sidewalk32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SidewalkDownRed32x32.jpg</Source>
-      <Name>Tiles\32p\SidewalkDownRed32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SidewalkDownRed32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SidewalkRightRed32x32.jpg</Source>
-      <Name>Tiles\32p\SidewalkRightRed32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SidewalkRightRed32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SortBike32x32.jpg</Source>
-      <Name>Tiles\32p\SortBike32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortBike32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SortBus32x32.jpg</Source>
-      <Name>Tiles\32p\SortBus32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortBus32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SortDown32x32.jpg</Source>
-      <Name>Tiles\32p\SortDown32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortDown32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SortLeft32x32.jpg</Source>
-      <Name>Tiles\32p\SortLeft32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortLeft32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Tiles\32p\SortRight32x32.jpg</Source>
-      <Name>Tiles\32p\SortRight32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortRight32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Sprites\Car32x32.PNG</Source>
-      <Name>Sprites\Car32x32</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Sprites\Car32x32.xnb</Output>
-      <Time>2012-12-10T07:11:44.786+01:00</Time>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Sprites\RedCar64x64DU.xnb</Output>
+      <Time>2012-10-28T20:46:48.8125+01:00</Time>
     </Item>
     <Item>
       <Source>Audio\Music\backgroundmusic.wav</Source>
@@ -322,8 +25,314 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Audio\Music\backgroundmusic.xnb</Output>
-      <Time>2012-11-19T11:41:21.789+01:00</Time>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Audio\Music\backgroundmusic.xnb</Output>
+      <Time>2012-10-28T17:05:21.765625+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\Crossing128x128.jpg</Source>
+      <Name>Tiles\128p\Crossing128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Crossing128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.3665095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\Road128x128.jpg</Source>
+      <Name>Tiles\128p\Road128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Road128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.3352595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\Sidewalk128x128.jpg</Source>
+      <Name>Tiles\128p\Sidewalk128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Sidewalk128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.2415095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\Lights128x128.jpg</Source>
+      <Name>Tiles\128p\Lights128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Lights128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.5071345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\Crossing64x64.jpg</Source>
+      <Name>Tiles\64p\Crossing64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Crossing64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.0540095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\Lights64x64.jpg</Source>
+      <Name>Tiles\64p\Lights64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Lights64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.1633845+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\Road64x64.jpg</Source>
+      <Name>Tiles\64p\Road64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Road64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.0227595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\Sidewalk64x64.jpg</Source>
+      <Name>Tiles\64p\Sidewalk64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Sidewalk64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.3508845+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\Grass128x128.jpg</Source>
+      <Name>Tiles\128p\Grass128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Grass128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.5852595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\Grass64x64.jpg</Source>
+      <Name>Tiles\64p\Grass64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Grass64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.2727595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\LightsGreen128x128.jpg</Source>
+      <Name>Tiles\128p\LightsGreen128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\LightsGreen128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.5540095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\LightsGreen64x64.jpg</Source>
+      <Name>Tiles\64p\LightsGreen64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\LightsGreen64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.1946345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\LightsRed128x128.jpg</Source>
+      <Name>Tiles\128p\LightsRed128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\LightsRed128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.2883845+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\LightsRed64x64.jpg</Source>
+      <Name>Tiles\64p\LightsRed64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\LightsRed64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.0071345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\128p\Spawn128x128.jpg</Source>
+      <Name>Tiles\128p\Spawn128x128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\128p\Spawn128x128.xnb</Output>
+      <Time>2012-12-10T00:28:54.4290095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\64p\Spawn64x64.jpg</Source>
+      <Name>Tiles\64p\Spawn64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\64p\Spawn64x64.xnb</Output>
+      <Time>2012-12-10T00:28:51.0852595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\Crossing32x32.jpg</Source>
+      <Name>Tiles\32p\Crossing32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Crossing32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1946345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\Grass32x32.jpg</Source>
+      <Name>Tiles\32p\Grass32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Grass32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1321345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\GreenLight32x32.jpg</Source>
+      <Name>Tiles\32p\GreenLight32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\GreenLight32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1946345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\RedLight32x32.jpg</Source>
+      <Name>Tiles\32p\RedLight32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\RedLight32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.0696345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\Road32x32.jpg</Source>
+      <Name>Tiles\32p\Road32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Road32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1633845+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\RoadCenter32x32.jpg</Source>
+      <Name>Tiles\32p\RoadCenter32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\RoadCenter32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1790095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\Sidewalk2Green32x32.jpg</Source>
+      <Name>Tiles\32p\Sidewalk2Green32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Sidewalk2Green32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1165095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\Sidewalk2Red32x32.jpg</Source>
+      <Name>Tiles\32p\Sidewalk2Red32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Sidewalk2Red32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1477595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\Sidewalk32x32.jpg</Source>
+      <Name>Tiles\32p\Sidewalk32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\Sidewalk32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.0852595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SidewalkDownRed32x32.jpg</Source>
+      <Name>Tiles\32p\SidewalkDownRed32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SidewalkDownRed32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1790095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SidewalkRightRed32x32.jpg</Source>
+      <Name>Tiles\32p\SidewalkRightRed32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SidewalkRightRed32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1946345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SortBike32x32.jpg</Source>
+      <Name>Tiles\32p\SortBike32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortBike32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1477595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SortBus32x32.jpg</Source>
+      <Name>Tiles\32p\SortBus32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortBus32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.0540095+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SortDown32x32.jpg</Source>
+      <Name>Tiles\32p\SortDown32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortDown32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1321345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SortLeft32x32.jpg</Source>
+      <Name>Tiles\32p\SortLeft32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortLeft32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.0696345+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Tiles\32p\SortRight32x32.jpg</Source>
+      <Name>Tiles\32p\SortRight32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Tiles\32p\SortRight32x32.xnb</Output>
+      <Time>2012-12-10T00:28:50.1633845+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\Car32x32.PNG</Source>
+      <Name>Sprites\Car32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Sprites\Car32x32.xnb</Output>
+      <Time>2012-12-10T12:48:11.0625+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\Default32x32.jpg</Source>
+      <Name>Sprites\Default32x32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\Sprites\Default32x32.xnb</Output>
+      <Time>2012-12-11T11:47:42.890625+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -331,39 +340,39 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>true</CompressContent>
-      <RootDirectory>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulatorContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulatorContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\DJohn\Documents\School Projects\SEN\sen\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulatorContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulatorContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Documents and Settings\Sneaky\Desktop\Coding\Visual Studio\KruispuntGroep6\XNASimulator\XNASimulator\XNASimulator\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2012-11-02T17:35:48.7296671+01:00</Value>
+        <Value>2012-09-18T14:19:00.953125+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

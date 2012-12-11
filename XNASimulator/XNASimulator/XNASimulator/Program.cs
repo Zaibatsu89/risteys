@@ -12,8 +12,8 @@ namespace KruispuntGroep6.Simulator
 		/// </summary>
 		public static void Main(string[] args)
 		{
-            //var serverThread = new Thread(ServerTask);
-            //serverThread.Start();
+            var serverThread = new Thread(ServerTask);
+            serverThread.Start();
 
             var clientThread = new Thread(ClientTask);
             clientThread.Start();
@@ -25,10 +25,10 @@ namespace KruispuntGroep6.Simulator
 				address = Client.GetAddress();
 			}
 
-            //using (MainGame game = new MainGame(address))
-            //{
-            //    game.Run();
-            //}
+            using (MainGame game = new MainGame(address))
+            {
+                game.Run();
+            }
 		}
 		
 		public static void ClientTask()

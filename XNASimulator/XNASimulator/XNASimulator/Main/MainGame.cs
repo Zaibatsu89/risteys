@@ -21,8 +21,8 @@ namespace KruispuntGroep6.Simulator.Main
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        private int tilesHor = 20;
-        private int tilesVer = 20;
+        public static int TilesHor = 20;
+        public static int TilesVer = 20;
 
         private LevelBuilder levelBuilder;
         private Audio audio;
@@ -45,8 +45,8 @@ namespace KruispuntGroep6.Simulator.Main
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferHeight = this.tilesHor * 32;
-            graphics.PreferredBackBufferWidth = this.tilesVer * 32;
+            graphics.PreferredBackBufferHeight = TilesHor * 32;
+            graphics.PreferredBackBufferWidth = TilesVer * 32;
         }
 
         /// <summary>
@@ -57,6 +57,8 @@ namespace KruispuntGroep6.Simulator.Main
         /// </summary>
         protected override void Initialize()
         {
+            Textures.Default = Content.Load<Texture2D>("Sprites/Default32x32");
+
             lists = new Lists();
 
             levelBuilder = new LevelBuilder(lists);

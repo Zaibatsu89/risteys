@@ -1,8 +1,9 @@
 Content\background.xnb
+Content\Sprites\RedCar64x64DU.xnb
+Content\Audio\Music\backgroundmusic.xnb
 Content\Tiles\128p\Crossing128x128.xnb
 Content\Tiles\128p\Road128x128.xnb
 Content\Tiles\128p\Sidewalk128x128.xnb
-Content\Sprites\RedCar64x64DU.xnb
 Content\Tiles\128p\Lights128x128.xnb
 Content\Tiles\64p\Crossing64x64.xnb
 Content\Tiles\64p\Lights64x64.xnb
@@ -33,7 +34,7 @@ Content\Tiles\32p\SortDown32x32.xnb
 Content\Tiles\32p\SortLeft32x32.xnb
 Content\Tiles\32p\SortRight32x32.xnb
 Content\Sprites\Car32x32.xnb
-Content\Audio\Music\backgroundmusic.xnb
+Content\Sprites\Default32x32.xnb
 Content\Tiles\128p\Crossing128x128.jpg
 Content\Tiles\128p\Road128x128.jpg
 Content\Tiles\128p\Sidewalk128x128.jpg
@@ -41,3 +42,4 @@ Content\Audio\Music\backgroundmusic.wav
 Content\Grids\TestGrid.txt
 Content\Grids\TestGrid2.txt
 Content\Grids\Crossroad.txt
+Content\Grids\Pathfinding.txt
