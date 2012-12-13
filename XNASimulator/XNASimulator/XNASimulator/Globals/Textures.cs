@@ -6,6 +6,8 @@ namespace KruispuntGroep6.Simulator.Globals
     {
         public static Texture2D RedLight;
         public static Texture2D GreenLight;
+        public static Texture2D YellowLight;
+        public static Texture2D BlinkLight;
 
 
         public static Texture2D Sidewalk2Red;
