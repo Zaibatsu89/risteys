@@ -123,8 +123,9 @@ namespace KruispuntGroep6.Simulator.Main
             this.LoadCrossroad("Content/Grids/Crossroad.txt");
 			this.LoadPathfinding("Content/Grids/Pathfinding.txt");
 
-            laneControl.LoadLanes();
+
             tileControl.FillTileList();
+            laneControl.LoadLanes();
             //vehicleControl.LoadVehicles();
             //audio.PlayBackgroundMusic();
 			vehicleControl.SetPathfinder(pathfinder);
