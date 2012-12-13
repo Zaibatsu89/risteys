@@ -105,10 +105,10 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     break;
                 case "W6": LoadLane(new Vector2(0, 7), lane);
                     break;
-                case "W7":
+                case "W7": 
                     break;
 
-                case "S0":
+                case "S0": LoadLane(new Vector2(13, 13), lane);
                     break;
                 case "S1": LoadLane(new Vector2(12, 19), lane);
                     break;
@@ -122,7 +122,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     break;
                 case "S6": LoadLane(new Vector2(7, 19), lane);
                     break;
-                case "S7": 
+                case "S7": LoadLane(new Vector2(6, 13), lane);
                     break;
             }
         }
@@ -137,30 +137,69 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
             if (lane.laneID.Contains("N"))
             {
-                for (int i = 1; i < Lane.LaneLength; i++)
+                if (lane.laneID.Equals("N0"))
                 {
-                    lane.laneTiles.Add(lists.Tiles[(int)gridposition.X, i]);
+                }
+                else if (lane.laneID.Equals("N7"))
+                {
+                }
+                else
+                {
+                    for (int i = 0; i < Lane.LaneLength; i++)
+                    {
+                        //lane.laneTiles.Add(lists.Tiles[(int)gridposition.X, i]);
+
+                        //Keep adding tiles to the south until you reach the lanelength
+                        lane.laneTiles.Add(lane.laneTiles[i].adjacentTiles[RotationEnum.South.ToString()]);
+                    }
                 }
             }
             else if (lane.laneID.Contains("E"))
             {
-                for (int i = 18; i > (19 - Lane.LaneLength); i--)
+                if (lane.laneID.Equals("E0"))
                 {
-                    lane.laneTiles.Add(lists.Tiles[i, (int)gridposition.Y]);
+                }
+                else if (lane.laneID.Equals("E7"))
+                {
+                }
+                else
+                {
+                    for (int i = 0; i < Lane.LaneLength; i++)
+                    {
+                        lane.laneTiles.Add(lane.laneTiles[i].adjacentTiles[RotationEnum.West.ToString()]);
+                    }
                 }
             }
             else if (lane.laneID.Contains("W"))
             {
-                for (int i = 1; i < Lane.LaneLength; i++)
+                if (lane.laneID.Equals("W0"))
                 {
-                    lane.laneTiles.Add(lists.Tiles[i, (int)gridposition.Y]);
+                }
+                else if (lane.laneID.Equals("W7"))
+                {
+                }
+                else
+                {
+                    for (int i = 0; i < Lane.LaneLength; i++)
+                    {
+                        lane.laneTiles.Add(lane.laneTiles[i].adjacentTiles[RotationEnum.East.ToString()]);
+                    }
                 }
             }
             else if (lane.laneID.Contains("S"))
             {
-                for (int i = 18; i > (19 - Lane.LaneLength); i--)
+                if (lane.laneID.Equals("S0"))
                 {
-                    lane.laneTiles.Add(lists.Tiles[(int)gridposition.X, i]);
+                }
+                else if (lane.laneID.Equals("S7"))
+                {
+                }
+                else
+                {
+                    for (int i = 0; i < Lane.LaneLength; i++)
+                    {
+                        lane.laneTiles.Add(lane.laneTiles[i].adjacentTiles[RotationEnum.North.ToString()]);
+                    }
                 }
             }
 

@@ -79,22 +79,19 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
         public void ChangeLights(string laneID, LightsEnum colour)
         {
-            Tile tile;
-
             foreach (Lane lane in lists.Lanes)
             {
                 if(laneID.Equals(lane.laneID))
                 {
-                    tile = lane.trafficLight;
                     switch (colour)
                     {
-                        case LightsEnum.Blink: tile.Texture = Textures.BlinkLight;
+                        case LightsEnum.Blink: lane.trafficLight.Texture = Textures.BlinkLight;
                             break;
-                        case LightsEnum.Red: tile.Texture = Textures.RedLight;
+                        case LightsEnum.Red: lane.trafficLight.Texture = Textures.RedLight;
                             break;
-                        case LightsEnum.Green: tile.Texture = Textures.GreenLight;
+                        case LightsEnum.Green: lane.trafficLight.Texture = Textures.GreenLight;
                             break;
-                        case LightsEnum.Yellow: tile.Texture = Textures.YellowLight;
+                        case LightsEnum.Yellow: lane.trafficLight.Texture = Textures.YellowLight;
                             break;
                     }
 				} break;
