@@ -35,7 +35,7 @@ namespace KruispuntGroep6.Simulator.Main
 			if (cellX < 0 || cellX > Width - 1 || cellY < 0 || cellY > Height - 1)
 				return 0;
 
-			return layout[cellY, cellX];
+			return layout[cellX, cellY];
 		}
 
 		public void LoadLevel(string path)
@@ -60,7 +60,7 @@ namespace KruispuntGroep6.Simulator.Main
 				}
 			}
 
-			this.layout = new int[Height, Width];
+			this.layout = new int[Width, Height];
 
 			// Loop over every tile position,
 			for (int y = 0; y < Height; ++y)
@@ -68,7 +68,7 @@ namespace KruispuntGroep6.Simulator.Main
 				for (int x = 0; x < Width; ++x)
 				{
 					// to load each tile
-					char tileType = lines[y][x];
+					char tileType = lines[x][y];
 
 					LoadTile(tileType, x, y);
 
@@ -90,10 +90,10 @@ namespace KruispuntGroep6.Simulator.Main
 			switch (tileType)
 			{
 				case '0':
-					layout[y, x] = 0;
+					layout[x, y] = 0;
 					break;
 				case '1':
-					layout[y, x] = 1;
+					layout[x, y] = 1;
 					break;
 				// Unknown tile type character
 				default:
@@ -101,7 +101,7 @@ namespace KruispuntGroep6.Simulator.Main
 			}
 		}
 
-		internal int[,] GetLayout()
+		public int[,] GetLayout()
 		{
 			return layout;
 		}

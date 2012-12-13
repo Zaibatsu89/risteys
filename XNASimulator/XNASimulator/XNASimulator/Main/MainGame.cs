@@ -32,6 +32,7 @@ namespace KruispuntGroep6.Simulator.Main
         private Lists lists;
 
 		private PathfinderLoader pathfinderLoader;
+		private Pathfinder pathfinder;
 
 		private VehicleControl vehicleControl;
         private TileControl tileControl;
@@ -126,7 +127,7 @@ namespace KruispuntGroep6.Simulator.Main
             tileControl.FillTileList();
             //vehicleControl.LoadVehicles();
             //audio.PlayBackgroundMusic();
-
+			vehicleControl.SetPathfinder(pathfinder);
             
             simReady = true;
         }
@@ -149,7 +150,7 @@ namespace KruispuntGroep6.Simulator.Main
         {
             if (simReady)
             {
-                communication = new KruispuntGroep6.Simulator.Events.Communication(address, vehicleControl);
+                communication = new KruispuntGroep6.Simulator.Events.Communication(address, tileControl, vehicleControl);
                 simReady = false;
             }
 
@@ -196,12 +197,8 @@ namespace KruispuntGroep6.Simulator.Main
 				pathfinderLoader.LoadLevel(filePath);
 			else throw new Exception("No Level Detected");
 
-			// Simple implementation of pathfinder
 			Map map = new Map(pathfinderLoader.GetLayout());
-			Pathfinder pathfinder = new Pathfinder(map);
-			Point pntDeparture = new Point(0, 0);
-			Point pntArrival = new Point(3, 3);
-			List<Vector2> path = pathfinder.FindPath(pntDeparture, pntArrival);
+			pathfinder = new Pathfinder(map);
 		}
 
         private void MouseButtonPress()

@@ -76,6 +76,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 tile.isGreen = false;
             }
         }
+
         public void ChangeLights(string laneID, LightsEnum colour)
         {
             Tile tile;
@@ -96,7 +97,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                         case LightsEnum.Yellow: tile.Texture = Textures.YellowLight;
                             break;
                     }
-                }
+				} break;
             }           
         }
 

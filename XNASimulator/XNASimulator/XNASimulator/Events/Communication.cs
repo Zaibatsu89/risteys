@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using KruispuntGroep6.Simulator.ObjectControllers;
+using XNASimulator.Globals;
 
 namespace KruispuntGroep6.Simulator.Events
 {
@@ -13,13 +14,15 @@ namespace KruispuntGroep6.Simulator.Events
 		private int connectionAttempts;
 		private TcpClient tcpClient;
 		private Thread thrReadForever;
+		private TileControl tileControl;
 		private System.Timers.Timer timerConnection;
         private VehicleControl vehicleControl;
 
-		public Communication(string address, VehicleControl vehicleControl)
+		public Communication(string address, TileControl tileControl, VehicleControl vehicleControl)
 		{
-            this.vehicleControl = vehicleControl;
 			this.address = address;
+			this.tileControl = tileControl;
+            this.vehicleControl = vehicleControl;
 
 			timerConnection = new System.Timers.Timer(5000);
 			timerConnection.Elapsed += new System.Timers.ElapsedEventHandler(timerConnection_Elapsed);
@@ -140,14 +143,33 @@ namespace KruispuntGroep6.Simulator.Events
 
 					if (jsonParameters[0].Equals("input"))
 					{
-						if (jsonParameters[2].Equals("car"))
+						if (!jsonParameters[2].Equals("pedestrian"))
 						{
-							// Spawn car at 'from'
-							vehicleControl.Spawn(jsonParameters[3]);
-
-							// Drive car to 'to'
-							vehicleControl.Drive(jsonParameters[4]);
+							// Spawn car at 'from' and drive it to 'to'
+							vehicleControl.Spawn(jsonParameters[2], jsonParameters[3], jsonParameters[4]);
 						}
+					}
+					else if (jsonParameters[0].Equals("stoplight"))
+					{
+						LightsEnum lightsEnum = LightsEnum.Blink;
+
+						switch (jsonParameters[2])
+						{
+							case "blink":
+								lightsEnum = LightsEnum.Blink;
+								break;
+							case "green":
+								lightsEnum = LightsEnum.Green;
+								break;
+							case "red":
+								lightsEnum = LightsEnum.Red;
+								break;
+							case "yellow":
+								lightsEnum = LightsEnum.Yellow;
+								break;
+						}
+
+						tileControl.ChangeLights(jsonParameters[1], lightsEnum);
 					}
 				}
 			}

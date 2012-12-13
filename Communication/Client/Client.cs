@@ -17,19 +17,31 @@ namespace KruispuntGroep6.Communication.Client
 	public partial class Client : Form
 	{
 		private string address;	// String used to contain the IP address of the internet connection.
-		private Button btnClear, btnConnect, btnDisconnect, btnJsonGenerator, btnSend;	// Buttons used to contain buttons.
+		private Button btnClear,
+			btnConnect,
+			btnDisconnect,
+			btnJsonGenerator,
+			btnSend,
+			btnSimulatorConnect;	// Buttons used to contain buttons.
 		private ComboBox cbJsonType;	// ComboBox used to contain the three JSON types that can be generated.
 		private int connectionAttempts;	// Integer used to contain the current connection attempt number.
+		private string[] detectorJSON;	// String array used to contain all lines of the JSON detector data file.
+		private int detectorJSONnumber;	// Integer used to contain the current detector JSON number.
 		private static bool disconnected;	// Boolean used in the test session.
 		private bool hasRealAddress;	// Boolean used to contain the server address that the user has put in.
 		private string[] inputJSON;		// String array used to contain all lines of the JSON input data file.
 		private int inputJSONnumber;	// Integer used to contain the current input JSON number.
-		private JsonGenerator jsonGenerator = new JsonGenerator();	// JsonGenerator used to generate JSON input data file.
+		private JsonGenerator jsonGenerator = new JsonGenerator();	// JsonGenerator used to generate JSON data file.
+		private string jsonType;	// String used to contain the selected JSON type.
 		private Label lblConStatusValue;	// Label used to contain the connection status value.
 		private ListBox lbResults;	// ListBox used to contain messages to keep the user informed.
+		private int previousDetectorJSONnumber; // Integer used to contain the previous detector JSON number.
 		private int previousInputJSONnumber; // Integer used to contain the previous input JSON number.
+		private int previousStoplightJSONnumber; // Integer used to contain the previous stoplight JSON number.
 		private int previousTime;	// Integer used to contain the previous input JSON time value.
 		private static string realAddress;	// String used to contain the server address to be used by Simulator via Program.
+		private string[] stoplightJSON;	// String array used to contain all lines of the JSON stoplight data file.
+		private int stoplightJSONnumber;	// Integer used to contain the current stoplight JSON number.
 		private Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
 		private TcpClient tcpClient;	// TcpClient used to contain the heart of this class: the TCP client.
 		private TextBox tbAddress, tbJsonGenerator, tbNewText; // TextBoxes used to contain boxes to input text.
@@ -79,6 +91,14 @@ namespace KruispuntGroep6.Communication.Client
 			btnSend.Size = new Size(5 * Font.Height, 2 * Font.Height);
 			btnSend.Text = strings.Send;
 
+			btnSimulatorConnect = new Button();
+			btnSimulatorConnect.Click += new EventHandler(btnSimulatorConnect_Click);
+			btnSimulatorConnect.Enabled = false;
+			btnSimulatorConnect.Location = new Point(17 * Font.Height - 3, 4 * Font.Height - 6);
+			btnSimulatorConnect.Parent = this;
+			btnSimulatorConnect.Size = new Size(6 * Font.Height, 2 * Font.Height);
+			btnSimulatorConnect.Text = strings.SimulatorConnect;
+
 			cbJsonType = new ComboBox();
 			cbJsonType.Items.Add(strings.JsonTypeInput);
 			cbJsonType.Items.Add(strings.JsonTypeDetector);
@@ -96,15 +116,9 @@ namespace KruispuntGroep6.Communication.Client
 			lblAddress.Parent = this;
 			lblAddress.Text = strings.Address;
 
-			Label lblConStatus = new Label();
-			lblConStatus.AutoSize = true;
-			lblConStatus.Location = new Point(Font.Height - 3, 4 * Font.Height);
-			lblConStatus.Parent = this;
-			lblConStatus.Text = strings.ConnectionStatus;
-
 			lblConStatusValue = new Label();
 			lblConStatusValue.AutoSize = true;
-			lblConStatusValue.Location = new Point(9 * Font.Height - 3, 4 * Font.Height);
+			lblConStatusValue.Location = new Point(Font.Height - 3, 4 * Font.Height);
 			lblConStatusValue.Parent = this;
 			lblConStatusValue.Text = strings.LabelDisconnected;
 
@@ -166,38 +180,120 @@ namespace KruispuntGroep6.Communication.Client
 
 			try
 			{
-				// if inputJSON isn't born yet, setting this boolean false forces
-				// reading the json input file and resetting the input json number
-				bool inputFilesAreEqual = false;
+				// get JSON type
+				jsonType = cbJsonType.SelectedItem.ToString();
 
-				// if inputJSON exists, set the real value of inputFilesAreEqual
-				if (!Object.Equals(inputJSON, null))
+				switch (jsonType)
 				{
-					inputFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(
-						strings.JsonTypeInput + strings.JsonInputFileExtension), inputJSON);
-				}
+					case "detectors":
+						// if detectorJSON isn't born yet, setting this boolean false forces
+						// reading the JSON detector file and resetting the detector JSON number
+						bool detectorFilesAreEqual = false;
 
-				//when the user generates a new json input file,
-				//and the client handles the previous file,
-				//abort that file and make the new file his
-				if (!inputFilesAreEqual)
-				{
-					inputJSON = File.ReadAllLines(strings.JsonTypeInput + strings.JsonInputFileExtension);
-					inputJSONnumber = 0;
-				}
+						// if detectorJSON exists, set the real value of detectorFilesAreEqual
+						if (!Object.Equals(inputJSON, null))
+						{
+							detectorFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(
+								strings.JsonTypeDetector + strings.JsonFileExtension), inputJSON);
+						}
 
-				//reset current input json number,
-				//if the whole JSON input file is sent already
-				if (inputJSONnumber >= inputJSON.Length)
-				{
-					inputJSONnumber = 0;
-				}
+						//when the user generates a new JSON detector file,
+						//and the client handles the previous file,
+						//abort that file and make the new file his
+						if (!detectorFilesAreEqual)
+						{
+							detectorJSON = File.ReadAllLines(strings.JsonTypeDetector + strings.JsonFileExtension);
+							detectorJSONnumber = 0;
+						}
 
-				// if the whole JSON input file isn't sent already,
-				// continue with the inputJSONnumber from before the
-				// connection loss or disconnect
-				if (inputJSONnumber > 0)
-					previousInputJSONnumber = inputJSONnumber;
+						//reset current detector JSON number,
+						//if the whole JSON detector file is sent already
+						if (detectorJSONnumber >= detectorJSON.Length)
+						{
+							detectorJSONnumber = 0;
+						}
+
+						// if the whole JSON detector file isn't sent already,
+						// continue with the detectorJSONnumber from before the
+						// connection loss or disconnect
+						if (detectorJSONnumber > 0)
+						{
+							previousDetectorJSONnumber = detectorJSONnumber;
+						}
+						break;
+					case "inputs":
+						// if inputJSON isn't born yet, setting this boolean false forces
+						// reading the JSON input file and resetting the input JSON number
+						bool inputFilesAreEqual = false;
+
+						// if inputJSON exists, set the real value of inputFilesAreEqual
+						if (!Object.Equals(inputJSON, null))
+						{
+							inputFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(
+								strings.JsonTypeInput + strings.JsonFileExtension), inputJSON);
+						}
+
+						//when the user generates a new JSON input file,
+						//and the client handles the previous file,
+						//abort that file and make the new file his
+						if (!inputFilesAreEqual)
+						{
+							inputJSON = File.ReadAllLines(strings.JsonTypeInput + strings.JsonFileExtension);
+							inputJSONnumber = 0;
+						}
+
+						//reset current input JSON number,
+						//if the whole JSON input file is sent already
+						if (inputJSONnumber >= inputJSON.Length)
+						{
+							inputJSONnumber = 0;
+						}
+
+						// if the whole JSON input file isn't sent already,
+						// continue with the inputJSONnumber from before the
+						// connection loss or disconnect
+						if (inputJSONnumber > 0)
+						{
+							previousInputJSONnumber = inputJSONnumber;
+						}
+						break;
+					case "stoplights":
+						// if stoplightJSON isn't born yet, setting this boolean false forces
+						// reading the JSON stoplight file and resetting the stoplight JSON number
+						bool stoplightFilesAreEqual = false;
+
+						// if stoplightJSON exists, set the real value of stoplightFilesAreEqual
+						if (!Object.Equals(stoplightJSON, null))
+						{
+							stoplightFilesAreEqual = Enumerable.SequenceEqual(File.ReadAllLines(
+								strings.JsonTypeStoplight + strings.JsonFileExtension), stoplightJSON);
+						}
+
+						//when the user generates a new JSON stoplight file,
+						//and the client handles the previous file,
+						//abort that file and make the new file his
+						if (!stoplightFilesAreEqual)
+						{
+							stoplightJSON = File.ReadAllLines(strings.JsonTypeStoplight + strings.JsonFileExtension);
+							stoplightJSONnumber = 0;
+						}
+
+						//reset current stoplight JSON number,
+						//if the whole JSON stoplight file is sent already
+						if (stoplightJSONnumber >= stoplightJSON.Length)
+						{
+							stoplightJSONnumber = 0;
+						}
+
+						// if the whole JSON stoplight file isn't sent already,
+						// continue with the stoplightJSONnumber from before the
+						// connection loss or disconnect
+						if (stoplightJSONnumber > 0)
+						{
+							previousStoplightJSONnumber = stoplightJSONnumber;
+						}
+						break;
+				}
 			}
 			catch (FileNotFoundException)
 			{
@@ -239,18 +335,6 @@ namespace KruispuntGroep6.Communication.Client
 			timerConnection = new System.Timers.Timer(5000);
 			timerConnection.Elapsed += new ElapsedEventHandler(timerConnection_Elapsed);
 			timerConnection.Start();
-
-			// Get address from textbox
-			address = tbAddress.Text;
-
-			realAddress = address;
-
-			if (!hasRealAddress)
-			{
-				// Wait till Program has the real address
-				Thread.Sleep(555);
-				hasRealAddress = true;
-			}
 
 			// Try to connect in the background...
 			thrConnect = new Thread(new ThreadStart(Connect));
@@ -321,12 +405,12 @@ namespace KruispuntGroep6.Communication.Client
 				if (jsonGenerator.SaveJSONFile(cbJsonType.SelectedItem.ToString()))
 				{
 					OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSaved +
-						cbJsonType.SelectedItem.ToString() + strings.JsonInputFileExtension);
+						cbJsonType.SelectedItem.ToString() + strings.JsonFileExtension);
 				}
 				else
 				{
 					OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSavingError +
-						cbJsonType.SelectedItem.ToString() + strings.JsonInputFileExtension);
+						cbJsonType.SelectedItem.ToString() + strings.JsonFileExtension);
 				}
 			}
 		}
@@ -339,6 +423,26 @@ namespace KruispuntGroep6.Communication.Client
 		private void btnSend_Click(object sender, EventArgs e)
 		{
 			SendToController(tbNewText.Text);
+		}
+
+		private void btnSimulatorConnect_Click(object sender, EventArgs e)
+		{
+			btnSimulatorConnect.Enabled = false;
+
+			// Read JSON input file and if that's a success, send start time to controller
+			if (readJSON())
+			{
+				// Disable JSON generator GUI, to prevent bugs
+				OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType(), enabled: false);
+				OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType(), enabled: false);
+				OnMessageChanged(cbJsonType, cbJsonType.GetType(), enabled: false);
+
+				SendStartTime();
+
+				// Read messages forever
+				thrReadForever = new Thread(new ThreadStart(ReadForever));
+				thrReadForever.Start();
+			}
 		}
 
 		private void ChangeMessage(object sender, Type type, string text, bool enabled)
@@ -445,20 +549,20 @@ namespace KruispuntGroep6.Communication.Client
 			OnMessageChanged(btnDisconnect, btnDisconnect.GetType());
 			OnMessageChanged(tbNewText, tbNewText.GetType());
 
-			// Read JSON input file and if that's a success, send start time to controller
-			if (readJSON())
+			// Get address from textbox
+			address = tbAddress.Text;
+
+			realAddress = address;
+
+			if (!hasRealAddress)
 			{
-				// Disable JSON generator GUI, to prevent bugs
-				OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType(), enabled: false);
-				OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType(), enabled: false);
-				OnMessageChanged(cbJsonType, cbJsonType.GetType(), enabled: false);
-
-				SendStartTime();
-
-				// Read messages forever
-				thrReadForever = new Thread(new ThreadStart(ReadForever));
-				thrReadForever.Start();
+				hasRealAddress = true;
 			}
+
+			// Wait for the simulator to start
+			Thread.Sleep(2000);
+
+			OnMessageChanged(btnSimulatorConnect, btnSimulatorConnect.GetType());
 
 			//abort connect thread
 			thrConnect.Abort();
@@ -527,49 +631,98 @@ namespace KruispuntGroep6.Communication.Client
 
 		private void SendJSONObject()
 		{
-			int time = 0;
-
-			if (previousInputJSONnumber > 0)
+			switch (jsonType)
 			{
-				inputJSONnumber = previousInputJSONnumber;
-				previousInputJSONnumber = 0;
-			}
+				case "detectors":
+					if (previousDetectorJSONnumber > 0)
+					{
+						detectorJSONnumber = previousDetectorJSONnumber;
+						previousDetectorJSONnumber = 0;
+					}
 
-			if (timerJson.Enabled)
-			{
-				time = GetTime(inputJSON[inputJSONnumber]);
-			}
+					SendToController(detectorJSON[detectorJSONnumber]);
 
-			while (time.Equals(previousTime))
-			{
-				SendToController(inputJSON[inputJSONnumber]);
+					detectorJSONnumber++;
 
-				inputJSONnumber++;
+					if (detectorJSONnumber >= detectorJSON.Length)
+					{
+						timerJson.Stop();
+						OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSentDetector);
 
-				if (inputJSONnumber < inputJSON.Length)
-				{
-					time = GetTime(inputJSON[inputJSONnumber]);
-				}
-				else
-				{
-					timerJson.Stop();
+						// Enable generation of JSON file
+						OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType());
+						OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType());
+						OnMessageChanged(cbJsonType, cbJsonType.GetType());
+					}
 					break;
-				}
-			}
+				case "inputs":
+					int inputTime = 0;
 
-			if (inputJSONnumber < inputJSON.Length)
-			{
-				previousTime = GetTime(inputJSON[inputJSONnumber]);
-			}
-			else
-			{
-				timerJson.Stop();
-				OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSent);
+					if (previousInputJSONnumber > 0)
+					{
+						inputJSONnumber = previousInputJSONnumber;
+						previousInputJSONnumber = 0;
+					}
 
-				// Enable generation of JSON file
-				OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType());
-				OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType());
-				OnMessageChanged(cbJsonType, cbJsonType.GetType());
+					if (timerJson.Enabled)
+					{
+						inputTime = GetTime(inputJSON[inputJSONnumber]);
+					}
+
+					while (inputTime.Equals(previousTime))
+					{
+						SendToController(inputJSON[inputJSONnumber]);
+
+						inputJSONnumber++;
+
+						if (inputJSONnumber < inputJSON.Length)
+						{
+							inputTime = GetTime(inputJSON[inputJSONnumber]);
+						}
+						else
+						{
+							timerJson.Stop();
+							break;
+						}
+					}
+
+					if (inputJSONnumber < inputJSON.Length)
+					{
+						previousTime = GetTime(inputJSON[inputJSONnumber]);
+					}
+					else
+					{
+						timerJson.Stop();
+						OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSentInput);
+
+						// Enable generation of JSON file
+						OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType());
+						OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType());
+						OnMessageChanged(cbJsonType, cbJsonType.GetType());
+					}
+					break;
+				case "stoplights":
+					if (previousStoplightJSONnumber > 0)
+					{
+						stoplightJSONnumber = previousStoplightJSONnumber;
+						previousStoplightJSONnumber = 0;
+					}
+
+					SendToController(stoplightJSON[stoplightJSONnumber]);
+
+					stoplightJSONnumber++;
+
+					if (stoplightJSONnumber >= stoplightJSON.Length)
+					{
+						timerJson.Stop();
+						OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonSentStoplight);
+
+						// Enable generation of JSON file
+						OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType());
+						OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType());
+						OnMessageChanged(cbJsonType, cbJsonType.GetType());
+					}
+					break;
 			}
 		}
 

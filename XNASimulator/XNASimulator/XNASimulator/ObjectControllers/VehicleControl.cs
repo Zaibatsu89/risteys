@@ -3,6 +3,9 @@ using KruispuntGroep6.Simulator.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using KruispuntGroep6.Simulator.Main;
+using System.Collections.Generic;
+using XNASimulator.Globals;
 
 namespace KruispuntGroep6.Simulator.ObjectControllers
 {
@@ -10,6 +13,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
     {
         private Lists lists;
         private GraphicsDevice graphics;
+		private Pathfinder pathfinder;
+		private List<Tuple<string, List<Vector2>>> paths;
 		private Random random;
 
         public VehicleControl(GraphicsDevice graphics, Lists lists)
@@ -17,6 +22,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             this.lists = lists;
             this.graphics = graphics;
 
+			paths = new List<Tuple<string, List<Vector2>>>();
 			random = new Random();
         }
 
@@ -223,9 +229,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 vehicle.stopRedLight = false;
             }
         }
-        
 
-        public void Spawn(string from)
+        public void Spawn(string type, string from, string to)
         {
             foreach (Lane lane in lists.Lanes)
             {
@@ -238,7 +243,28 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                             Vehicle newVehicle = lists.Vehicles[i];
                             if (newVehicle.ID.Equals(string.Empty))
                             {
-                                newVehicle = LoadVehicle(lane.spawnTile, "V" + i);
+								string vehicleType = string.Empty;
+
+								switch (type)
+								{
+									case "bike":
+										vehicleType = "b";
+										break;
+									case "bus":
+										vehicleType = "B";
+										break;
+									case "car":
+										vehicleType = "c";
+										break;
+									case "godzilla":
+										vehicleType = "g";
+										break;
+									case "truck":
+										vehicleType = "t";
+										break;
+								}
+
+                                newVehicle = LoadVehicle(lane.spawnTile, vehicleType + i);
                                 lists.Vehicles[i] = newVehicle;
                                 break;
                             }
@@ -250,31 +276,198 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     }
                 }             
             }
-        }
 
-        public void Drive(string to)
-        {
-            //TODO: drive car
+			// Spawn car
+			RotationEnum directionFrom = RotationEnum.North;
+			
+			switch (from[0])
+			{
+				case 'N':
+					// spawn car from north
+					directionFrom = RotationEnum.North;
+					break;
+				case 'E':
+					// spawn car from east
+					directionFrom = RotationEnum.East;
+					break;
+				case 'S':
+					// spawn car from south
+					directionFrom = RotationEnum.South;
+					break;
+				case 'W':
+					// spawn car from west
+					directionFrom = RotationEnum.West;
+					break;
+			}
+
+			// Drive car
+			RotationEnum directionTo = RotationEnum.North;
 
             switch (to[0])
             {
                 case 'N':
                     // drive car to north
-
+					directionTo = RotationEnum.North;
                     break;
                 case 'E':
                     // drive car to east
-
+					directionTo = RotationEnum.East;
                     break;
                 case 'S':
                     // drive car to south
-
+					directionTo = RotationEnum.South;
                     break;
                 case 'W':
                     // drive car to west
-
+					directionTo = RotationEnum.West;
                     break;
             }
+
+			int intTo = int.Parse(to[1].ToString());
+
+			Path(directionFrom, directionTo, intTo);
         }
-    }
+
+		public void Path(RotationEnum from, RotationEnum to, int intTo)
+		{
+			for (int i = 0; i < lists.Vehicles.Length; i++)
+			{
+				Point pntDeparture = new Point();
+
+				if (lists.Vehicles[i].spawntile != null)
+				{
+					if (lists.Vehicles[i].spawntile.GridCoordinates != null)
+					{
+						int departureX = (int)lists.Vehicles[i].spawntile.GridCoordinates.X;
+						int departureY = (int)lists.Vehicles[i].spawntile.GridCoordinates.Y;
+
+						switch (from)
+						{
+							case RotationEnum.North:
+								// from north
+								departureY += 7;
+								break;
+							case RotationEnum.East:
+								// from east
+								departureX -= 7;
+								break;
+							case RotationEnum.South:
+								// from south
+								departureY -= 7;
+								break;
+							case RotationEnum.West:
+								// from west
+								departureX += 7;
+								break;
+							default:
+								throw new Exception(string.Format("Direction from {0} wordt niet herkend!", from));
+						}
+
+						if (departureX > -1 && departureY > -1)
+						{
+							pntDeparture = new Point(departureX, departureY);
+						}
+						else
+						{
+							// Pech gehad
+						}
+
+						Point pntArrival = new Point();
+
+						int arrivalX = -1;
+						int arrivalY = -1;
+
+						foreach (Lane lane in lists.Lanes)
+						{
+							switch (to)
+							{
+								case RotationEnum.North:
+									// to north
+									if (lane.laneID.Equals("N6"))
+									{
+										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
+										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
+									}
+									break;
+								case RotationEnum.East:
+									// to east
+									if (lane.laneID.Equals("E6"))
+									{
+										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
+										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
+									}
+									break;
+								case RotationEnum.South:
+									// to south
+									if (lane.laneID.Equals("S6"))
+									{
+										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
+										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
+									}
+									break;
+								case RotationEnum.West:
+									// to west
+									if (lane.laneID.Equals("W6"))
+									{
+										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
+										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
+									}
+									break;
+								default:
+									throw new Exception(string.Format("Direction to {0} wordt niet herkend!", to));
+							}
+						}
+
+						if (arrivalX > -1 && arrivalY > -1)
+						{
+							pntArrival = new Point(arrivalX, arrivalY);
+						}
+						else
+						{
+							pntArrival = pntDeparture;
+						}
+
+						if (!pntArrival.Equals(pntDeparture))
+						{
+							Tuple<string, List<Vector2>> path = new Tuple<string, List<Vector2>>(lists.Vehicles[i].ID, new List<Vector2>());
+
+							try
+							{
+								path = new Tuple<string, List<Vector2>>(lists.Vehicles[i].ID, pathfinder.FindPath(pntDeparture, pntArrival));
+							}
+							catch (IndexOutOfRangeException)
+							{
+								
+							}
+
+							bool alreadyInPaths = false;
+
+							foreach (Tuple<string, List<Vector2>> path2 in paths)
+							{
+								if (path2.Item1.Equals(lists.Vehicles[i].ID))
+								{
+									alreadyInPaths = true;
+								}
+							}
+
+							if (!alreadyInPaths)
+							{
+								paths.Add(path);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public List<Tuple<string, List<Vector2>>> GetPaths()
+		{
+			return paths;
+		}
+
+		public void SetPathfinder(Pathfinder pathfinder)
+		{
+			this.pathfinder = pathfinder;
+		}
+	}
 }

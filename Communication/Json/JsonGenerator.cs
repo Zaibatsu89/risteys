@@ -918,7 +918,7 @@ namespace KruispuntGroep6.Communication.Json
 			try
 			{
 				// Write input.json in main folder of KruispuntGroep6 called XNASimulator
-				File.WriteAllLines(type + strings.JsonInputFileExtension, jsons);
+				File.WriteAllLines(type + strings.JsonFileExtension, jsons);
 			}
 			catch (Exception ex)
 			{

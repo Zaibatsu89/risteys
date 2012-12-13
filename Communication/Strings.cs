@@ -65,11 +65,6 @@
 			get { return "No connection possible, check server IP address"; }
 		}
 
-		public string ConnectionStatus
-		{
-			get { return "Connection status"; }
-		}
-
 		public string DateTimeFormat
 		{
 			get { return "HH:mm"; }
@@ -140,7 +135,7 @@
 			get { return "How many JSONs?"; }
 		}
 
-		public string JsonInputFileExtension
+		public string JsonFileExtension
 		{
 			get { return ".json"; }
 		}
@@ -165,9 +160,19 @@
 			get { return "Error saving JSON file as "; }
 		}
 
-		public string JsonSent
+		public string JsonSentDetector
 		{
-			get { return "Sent last JSON from file"; }
+			get { return "Sent last JSON from detector file"; }
+		}
+
+		public string JsonSentInput
+		{
+			get { return "Sent last JSON from input file"; }
+		}
+
+		public string JsonSentStoplight
+		{
+			get { return "Sent last JSON from stoplight file"; }
 		}
 
 		public string JsonTypeDetector
@@ -233,6 +238,16 @@
 		public string Sent
 		{
 			get { return "Sent: {0}"; }
+		}
+
+		public string Simulator
+		{
+			get { return "Simulator"; }
+		}
+
+		public string SimulatorConnect
+		{
+			get { return "Connect sim."; }
 		}
 
 		public string SimulatorDisconnected
