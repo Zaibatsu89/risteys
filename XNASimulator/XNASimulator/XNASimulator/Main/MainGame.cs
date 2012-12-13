@@ -95,6 +95,8 @@ namespace KruispuntGroep6.Simulator.Main
             #region Textures
             Textures.RedLight = Content.Load<Texture2D>("Tiles/32p/RedLight32x32");
             Textures.GreenLight = Content.Load<Texture2D>("Tiles/32p/GreenLight32x32");
+            Textures.YellowLight = Content.Load<Texture2D>("Tiles/32p/YellowLight32x32");
+            Textures.BlinkLight = Content.Load<Texture2D>("Tiles/32p/BlinkLight32x32");
 
             Textures.Sidewalk2Red = Content.Load<Texture2D>("Tiles/32p/Sidewalk2Red32x32");
             Textures.Sidewalk2Green = Content.Load<Texture2D>("Tiles/32p/Sidewalk2Green32x32");
