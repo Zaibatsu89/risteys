@@ -19,11 +19,12 @@ namespace KruispuntGroep6.Simulator.Objects
 		public float speed { get; set; }
         public bool stopCar { get; set; }
         public bool stopRedLight { get; set; }
+        public Vector2 occupyingtile { get; set; }
 		
         public Vehicle(Texture2D texture, string ID, Random random)
         {
             this.ID = ID;
-            rotation = RotationEnum.Up;
+            rotation = RotationEnum.North;
             position = Vector2.Zero;
             drawposition = Vector2.Zero;
             sprite = texture;
@@ -36,16 +37,18 @@ namespace KruispuntGroep6.Simulator.Objects
             stopCar = false;
             stopRedLight = false;
             collission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
+            occupyingtile = Vector2.Zero;
         }
 
         public Vehicle(string ID)
         {
             this.ID = ID;
-            rotation = RotationEnum.Up;
+            rotation = RotationEnum.North;
             position = Vector2.Zero;
             drawposition = Vector2.Zero;
             sprite = Textures.Default;
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
+            speed = 1f;
             alive = false;
 			speed = 1f;
             stopCar = false;

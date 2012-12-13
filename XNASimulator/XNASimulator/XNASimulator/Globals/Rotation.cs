@@ -4,10 +4,10 @@ namespace KruispuntGroep6.Simulator.Globals
 {
     enum RotationEnum
     { 
-        Up, 
-        Right, 
-        Down, 
-        Left 
+        North, 
+        East, 
+        South, 
+        West 
     }
 
     struct Rotation
@@ -18,16 +18,16 @@ namespace KruispuntGroep6.Simulator.Globals
 
             switch (rotation)
             {
-                case RotationEnum.Up:
+                case RotationEnum.North:
                     angle = 0;
                     break;
-                case RotationEnum.Right:
+                case RotationEnum.East:
                     angle = 90;
                     break;
-                case RotationEnum.Down:
+                case RotationEnum.South:
                     angle = 180;
                     break;
-                case RotationEnum.Left:
+                case RotationEnum.West:
                     angle = 270;
                     break;
             }

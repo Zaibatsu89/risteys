@@ -9,6 +9,9 @@ using System.Collections.Generic;
 
 namespace KruispuntGroep6.Simulator.Main
 {
+    //TODO: bugs: 
+    //Ghost cars that don't move appear after reset or after stress
+
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -37,6 +40,8 @@ namespace KruispuntGroep6.Simulator.Main
         private MouseState mouseStateCurrent;
         private MouseState mouseStatePrevious;
         private Vector2 mousePosition;
+
+        private bool simReady = false;
 
         public MainGame(string address)
         {
@@ -68,7 +73,7 @@ namespace KruispuntGroep6.Simulator.Main
             tileControl = new TileControl(lists);
             laneControl = new LaneControl(lists);
 
-            communication = new KruispuntGroep6.Simulator.Events.Communication(address, vehicleControl);
+
 
 
             //audio = new Audio(Services);
@@ -116,10 +121,12 @@ namespace KruispuntGroep6.Simulator.Main
 			this.LoadPathfinding("Content/Grids/Pathfinding.txt");
 
             laneControl.LoadLanes();
+            tileControl.FillTileList();
             //vehicleControl.LoadVehicles();
-
             //audio.PlayBackgroundMusic();
 
+            
+            simReady = true;
         }
 
         /// <summary>
@@ -138,13 +145,19 @@ namespace KruispuntGroep6.Simulator.Main
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (simReady)
+            {
+                communication = new KruispuntGroep6.Simulator.Events.Communication(address, vehicleControl);
+                simReady = false;
+            }
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             
             MouseButtonPress();
 
-            tileControl.Update(gameTime);
+            //tileControl.Update(gameTime);
             vehicleControl.Update(gameTime);
             laneControl.Update(gameTime);
 

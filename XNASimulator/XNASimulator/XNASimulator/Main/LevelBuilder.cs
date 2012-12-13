@@ -80,103 +80,103 @@ namespace KruispuntGroep6.Simulator.Main
             switch (tileType)
             {
                 case 'X':
-                    return LoadTile(Textures.RoadCenter, RotationEnum.Up, new Vector2(x,y));
+                    return LoadTile(Textures.RoadCenter, RotationEnum.North, new Vector2(x,y));
                 case 'S':
-                    return LoadTile(Textures.Sidewalk, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Sidewalk, RotationEnum.North, new Vector2(x, y));
                 case 'G':
-                    return LoadTile(Textures.Grass, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Grass, RotationEnum.North, new Vector2(x, y));
                 case 'C':
-                    return LoadTile(Textures.Crossing, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Crossing, RotationEnum.North, new Vector2(x, y));
                 case 'c':
-                    return LoadTile(Textures.Crossing, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.Crossing, RotationEnum.East, new Vector2(x, y));
 
                 #region Roads
                 case 'A':
-                    return LoadTile(Textures.Road, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.Road, RotationEnum.South, new Vector2(x, y));
                 case 'a':
-                    return LoadTile(Textures.Road, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.Road, RotationEnum.East, new Vector2(x, y));
                 case 'Z':
-                    return LoadTile(Textures.Road, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.Road, RotationEnum.West, new Vector2(x, y));
                 case 'z':
-                    return LoadTile(Textures.Road, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Road, RotationEnum.North, new Vector2(x, y));
                 #endregion
 
                 #region CarSorts
                 case 'I':
-                    return LoadTile(Textures.CarSortRight, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortRight, RotationEnum.South, new Vector2(x, y));
                 case 'O':
-                    return LoadTile(Textures.CarSortDown, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortDown, RotationEnum.South, new Vector2(x, y));
                 case 'P':
-                    return LoadTile(Textures.CarSortLeft, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortLeft, RotationEnum.South, new Vector2(x, y));
 
                 case 'i':
-                    return LoadTile(Textures.CarSortRight, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortRight, RotationEnum.East, new Vector2(x, y));
                 case 'o':
-                    return LoadTile(Textures.CarSortDown, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortDown, RotationEnum.East, new Vector2(x, y));
                 case 'p':
-                    return LoadTile(Textures.CarSortLeft, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortLeft, RotationEnum.East, new Vector2(x, y));
 
                 case 'T':
-                    return LoadTile(Textures.CarSortRight, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortRight, RotationEnum.West, new Vector2(x, y));
                 case 'Y':
-                    return LoadTile(Textures.CarSortDown, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortDown, RotationEnum.West, new Vector2(x, y));
                 case 'U':
-                    return LoadTile(Textures.CarSortLeft, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortLeft, RotationEnum.West, new Vector2(x, y));
 
                 case 't':
-                    return LoadTile(Textures.CarSortRight, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortRight, RotationEnum.North, new Vector2(x, y));
                 case 'y':
-                    return LoadTile(Textures.CarSortDown, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortDown, RotationEnum.North, new Vector2(x, y));
                 case 'u':
-                    return LoadTile(Textures.CarSortLeft, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.CarSortLeft, RotationEnum.North, new Vector2(x, y));
                 #endregion
 
                 #region MiscSorts
 
                 case 'F':
-                    return LoadTile(Textures.Bikelane, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.Bikelane, RotationEnum.South, new Vector2(x, y));
                 case 'B':
-                    return LoadTile(Textures.Buslane, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.Buslane, RotationEnum.South, new Vector2(x, y));
 
                 case 'f':
-                    return LoadTile(Textures.Bikelane, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.Bikelane, RotationEnum.East, new Vector2(x, y));
                 case 'b':
-                    return LoadTile(Textures.Buslane, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.Buslane, RotationEnum.East, new Vector2(x, y));
 
                 case 'D':
-                    return LoadTile(Textures.Bikelane, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.Bikelane, RotationEnum.West, new Vector2(x, y));
                 case 'N':
-                    return LoadTile(Textures.Buslane, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.Buslane, RotationEnum.West, new Vector2(x, y));
 
                 case 'd':
-                    return LoadTile(Textures.Bikelane, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Bikelane, RotationEnum.North, new Vector2(x, y));
                 case 'n':
-                    return LoadTile(Textures.Buslane, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Buslane, RotationEnum.North, new Vector2(x, y));
 
                 #endregion
 
                 #region SidewalkLights
                 case 'V':
-                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.North, new Vector2(x, y));
                 case '>':
-                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.East, new Vector2(x, y));
                 case 'v':
-                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.South, new Vector2(x, y));
                 case '<':
-                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.Sidewalk2Red, RotationEnum.West, new Vector2(x, y));
 
                 #endregion
 
                 #region TrafficLights
 
                 case 'L':
-                    return LoadTile(Textures.RedLight, RotationEnum.Down, new Vector2(x, y));
+                    return LoadTile(Textures.RedLight, RotationEnum.South, new Vector2(x, y));
                 case 'l':
-                    return LoadTile(Textures.RedLight, RotationEnum.Right, new Vector2(x, y));
+                    return LoadTile(Textures.RedLight, RotationEnum.East, new Vector2(x, y));
                 case 'K':
-                    return LoadTile(Textures.RedLight, RotationEnum.Left, new Vector2(x, y));
+                    return LoadTile(Textures.RedLight, RotationEnum.West, new Vector2(x, y));
                 case 'k':
-                    return LoadTile(Textures.RedLight, RotationEnum.Up, new Vector2(x, y));
+                    return LoadTile(Textures.RedLight, RotationEnum.North, new Vector2(x, y));
 
                 #endregion
                 

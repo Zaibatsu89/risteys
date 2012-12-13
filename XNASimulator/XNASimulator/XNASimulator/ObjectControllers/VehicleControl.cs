@@ -20,24 +20,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 			random = new Random();
         }
 
-        public void LoadVehicles()
-        {
-            string vehicleID = "";
-            int i = 0;
-
-            foreach (Lane lane in lists.Lanes)
-            {
-                if (lane.spawnTile != null)
-                {
-                    i += 1;
-                    vehicleID = "V" + i;
-                    Vehicle vehicle = LoadVehicle(lane.spawnTile, vehicleID);
-                    //lists.Vehicles.Add(vehicle);
-                    lane.laneVehicles.Add(vehicle);
-                }
-            }
-        }
-
         public void Update(GameTime gameTime)
         {
             foreach (Vehicle vehicle in lists.Vehicles)
@@ -45,28 +27,28 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 if (!vehicle.ID.Equals(string.Empty))
                 {
                     this.CheckAlive(vehicle);
-                    this.CheckCollission(vehicle);
+                    this.CheckNextTile(vehicle);
 
                     if (!vehicle.stopRedLight && !vehicle.stopCar)
                     {
                         switch (vehicle.rotation)
                         {
-                            case RotationEnum.Up:
+                            case RotationEnum.North:
                                 vehicle.position -= new Vector2(0, vehicle.speed);
                                 vehicle.drawposition -= new Vector2(0, vehicle.speed);
-                                vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height - 32);
+                                vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
                                 break;
-                            case RotationEnum.Right:
+                            case RotationEnum.East:
                                 vehicle.position += new Vector2(vehicle.speed, 0);
                                 vehicle.drawposition += new Vector2(vehicle.speed, 0);
                                 vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
                                 break;
-                            case RotationEnum.Left:
+                            case RotationEnum.West:
                                 vehicle.position -= new Vector2(vehicle.speed, 0);
                                 vehicle.drawposition -= new Vector2(vehicle.speed, 0);
-                                vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width - 32, vehicle.sprite.Height);
+                                vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
                                 break;
-                            case RotationEnum.Down:
+                            case RotationEnum.South:
                                 vehicle.position += new Vector2(0, vehicle.speed);
                                 vehicle.drawposition += new Vector2(0, vehicle.speed);
                                 vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
@@ -101,7 +83,12 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             vehicle.rotation = tile.Rotation;
             vehicle.position = tile.Position;
             vehicle.drawposition = tile.DrawPosition;
+
+            //occupy tile
             vehicle.spawntile = tile;
+            vehicle.occupyingtile = tile.GridCoordinates;
+            tile.isOccupied = true;
+            tile.OccupiedID = vehicle.ID;
             return vehicle;
         }
 
@@ -113,7 +100,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     (int)vehicle.position.Y)) )
                 {
                     vehicle.alive = false;
-                    //lists.Vehicles.Remove(vehicle);
+
+                    //Reset the vehicle for future use
                     lists.Vehicles[vehicle.ID[1]] = new Vehicle(string.Empty);
                 }
             }
@@ -126,32 +114,116 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             }
         }
 
-        private void CheckCollission(Vehicle vehicle)
+        private void CheckNextTile(Vehicle vehicle)
         {
-            foreach (Tile tile in lists.Tiles)
-            {
-                if (vehicle.collission.Intersects(tile.CollisionRectangle))
-                {
-                    if (tile.isOccupied && !string.Equals(tile.OccupiedID, vehicle.ID))
-                    {
-                        vehicle.stopCar = true;
-                    }
-                    else
-                    {
-                        vehicle.stopCar = false;
-                    }
+            Tile nextTile;
+            Tile currentTile = lists.Tiles[(int)vehicle.occupyingtile.X,(int)vehicle.occupyingtile.Y];
 
-                    if (tile.Texture.Equals(Textures.RedLight))
+            switch (vehicle.rotation)
+            {
+                case RotationEnum.North:
+                    //check if there is a tile north of the one the vehicle is occupying
+                    if (currentTile.adjacentTiles.ContainsKey(RotationEnum.North.ToString()))
                     {
-                        vehicle.stopRedLight = true;
+                        nextTile = currentTile.adjacentTiles[RotationEnum.North.ToString()];
+                        if (vehicle.collission.Intersects(nextTile.CollisionRectangle))
+                        {
+                            CheckTileOccupation(vehicle, nextTile);
+                        }
+                        else
+                        {
+                            CheckTileOccupation(vehicle, currentTile);
+                        }
                     }
-                    else
+                    break;
+                case RotationEnum.East:
+                    if (currentTile.adjacentTiles.ContainsKey(RotationEnum.East.ToString()))
                     {
-                        vehicle.stopRedLight = false;
+                        nextTile = currentTile.adjacentTiles[RotationEnum.East.ToString()];
+                        if (vehicle.collission.Intersects(nextTile.CollisionRectangle))
+                        {
+                            CheckTileOccupation(vehicle, nextTile);
+                        }
+                        else
+                        {
+                            CheckTileOccupation(vehicle, currentTile);
+                        }
                     }
-                }
+                    break;
+                case RotationEnum.South:
+                    if (currentTile.adjacentTiles.ContainsKey(RotationEnum.South.ToString()))
+                    {
+                        nextTile = currentTile.adjacentTiles[RotationEnum.South.ToString()];
+                        if (vehicle.collission.Intersects(nextTile.CollisionRectangle))
+                        {
+                            CheckTileOccupation(vehicle, nextTile);
+                        }
+                        else
+                        {
+                            CheckTileOccupation(vehicle, currentTile);
+                        }
+                    }
+                    break;
+                case RotationEnum.West:
+                    if (currentTile.adjacentTiles.ContainsKey(RotationEnum.West.ToString()))
+                    {
+                        nextTile = currentTile.adjacentTiles[RotationEnum.West.ToString()];
+                        if (vehicle.collission.Intersects(nextTile.CollisionRectangle))
+                        {
+                            CheckTileOccupation(vehicle, nextTile);
+                        }
+                        else
+                        {
+                            CheckTileOccupation(vehicle, currentTile);
+                        }
+                    }
+                    break;
             }
         }
+
+        private void CheckTileOccupation(Vehicle vehicle, Tile tile)
+        {
+            //check if occupied
+            if (tile.isOccupied)
+            {
+                //is it occupied by this vehicle?
+                if (tile.GridCoordinates.Equals(vehicle.occupyingtile))
+                {
+                    //yes, so go..
+                    vehicle.stopCar = false;
+                }
+                else
+                {
+                    //no, so wait..
+                    vehicle.stopCar = true;
+                }
+            }                    
+            else //not occupied
+            {
+                vehicle.stopCar = false;
+
+                //claim it 
+                tile.isOccupied = true;
+                tile.OccupiedID = vehicle.ID;
+
+                //release previous tile
+                lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].isOccupied = false;
+                lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].OccupiedID = string.Empty;
+
+                //set the new tile
+                vehicle.occupyingtile = tile.GridCoordinates;              
+            }
+
+            if (tile.Texture.Equals(Textures.RedLight))
+            {
+                vehicle.stopRedLight = true;
+            }
+            else
+            {
+                vehicle.stopRedLight = false;
+            }
+        }
+        
 
         public void Spawn(string from)
         {
@@ -159,9 +231,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             {
                 if(lane.laneID.Equals(from))
                 {
-                    //this.vehicleIDCounter += 1;
-                    //Vehicle vehicle = LoadVehicle(lane.spawnTile, "V" + vehicleIDCounter);
-                    //lists.Vehicles.Add(vehicle);
                     for (int i = 0; i < lists.Vehicles.Length; i++)
                     {
                         if (!lane.spawnTile.isOccupied)
@@ -179,7 +248,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                             //put vehicle in queue
                         }
                     }
-                    //lane.laneVehicles.Add(vehicle);
                 }             
             }
         }

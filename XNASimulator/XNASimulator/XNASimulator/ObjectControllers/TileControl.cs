@@ -2,6 +2,7 @@
 using KruispuntGroep6.Simulator.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using KruispuntGroep6.Simulator.Main;
 
 namespace KruispuntGroep6.Simulator.ObjectControllers
 {
@@ -23,10 +24,11 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             this.lists = lists;
         }
 
+        /*
         public void Update(GameTime gameTime)
         {
-            this.UpdateTileOccupied();
-        }
+            //this.UpdateTileOccupied();
+        }*/
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -66,13 +68,14 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             }
         }
 
+        /*
         private void UpdateTileOccupied()
         {
             foreach (Tile tile in lists.Tiles)
             {
                 foreach (Vehicle vehicle in lists.Vehicles)
                 {
-                    //check if vehicle exists
+                    //Check if vehicle exists
                     if (!vehicle.ID.Equals(string.Empty))
                     {
                         //check if vehicle is the one occupying the tile...
@@ -96,7 +99,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     }
                 }
             }
-        }
+            
+        }*/
 
         private void ChangeLights(Tile tile)
         {
@@ -109,6 +113,33 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             {
                 tile.Texture = Textures.RedLight;
                 tile.isGreen = false;
+            }
+        }
+
+        public void FillTileList()
+        {
+            foreach (Tile tile in lists.Tiles)
+            {
+                int tileX = (int)tile.GridCoordinates.X;
+                int tileY = (int)tile.GridCoordinates.Y;
+
+                if (tileX > 0)
+                {
+                    tile.adjacentTiles.Add(RotationEnum.West.ToString(), lists.Tiles[tileX - 1, tileY]);
+                }
+                if (tileX < MainGame.TilesHor - 1)
+                {
+                    tile.adjacentTiles.Add(RotationEnum.East.ToString(), lists.Tiles[tileX + 1, tileY]);
+                }
+                if (tileY > 0)
+                {
+                    tile.adjacentTiles.Add(RotationEnum.North.ToString(), lists.Tiles[tileX, tileY - 1]);
+                }
+                if (tileY < MainGame.TilesVer - 1)
+                {
+                    tile.adjacentTiles.Add(RotationEnum.South.ToString(), lists.Tiles[tileX, tileY + 1]);
+                }
+                
             }
         }
     }

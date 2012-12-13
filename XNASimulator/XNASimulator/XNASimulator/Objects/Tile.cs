@@ -1,6 +1,7 @@
 ﻿using KruispuntGroep6.Simulator.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace KruispuntGroep6.Simulator.Objects
 {
@@ -23,6 +24,7 @@ namespace KruispuntGroep6.Simulator.Objects
         //public int TileID;
         //public int TrafficLightID;
         //public Tile[] adjacentTiles;
+        public Dictionary<string, Tile> adjacentTiles {get; set; }
 
         public string OccupiedID { get; set; }
 
@@ -44,7 +46,8 @@ namespace KruispuntGroep6.Simulator.Objects
             this.Texture = texture;
             this.Rotation = rotation;
 
-            this.OccupiedID = "";
+            this.OccupiedID = string.Empty;
+            this.adjacentTiles = new Dictionary<string, Tile>();
         }
     }
 }
