@@ -76,19 +76,28 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 tile.isGreen = false;
             }
         }
-        public void ChangeLights(Tile tile, LightsEnum colour)
+        public void ChangeLights(string laneID, LightsEnum colour)
         {
-            switch (colour)
+            Tile tile;
+
+            foreach (Lane lane in lists.Lanes)
             {
-                case LightsEnum.Blink: tile.Texture = Textures.BlinkLight;
-                    break;
-                case LightsEnum.Red: tile.Texture = Textures.RedLight;
-                    break;
-                case LightsEnum.Green: tile.Texture = Textures.GreenLight;
-                    break;
-                case LightsEnum.Yellow: tile.Texture = Textures.YellowLight;
-                    break;
-            }
+                if(laneID.Equals(lane.laneID))
+                {
+                    tile = lane.trafficLight;
+                    switch (colour)
+                    {
+                        case LightsEnum.Blink: tile.Texture = Textures.BlinkLight;
+                            break;
+                        case LightsEnum.Red: tile.Texture = Textures.RedLight;
+                            break;
+                        case LightsEnum.Green: tile.Texture = Textures.GreenLight;
+                            break;
+                        case LightsEnum.Yellow: tile.Texture = Textures.YellowLight;
+                            break;
+                    }
+                }
+            }           
         }
 
         public void FillTileList()
