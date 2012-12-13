@@ -3,6 +3,7 @@ using KruispuntGroep6.Simulator.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using KruispuntGroep6.Simulator.Main;
+using XNASimulator.Globals;
 
 namespace KruispuntGroep6.Simulator.ObjectControllers
 {
@@ -23,12 +24,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         {
             this.lists = lists;
         }
-
-        /*
-        public void Update(GameTime gameTime)
-        {
-            //this.UpdateTileOccupied();
-        }*/
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -68,41 +63,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             }
         }
 
-        /*
-        private void UpdateTileOccupied()
-        {
-            foreach (Tile tile in lists.Tiles)
-            {
-                foreach (Vehicle vehicle in lists.Vehicles)
-                {
-                    //Check if vehicle exists
-                    if (!vehicle.ID.Equals(string.Empty))
-                    {
-                        //check if vehicle is the one occupying the tile...
-                        if (vehicle.ID == tile.OccupiedID)
-                        {
-                            //if occupying vehicle no longer occupies...
-                            if (!vehicle.collission.Intersects(tile.CollisionRectangle))
-                            {
-                                //release tile
-                                tile.isOccupied = false;
-                                tile.OccupiedID = "";
-                            }
-                        }
-
-                        //if not occupied and vehicle enters...
-                        if (!tile.isOccupied && vehicle.collission.Intersects(tile.CollisionRectangle))
-                        {
-                            tile.isOccupied = true;
-                            tile.OccupiedID = vehicle.ID;
-                        }
-                    }
-                }
-            }
-            
-        }*/
-
-        private void ChangeLights(Tile tile)
+        public void ChangeLights(Tile tile)
         {
             if (tile.isGreen == false && tile.Texture.Equals(Textures.RedLight))
             {
@@ -113,6 +74,20 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             {
                 tile.Texture = Textures.RedLight;
                 tile.isGreen = false;
+            }
+        }
+        public void ChangeLights(Tile tile, LightsEnum colour)
+        {
+            switch (colour)
+            {
+                case LightsEnum.Blink: tile.Texture = Textures.BlinkLight;
+                    break;
+                case LightsEnum.Red: tile.Texture = Textures.RedLight;
+                    break;
+                case LightsEnum.Green: tile.Texture = Textures.GreenLight;
+                    break;
+                case LightsEnum.Yellow: tile.Texture = Textures.YellowLight;
+                    break;
             }
         }
 
