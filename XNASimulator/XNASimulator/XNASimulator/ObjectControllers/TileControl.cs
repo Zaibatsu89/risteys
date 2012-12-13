@@ -83,19 +83,22 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             {
                 if(laneID.Equals(lane.laneID))
                 {
-                    switch (colour)
-                    {
-                        case LightsEnum.Blink: lane.trafficLight.Texture = Textures.BlinkLight;
-                            break;
-                        case LightsEnum.Red: lane.trafficLight.Texture = Textures.RedLight;
-                            break;
-                        case LightsEnum.Green: lane.trafficLight.Texture = Textures.GreenLight;
-                            break;
-                        case LightsEnum.Yellow: lane.trafficLight.Texture = Textures.YellowLight;
-                            break;
-                    }
-				} break;
-            }           
+					if (!laneID[1].Equals('0') && !laneID[1].Equals('7'))
+					{
+						switch (colour)
+						{
+							case LightsEnum.Blink: lane.trafficLight.Texture = Textures.BlinkLight;
+								break;
+							case LightsEnum.Red: lane.trafficLight.Texture = Textures.RedLight;
+								break;
+							case LightsEnum.Green: lane.trafficLight.Texture = Textures.GreenLight;
+								break;
+							case LightsEnum.Yellow: lane.trafficLight.Texture = Textures.YellowLight;
+								break;
+						}
+					}
+				}
+            }
         }
 
         public void FillTileList()

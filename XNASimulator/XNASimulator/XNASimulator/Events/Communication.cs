@@ -151,7 +151,7 @@ namespace KruispuntGroep6.Simulator.Events
 					}
 					else if (jsonParameters[0].Equals("stoplight"))
 					{
-						LightsEnum lightsEnum = LightsEnum.Blink;
+						LightsEnum lightsEnum = LightsEnum.Red;
 
 						switch (jsonParameters[2])
 						{

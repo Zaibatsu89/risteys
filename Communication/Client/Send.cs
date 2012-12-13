@@ -35,7 +35,7 @@ namespace KruispuntGroep6.Communication.Client
 			{
 				Console.WriteLine(string.Format(strings.SocketException, e.Message));
 			}
-			catch (System.IO.IOException e)
+			catch (IOException e)
 			{
 				Console.WriteLine(string.Format(strings.IOException, e.Message));
 			}
