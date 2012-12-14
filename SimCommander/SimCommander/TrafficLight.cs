@@ -5,6 +5,7 @@ using System.Text;
 using SimCommander.Exceptions;
 using System.Timers;
 using SimCommander.ControllerDelegates;
+using SimCommander.Communication;
 using System.Windows.Forms;
 using SimCommander.SharedObjects;
 
@@ -12,13 +13,14 @@ namespace SimCommander
 {
     public abstract class TrafficLight
     {
+        // used to get priority, the value of typeMultiplier is multiplied by the number of waiting entities.
         protected double typeMultiplier;
 
         // FIX: must be public because it is used in the CompareTo methode. It is a copy of
         // the Queue row.count but this is of base type int which has no method CompareTo there
         // for you need to use Int16, Int32 or Int64
         protected int numberOfWaitingEntities;
-        protected int[] trafficLightMatrix;
+        //protected int[] trafficLightMatrix;
 
         protected int minGreenTime;
         protected int maxGreenTime;
@@ -33,6 +35,8 @@ namespace SimCommander
         //public TrafficLight(double typeMultiplier, string name,
         //int minGreenTime, int maxGreenTime, int orangeTime, ImmutableDictionary<string, int[]> TrafficLightMatrices)
 
+        #region Constuctor
+
         public TrafficLight(double typeMultiplier, string name,
         int minGreenTime, int maxGreenTime, int orangeTime, int[] TrafficLightMatrix)
         {
@@ -41,7 +45,7 @@ namespace SimCommander
             this.typeMultiplier = typeMultiplier>=0.1?typeMultiplier: 1;
             this.Name = name;
             //this.TrafficLightMatrices = TrafficLightMatrices;
-            this.trafficLightMatrix = TrafficLightMatrix;
+            this.TrafficLightMatrix = TrafficLightMatrix;
 
             this.minGreenTime = minGreenTime*100;
             this.maxGreenTime = maxGreenTime*100;
@@ -69,6 +73,8 @@ namespace SimCommander
                 throw new TrafficLightInitializationException("OrangeTime must be greater than 0");
 
         }
+
+        #endregion
 
         #region properties
 
@@ -216,6 +222,20 @@ namespace SimCommander
                     target.Invoke(TrafficLightChanged, new object[] { sender, tlp });
                 else
                     TrafficLightChanged(sender, tlp);
+            }
+        }
+
+        public event delegates.OnInfoMessageHandler messageInfo;
+
+        protected virtual void OnInfoMessage(string message)
+        {
+            if (messageInfo != null)
+            {
+                Control target = messageInfo.Target as Control;
+                if (target != null && target.InvokeRequired)
+                    target.Invoke(messageInfo, new object[] { message });
+                else
+                    messageInfo(message);
             }
         }
 

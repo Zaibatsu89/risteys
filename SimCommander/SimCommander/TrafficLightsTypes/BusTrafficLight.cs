@@ -14,7 +14,7 @@ namespace SimCommander.TrafficLichtTypes
 
         //public BusTrafficLight(string name, int multiplier, ImmutableDictionary<string, int[]> TrafficLightMatrices) :
         public BusTrafficLight(string name, int multiplier, int[] TrafficLightMatrices) :
-            base(10, name, 10, 30, 30, TrafficLightMatrices)
+            base(100, name, 10, 30, 30, TrafficLightMatrices)
         {
             //this.MyTrafficLightMatrices = new Queue<ValuePair>();
             this.multiplier = multiplier;
@@ -28,13 +28,14 @@ namespace SimCommander.TrafficLichtTypes
         public override void add()
         {
             // to check if the matrix has the right dimention of 8*8=64 element.
-            if (trafficLightMatrix.Length != 64)
+            if (TrafficLightMatrix.Length != 64)
                 throw new InvalidTrafficLightMatrix("the number of an trafficLightMatrix needs to represent exectly 64 element");
 
             //MyTrafficLightMatrices.Enqueue(new ValuePair(TrafficLightMatrices[dlp.Light], dlp.Destination));
             // increment the number of waiting entities.
             numberOfWaitingEntities++;
-            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
+            //Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
+            OnInfoMessage(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         /// <summary>
@@ -45,18 +46,9 @@ namespace SimCommander.TrafficLichtTypes
             //MyTrafficLightMatrices.Dequeue();
 
             numberOfWaitingEntities--;
-            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
+            //Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
+            OnInfoMessage(this.Name + ": " + this.numberOfWaitingEntities);
         }
-
-        // TODO: needs to be implemented
-        ///// <summary>
-        ///// used to see what's the direction of (in this case the next bus) the next verhilce
-        ///// </summary>
-        ///// <returns>at this moment a wrong type</returns>
-        //public bool peek()
-        //{
-        //    return true;
-        //}
 
         /// <summary>
         /// 
@@ -160,7 +152,8 @@ namespace SimCommander.TrafficLichtTypes
                     OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.outOfOrder));
                     break;
                 default:
-                    Bootstrapper.MessageLoop.Enqueue("Invalid LightID");
+                    //Bootstrapper.MessageLoop.Enqueue("Invalid LightID");
+                    OnInfoMessage("Invalid LightID");
                     break;
             }
         }
@@ -168,3 +161,4 @@ namespace SimCommander.TrafficLichtTypes
         #endregion
     }
 }
+

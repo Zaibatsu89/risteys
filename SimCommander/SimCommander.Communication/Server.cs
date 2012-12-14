@@ -18,34 +18,41 @@ namespace SimCommander.Communication
         public static volatile bool quit;
         public Queue<String> message;
 
+        public object lockthis = new object();
+
         public Server()
         {
             clients = new List<TcpClient>();
             // detect current ip address and uses it
             SetAddress();
+            OnInfoMessage("server adres: " + address);
 
             quit = false;
             message = new Queue<string>();
 
-            OnInfoMessage(string.Format(Strings.HiIAmController +
-                " and I serve from {0}:1337 forever", address));
-
-            // create our TCPListener object
-            server = new TcpListener(IPAddress.Parse(address), Int32.Parse(Strings.Port));
+            //OnInfoMessage(string.Format(Strings.HiIAmController +
+            //    " and I serve from {0}:1337 forever", address));
 
             // start the server
-            server.Start();
+            //server.Start();
 
             // create a thread witch handels connect requests
             new Thread(new ThreadStart(connect)).Start();
 
-            new Thread(new ThreadStart(write)).Start();
         }
 
         private void connect()
         {
+            Thread.Sleep(1000);
+            OnInfoMessage(string.Format("the server is started on {0}:1337", this.address.ToString()));
+
+            // create our TCPListener object
+            server = new TcpListener(IPAddress.Parse(address), Int32.Parse(Strings.Port));
+            server.Start();
+            new Thread(new ThreadStart(write)).Start();
             while (!quit)
             {
+
                 //create a null connection
                 TcpClient client = null;
                 //check if there are any pending connection requests
@@ -53,8 +60,12 @@ namespace SimCommander.Communication
                 {
                     //if there are pending requests create a new connection
                     client = server.AcceptTcpClient();
-                    //add client to clients
-                    clients.Add(client);
+
+                    lock (lockthis)
+                    {
+                        //add client to clients
+                        clients.Add(client);
+                    }
 
                     //create a new DoCommunicate Object
                     ClientReader reader = new ClientReader(client);
@@ -136,12 +147,19 @@ namespace SimCommander.Communication
         private void write()
         {
             StreamWriter writer;
-
+            string __message = "";
+            List<TcpClient> __clients;
+            
             while (!quit)
             {
                 if (message.Count > 0)
                 {
-                    foreach (TcpClient client in clients)
+                    lock (lockthis)
+                    { 
+                        __clients = clients;
+                    }
+
+                    foreach (TcpClient client in __clients)
                     {
                         try
                         {
@@ -150,23 +168,22 @@ namespace SimCommander.Communication
                             if (!string.Equals(message.Peek().Trim(), string.Empty) || !TcpClient.Equals(client, null))
                             {
                                 writer = new StreamWriter(client.GetStream());
-
-                                writer.WriteLine(message.Dequeue());
+                                __message = message.Dequeue();
+                                writer.WriteLine(__message);
 
                                 writer.Flush();
 
-                                writer.Dispose();
+//                                writer.Close();
                             }
 
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
+                            OnInfoMessage(e.Message);
                             clients.Remove(client);
                         }
                     }
                 }
-                else
-                    Thread.Sleep(250);
             }
         }
 

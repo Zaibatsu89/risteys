@@ -35,8 +35,8 @@ namespace KruispuntGroep6.Communication.Server
 			//create our TCPListener object
 			server = new System.Net.Sockets.TcpListener(IPAddress.Parse(address), strings.Port);
 			//check to see if the server is running
-			//while (true) do the commands
-			while (true)
+            //while (true) do the commands
+            while (true)
 			{
 				try
 				{

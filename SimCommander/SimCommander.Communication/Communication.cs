@@ -96,11 +96,10 @@ namespace SimCommander.Communication
                     break;
                 case "multiplier":
 
-                    //
-                    int strMultiplier = json.multiplier;
-                    //var multiplier = json.multiplier;
+                    //int strMultiplier = json.multiplier;
+                    var multiplier = json.multiplier;
 
-                    OnMultiplierChanged(Int32.Parse(json.multiplier));
+                    OnMultiplierChanged((int) multiplier);
                     break;
                 default:
                     break;
