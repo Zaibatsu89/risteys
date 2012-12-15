@@ -40,7 +40,8 @@ namespace KruispuntGroep6.Simulator.Main
             {
                 string line = reader.ReadLine();
                 width = line.Length;
-                while (!string.Equals(line, null))
+
+                while (line != null)
                 {
                     lines.Add(line);
                     if (!Int32.Equals(line.Length, width))

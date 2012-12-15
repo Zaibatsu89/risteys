@@ -42,7 +42,7 @@
 
 		public string Connected
 		{
-			get { return "Connected: {0}"; }
+			get { return "Connected:{0}"; }
 		}
 
 		public string Connecting
@@ -243,11 +243,6 @@
 		public string Simulator
 		{
 			get { return "Simulator"; }
-		}
-
-		public string SimulatorConnect
-		{
-			get { return "Connect sim."; }
 		}
 
 		public string SimulatorDisconnected

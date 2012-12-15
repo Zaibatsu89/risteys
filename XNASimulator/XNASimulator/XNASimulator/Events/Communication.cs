@@ -103,9 +103,9 @@ namespace KruispuntGroep6.Simulator.Events
 				{
 					string message = reader.ReadLine();
 
-					if (!object.Equals(message, null))
+					if (message != null)
 					{
-						if (!string.Equals(message, string.Empty))
+						if (!message.Equals(string.Empty))
 						{
 							// Pass message to Decrypter
 							Decrypter(message);

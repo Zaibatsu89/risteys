@@ -6,12 +6,19 @@ using KruispuntGroep6.Communication.Json;
 
 namespace KruispuntGroep6.Communication.Server
 {
+	/// <summary>
+	/// Class used to do the communication.
+	/// </summary>
 	class DoCommunicate
 	{
-		TcpClient client;							// TcpClient used to communicate with.
-		StreamReader reader;						// Reader used to read messages from a network stream.
+		TcpClient client;	// TcpClient used to communicate with.
+		StreamReader reader;	// Reader used to read messages from a network stream.
 		private Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="tcpClient">TcpClient used to determine the TCP client.</param>
 		public DoCommunicate(TcpClient tcpClient)
 		{
 			//create our TcpClient
@@ -24,8 +31,11 @@ namespace KruispuntGroep6.Communication.Server
 			clientThread.Start();
 		}
 
+		/// <summary>
+		/// Runs the client.
+		/// Uses a try...catch to catch any exceptions.
+		/// </summary>
 		private void RunClient()
-		//use a try...catch to catch any exceptions
 		{
 			// Begins to listen for incoming connection attempts from controller or simulator.
 			try

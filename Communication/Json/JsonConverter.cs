@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace KruispuntGroep6.Communication.Json
 {
 	/// <summary>
-	/// Class to convert JSON from and to byte array or string.
+	/// Class used to convert a JSON array or a JSON object to a readable message.
 	/// </summary>
     public class JsonConverter
     {
 		/// <summary>
-		/// Gets the json type of a dynamic json string.
+		/// Gets the type of a JSON string.
 		/// </summary>
-		/// <param name="message">String used to contain a dynamic json.</param>
-		/// <returns>String used to contain the json type.</returns>
+		/// <param name="message">String used to contain a dynamic JSON.</param>
+		/// <returns>String used to contain the JSON type.</returns>
 		private static string GetType(string message)
 		{
 			string jsonType = string.Empty;
@@ -34,9 +32,9 @@ namespace KruispuntGroep6.Communication.Json
 		}
 
 		/// <summary>
-		/// Converts dynamic json array string to readable message.
+		/// Converts dynamic JSON array string to readable message.
 		/// </summary>
-		/// <param name="json">String used to contain a dynamic json array.</param>
+		/// <param name="json">String used to contain a dynamic JSON array.</param>
 		/// <returns>String used to contain a readable message.</returns>
 		public static string JsonArrayToMessage(string strJson)
 		{
@@ -46,70 +44,6 @@ namespace KruispuntGroep6.Communication.Json
 
 			switch (message)
 			{
-				case "input":
-					var time = ((dynamic[])json).Select(d => d.time);
-					var type = ((dynamic[])json).Select(d => d.type);
-					var from = ((dynamic[])json).Select(d => d.from);
-					var to = ((dynamic[])json).Select(d => d.to);
-
-					for (int i = 0; i < count; i++)
-					{
-						string strTime = time.ElementAt(i);
-						string strType = type.ElementAt(i);
-						string strFrom = from.ElementAt(i);
-						string strTo = to.ElementAt(i);
-
-						if (i > 0)
-						{
-							message += "[input";
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
-
-						message += ",";
-						message += strTime;
-						message += ",";
-						message += strType;
-						message += ",";
-						message += strFrom;
-						message += ",";
-						message += strTo;
-						message += "],";
-					}
-
-					message = message.Remove(message.Length - 1);
-
-					break;
-				case "stoplight":
-					var light = ((dynamic[])json).Select(d => d.light);
-					var state = ((dynamic[])json).Select(d => d.state);
-
-					for (int i = 0; i < count; i++)
-					{
-						string strLight = light.ElementAt(i);
-						string strState = state.ElementAt(i);
-
-						if (i > 0)
-						{
-							message += "[stoplight";
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
-
-						message += ",";
-						message += strLight;
-						message += ",";
-						message += strState;
-						message += "],";
-					}
-
-					message = message.Remove(message.Length - 1);
-
-					break;
 				case "detector":
 					var dLight = ((dynamic[])json).Select(d => d.light);
 					var dType = ((dynamic[])json).Select(d => d.type);
@@ -150,23 +84,36 @@ namespace KruispuntGroep6.Communication.Json
 					message = message.Remove(message.Length - 1);
 
 					break;
-				case "start":
-					var starttime = ((dynamic[])json).Select(d => d.starttime);
+				case "input":
+					var time = ((dynamic[])json).Select(d => d.time);
+					var type = ((dynamic[])json).Select(d => d.type);
+					var from = ((dynamic[])json).Select(d => d.from);
+					var to = ((dynamic[])json).Select(d => d.to);
 
 					for (int i = 0; i < count; i++)
 					{
-						string strStarttime = starttime.ElementAt(i);
+						string strTime = time.ElementAt(i);
+						string strType = type.ElementAt(i);
+						string strFrom = from.ElementAt(i);
+						string strTo = to.ElementAt(i);
 
 						if (i > 0)
 						{
-							message += "[starttime";
+							message += "[input";
 						}
 						else
 						{
 							message = message.Insert(0, "[");
 						}
+
 						message += ",";
-						message += strStarttime;
+						message += strTime;
+						message += ",";
+						message += strType;
+						message += ",";
+						message += strFrom;
+						message += ",";
+						message += strTo;
 						message += "],";
 					}
 
@@ -196,6 +143,59 @@ namespace KruispuntGroep6.Communication.Json
 					message = message.Remove(message.Length - 1);
 
 					break;
+				case "stoplight":
+					var light = ((dynamic[])json).Select(d => d.light);
+					var state = ((dynamic[])json).Select(d => d.state);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strLight = light.ElementAt(i);
+						string strState = state.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[stoplight";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+
+						message += ",";
+						message += strLight;
+						message += ",";
+						message += strState;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				
+				case "start":
+					var starttime = ((dynamic[])json).Select(d => d.starttime);
+
+					for (int i = 0; i < count; i++)
+					{
+						string strStarttime = starttime.ElementAt(i);
+
+						if (i > 0)
+						{
+							message += "[starttime";
+						}
+						else
+						{
+							message = message.Insert(0, "[");
+						}
+						message += ",";
+						message += strStarttime;
+						message += "],";
+					}
+
+					message = message.Remove(message.Length - 1);
+
+					break;
+				
 				default:
 					throw new Exception(string.Format("JSON {0} heeft geen herkenbaar type!", strJson));
 			}
@@ -204,9 +204,9 @@ namespace KruispuntGroep6.Communication.Json
 		}
 
 		/// <summary>
-		/// Converts dynamic json object string to readable message.
+		/// Converts dynamic JSON object string to readable message.
 		/// </summary>
-		/// <param name="json">String used to contain a dynamic json object.</param>
+		/// <param name="json">String used to contain a dynamic JSON object.</param>
 		/// <returns>String used to contain a readable message.</returns>
 		public static string JsonObjectToMessage(string strJson)
 		{
@@ -215,36 +215,6 @@ namespace KruispuntGroep6.Communication.Json
 
 			switch (message)
 			{
-				case "input":
-					string strTime = json.time;
-					string strType = json.type;
-					string strFrom = json.from;
-					string strTo = json.to;
-
-					message = message.Insert(0, "[");
-					message += ",";
-					message += strTime;
-					message += ",";
-					message += strType;
-					message += ",";
-					message += strFrom;
-					message += ",";
-					message += strTo;
-					message += "]";
-
-					break;
-				case "stoplight":
-					string strLight = json.light;
-					string strState = json.state;
-
-					message = message.Insert(0, "[");
-					message += ",";
-					message += strLight;
-					message += ",";
-					message += strState;
-					message += "]";
-
-					break;
 				case "detector":
 					string strDetectorLight = json.light;
 					string strDetectorType = json.type;
@@ -266,12 +236,21 @@ namespace KruispuntGroep6.Communication.Json
 					message += "]";
 
 					break;
-				case "start":
-					string strStarttime = json.starttime;
+				case "input":
+					string strTime = json.time;
+					string strType = json.type;
+					string strFrom = json.from;
+					string strTo = json.to;
 
 					message = message.Insert(0, "[");
 					message += ",";
-					message += strStarttime;
+					message += strTime;
+					message += ",";
+					message += strType;
+					message += ",";
+					message += strFrom;
+					message += ",";
+					message += strTo;
 					message += "]";
 
 					break;
@@ -281,6 +260,27 @@ namespace KruispuntGroep6.Communication.Json
 					message = message.Insert(0, "[");
 					message += ",";
 					message += strMultiplier;
+					message += "]";
+
+					break;
+				case "start":
+					string strStarttime = json.starttime;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strStarttime;
+					message += "]";
+
+					break;
+				case "stoplight":
+					string strLight = json.light;
+					string strState = json.state;
+
+					message = message.Insert(0, "[");
+					message += ",";
+					message += strLight;
+					message += ",";
+					message += strState;
 					message += "]";
 
 					break;

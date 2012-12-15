@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections;
+using System.IO;
 
 namespace KruispuntGroep6.Communication.Json
 {
 	/// <summary>
-	/// Class to generate random JSON.
+	/// Class used to generate random detector JSONs, input JSONs or stoplight JSONs.
 	/// </summary>
 	class JsonGenerator
 	{
@@ -123,7 +123,7 @@ namespace KruispuntGroep6.Communication.Json
 			int intRandom = -1;
 			string strRandom;
 
-			if (!object.Equals(exclude, null))
+			if (exclude != null)
 			{
 				while (exclude.Contains(intRandom) || intRandom < 0)
 				{
@@ -158,7 +158,7 @@ namespace KruispuntGroep6.Communication.Json
 			int intRandom = -1;
 			string strRandom = string.Empty;
 
-			if (!object.Equals(exclude, null))
+			if (exclude != null)
 			{
 				while (exclude.Contains(strRandom) || intRandom < 0)
 				{
@@ -683,7 +683,7 @@ namespace KruispuntGroep6.Communication.Json
 			int intRandom = -1;
 			string strRandom = string.Empty;
 
-			if (!object.Equals(exclude, null))
+			if (exclude != null)
 			{
 				while (exclude.Contains(strRandom) || intRandom < 0)
 				{
@@ -881,20 +881,21 @@ namespace KruispuntGroep6.Communication.Json
 		}
 
 		/// <summary>
-		/// Saves jsons string array in input.json file.
+		/// Saves JSON string array in JSON file.
 		/// </summary>
+		/// <param name="jsonType">String used to determine the type of the JSON string array.</param>
 		/// <returns>Boolean used to determine if the saving is succesfull.</returns>
-		public bool SaveJSONFile(string type)
+		public bool SaveJSONFile(string jsonType)
 		{
 			bool succes = true;
 			string message = string.Empty;
 
-			// Remove empty jsons
+			// Remove empty JSONs
 			int index = 0;
 
 			foreach (string json in jsons)
 			{
-				if (!object.Equals(json, null))
+				if (json != null)
 				{
 					index++;
 				}
@@ -906,7 +907,7 @@ namespace KruispuntGroep6.Communication.Json
 
 			foreach (string json in jsons)
 			{
-				if (!object.Equals(json, null))
+				if (json != null)
 				{
 					tempJsons[index] = json;
 					index++;
@@ -917,8 +918,8 @@ namespace KruispuntGroep6.Communication.Json
 
 			try
 			{
-				// Write input.json in main folder of KruispuntGroep6 called XNASimulator
-				File.WriteAllLines(type + strings.JsonFileExtension, jsons);
+				// Write JSON file in main folder of KruispuntGroep6 called XNASimulator
+				File.WriteAllLines(jsonType + strings.JsonFileExtension, jsons);
 			}
 			catch (Exception ex)
 			{

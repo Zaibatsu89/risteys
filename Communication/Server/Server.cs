@@ -7,7 +7,7 @@ using System.Net.Sockets;
 namespace KruispuntGroep6.Communication.Server
 {
 	/// <summary>
-	/// Public class used to listen for incoming connection attempts.
+	/// Class used to listen for incoming connection attempts.
 	/// </summary>
 	public class Server
 	{
@@ -26,8 +26,8 @@ namespace KruispuntGroep6.Communication.Server
 
 			// Create new list of clients
 			clients = new List<TcpClient>();
-			// Set address
-			SetAddress();
+			// Get IP address
+			GetAddress();
 
 			// inform the human being
 			Console.WriteLine(string.Format(strings.HiIAmController +
@@ -65,7 +65,30 @@ namespace KruispuntGroep6.Communication.Server
 		}
 
 		/// <summary>
-		/// Send message to all clients.
+		/// Gets the IP address of this server.
+		/// </summary>
+		private static void GetAddress()
+		{
+			// Get internet IP address
+			address = string.Empty;
+			IPHostEntry host;
+			host = Dns.GetHostEntry(Dns.GetHostName());
+			foreach (IPAddress ip in host.AddressList)
+			{
+				if (ip.AddressFamily.ToString().Equals(strings.Internet))
+				{
+					address = ip.ToString();
+				}
+			}
+			// If there is no internet, use localhost
+			if (address.Equals(string.Empty))
+			{
+				address = strings.Localhost;
+			}
+		}
+
+		/// <summary>
+		/// Sends message to all clients.
 		/// </summary>
 		/// <param name="message">String used to contain the message to send</param>
 		public static void SendMessage(string message)
@@ -83,7 +106,7 @@ namespace KruispuntGroep6.Communication.Server
 				{
 					//check if the message is empty, of the particular
 					//index of out array is null, if it is then continue
-					if (!string.Equals(message.Trim(), string.Empty) || !TcpClient.Equals(client, null))
+					if (!string.Equals(message.Trim(), string.Empty) || client != null)
 					{
 						//Use the GetStream method to get the current memory
 						//stream for this index of our TCPClient array
@@ -104,33 +127,13 @@ namespace KruispuntGroep6.Communication.Server
 			}
 
 			//if client to be removed isn't null, then remove that client for clients list
-			if (!TcpClient.Equals(clientToBeRemoved, null))
+			if (clientToBeRemoved != null)
 			{
 				clients.Remove(clientToBeRemoved);
 			}
 
 			//show message in console
 			Console.WriteLine(String.Format(strings.Sent, message));
-		}
-
-		private static void SetAddress()
-		{
-			// Get internet IP address
-			address = string.Empty;
-			IPHostEntry host;
-			host = Dns.GetHostEntry(Dns.GetHostName());
-			foreach (IPAddress ip in host.AddressList)
-			{
-				if (ip.AddressFamily.ToString().Equals(strings.Internet))
-				{
-					address = ip.ToString();
-				}
-			}
-			// If there is no internet, use localhost
-			if (address.Equals(string.Empty))
-			{
-				address = strings.Localhost;
-			}
 		}
 	}
 }
