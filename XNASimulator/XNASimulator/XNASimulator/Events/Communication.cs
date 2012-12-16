@@ -89,6 +89,13 @@ namespace KruispuntGroep6.Simulator.Events
 			thrReadForever.Start();
 		}
 
+        public void SendToController(string message)
+        {
+            StreamWriter writer = new StreamWriter(tcpClient.GetStream());
+            writer.WriteLine(message);
+            writer.Flush();
+        }
+
 		/// <summary>
 		/// Reads messages from controller, forever.
 		/// </summary>

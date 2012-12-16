@@ -20,6 +20,9 @@ namespace KruispuntGroep6.Simulator.Objects
         public bool stopCar { get; set; }
         public bool stopRedLight { get; set; }
         public Vector2 occupyingtile { get; set; }
+        public Lane currentLane { get; set; }
+
+        public string destinationLaneID { get; set; }
 		
         public Vehicle(Texture2D texture, string ID, Random random)
         {
@@ -30,14 +33,16 @@ namespace KruispuntGroep6.Simulator.Objects
             sprite = texture;
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
             alive = false;
-			while (speed < 0.5f)
-			{
-				speed = (float)random.NextDouble() * 5f;
-			}
+			//while (speed < 0.5f)
+			//{
+			//	speed = (float)random.NextDouble() * 5f;
+			//}
+            speed = 3f;
             stopCar = false;
             stopRedLight = false;
             collission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
             occupyingtile = Vector2.Zero;
+            destinationLaneID = string.Empty;
         }
 
         public Vehicle(string ID)
@@ -54,6 +59,7 @@ namespace KruispuntGroep6.Simulator.Objects
             stopCar = false;
             stopRedLight = false;
             collission = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
+            destinationLaneID = string.Empty;
         }
     }
 }

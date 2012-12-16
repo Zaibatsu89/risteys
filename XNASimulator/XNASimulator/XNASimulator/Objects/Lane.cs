@@ -42,7 +42,17 @@ namespace KruispuntGroep6.Simulator.Objects
             vehicle.occupyingtile = this.spawnTile.GridCoordinates;
             this.spawnTile.isOccupied = true;
             this.spawnTile.OccupiedID = vehicle.ID;
+
+            vehicle.currentLane = this;
+            this.laneVehicles.Add(vehicle);
             return vehicle;
+        }
+
+        public string CreateDetectionPackage()
+        {
+            string light = this.laneID;
+            string type;
+            return light;
         }
     }
 }

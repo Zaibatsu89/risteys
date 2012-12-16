@@ -197,17 +197,18 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
         public void Update(GameTime gametime)
         {
-            SpawnQueuedVehicles();
+            foreach (Lane lane in lists.Lanes)
+            {
+                SpawnQueuedVehicles(lane);
+            }
         }
 
         public void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
         }
 
-        private void SpawnQueuedVehicles()
+        private void SpawnQueuedVehicles(Lane lane)
         {
-            foreach (Lane lane in lists.Lanes)
-            {
                 if (lane.vehicleQueue.Count > 0)
                 {
                     if (!lane.spawnTile.isOccupied)
@@ -216,7 +217,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                         lane.SpawnVehicle(vehicle.ID);
                     }
                 }
-            }
+            
         }
+
     }
 }

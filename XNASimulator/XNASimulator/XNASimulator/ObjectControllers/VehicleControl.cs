@@ -34,6 +34,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 {
                     this.CheckAlive(vehicle);
                     this.CheckNextTile(vehicle);
+                    this.TempPathfinding(vehicle);
 
                     if (!vehicle.stopRedLight && !vehicle.stopCar)
                     {
@@ -93,8 +94,13 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 {
                     vehicle.alive = false;
 
+                    //Free up the last tile it was on
+                    lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].OccupiedID = string.Empty;
+                    lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].isOccupied = false;
+
                     //Reset the vehicle for future use
                     lists.Vehicles[vehicle.ID[1]] = new Vehicle(string.Empty);
+
                 }
             }
             else
@@ -178,11 +184,21 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             //check if occupied
             if (tile.isOccupied)
             {
+
                 //is it occupied by this vehicle?
                 if (tile.GridCoordinates.Equals(vehicle.occupyingtile))
                 {
                     //yes, so go..
                     vehicle.stopCar = false;
+
+                    if (tile.Equals(vehicle.currentLane.detectionClose))
+                    {
+
+                    }
+                    else if (tile.Equals(vehicle.currentLane.detectionFar))
+                    {
+
+                    }
                 }
                 else
                 {
@@ -201,6 +217,17 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 //release previous tile
                 lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].isOccupied = false;
                 lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].OccupiedID = string.Empty;
+
+                //let the detection know
+                if (tile.Equals(vehicle.currentLane.detectionClose))
+                {
+
+                }
+                else if (tile.Equals(vehicle.currentLane.detectionFar))
+                {
+
+                }
+
 
                 //set the new tile
                 vehicle.occupyingtile = tile.GridCoordinates;              
@@ -225,6 +252,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 {
                     for (int i = 0; i < lists.Vehicles.Length; i++)
                     {
+                        lists.Vehicles[i].destinationLaneID = to;
                         Vehicle newVehicle = lists.Vehicles[i];
                         string vehicleType = string.Empty;
 
@@ -317,7 +345,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 			Path(directionFrom, directionTo, intTo);
         }
 
-		public void Path(RotationEnum from, RotationEnum to, int intTo)
+		private void Path(RotationEnum from, RotationEnum to, int intTo)
 		{
 			for (int i = 0; i < lists.Vehicles.Length; i++)
 			{
@@ -458,5 +486,86 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 		{
 			this.pathfinder = pathfinder;
 		}
+
+
+
+        private void TempPathfinding(Vehicle vehicle)
+        {
+            Tile occupyingTile = lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y];
+
+            //origin
+            switch (vehicle.spawntile.Rotation)
+            {
+                case RotationEnum.North:
+                    //destination
+                    switch (vehicle.destinationLaneID)
+                    {
+                        case "N6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.East;
+                            break;
+                        case "E6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.East;
+                            break;
+                        case "W6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.East;
+                            break;
+                    }
+                    break;
+                case RotationEnum.South:
+                    switch (vehicle.destinationLaneID)
+                    {
+                        case "E6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.West;
+                            break;
+                        case "S6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.West;
+                            break;
+                        case "W6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.West;
+                            break;
+                    }
+                    break;
+                case RotationEnum.East:
+                    switch (vehicle.destinationLaneID)
+                    {
+                        case "N6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.South;
+                            break;
+                        case "S6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.South;
+                            break;
+                        case "E6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.South;
+                            break;
+                    }
+                    break;
+                case RotationEnum.West:
+                    switch (vehicle.destinationLaneID)
+                    {
+                        case "N6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.North;
+                            break;
+                        case "S6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.North;
+                            break;
+                        case "W6":
+                            if (occupyingTile.Texture.Equals(Textures.Crossing))
+                                vehicle.rotation = RotationEnum.North;
+                            break;
+                    }
+                    break;
+            }
+        }
 	}
 }

@@ -19,11 +19,6 @@ namespace KruispuntGroep6.Simulator.Objects
         public Vector2 DrawPosition { get; set; }
         public Rectangle CollisionRectangle { get; set; }
         public Vector2 GridCoordinates { get; set; }
-
-        //Information
-        //public int TileID;
-        //public int TrafficLightID;
-        //public Tile[] adjacentTiles;
         public Dictionary<string, Tile> adjacentTiles {get; set; }
 
         public string OccupiedID { get; set; }
