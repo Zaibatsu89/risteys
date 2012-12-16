@@ -83,20 +83,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 }
             }
         }
-        private Vehicle LoadVehicle(Tile tile, string vehicleID)
-        {
-            Vehicle vehicle = new Vehicle(Textures.Car, vehicleID, random);
-            vehicle.rotation = tile.Rotation;
-            vehicle.position = tile.Position;
-            vehicle.drawposition = tile.DrawPosition;
-
-            //occupy tile
-            vehicle.spawntile = tile;
-            vehicle.occupyingtile = tile.GridCoordinates;
-            tile.isOccupied = true;
-            tile.OccupiedID = vehicle.ID;
-            return vehicle;
-        }
 
         private void CheckAlive(Vehicle vehicle)
         {
@@ -220,6 +206,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 vehicle.occupyingtile = tile.GridCoordinates;              
             }
 
+
             if (tile.Texture.Equals(Textures.RedLight))
             {
                 vehicle.stopRedLight = true;
@@ -238,40 +225,42 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                 {
                     for (int i = 0; i < lists.Vehicles.Length; i++)
                     {
-                        if (!lane.spawnTile.isOccupied)
+                        Vehicle newVehicle = lists.Vehicles[i];
+                        string vehicleType = string.Empty;
+
+                        if (newVehicle.ID.Equals(string.Empty))
                         {
-                            Vehicle newVehicle = lists.Vehicles[i];
-                            if (newVehicle.ID.Equals(string.Empty))
+
+                            switch (type)
                             {
-								string vehicleType = string.Empty;
-
-								switch (type)
-								{
-									case "bike":
-										vehicleType = "b";
-										break;
-									case "bus":
-										vehicleType = "B";
-										break;
-									case "car":
-										vehicleType = "c";
-										break;
-									case "godzilla":
-										vehicleType = "g";
-										break;
-									case "truck":
-										vehicleType = "t";
-										break;
-								}
-
-                                newVehicle = LoadVehicle(lane.spawnTile, vehicleType + i);
-                                lists.Vehicles[i] = newVehicle;
-                                break;
+                                case "bike":
+                                    vehicleType = "b";
+                                    break;
+                                case "bus":
+                                    vehicleType = "B";
+                                    break;
+                                case "car":
+                                    vehicleType = "c";
+                                    break;
+                                case "godzilla":
+                                    vehicleType = "g";
+                                    break;
+                                case "truck":
+                                    vehicleType = "t";
+                                    break;
                             }
-                        }
-                        else
-                        {
-                            //put vehicle in queue
+
+                            if (!lane.spawnTile.isOccupied)
+                            {
+                                string vehicleID = vehicleType + i;
+                                lists.Vehicles[i] = lane.SpawnVehicle(vehicleID);
+                                break;
+
+                            }
+                            else
+                            {
+                                lane.vehicleQueue.Enqueue(newVehicle);
+                            }
                         }
                     }
                 }             
