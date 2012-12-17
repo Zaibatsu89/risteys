@@ -50,7 +50,9 @@ namespace KruispuntGroep6.Communication.Server
 					// If String is exit message, display it and break.
 					if (data.Equals(strings.Exit))
 					{
+						/* TODO: is commented for test session
 						Console.WriteLine(strings.Disconnected, strings.HiIAmSimulator);
+						 */
 						client.Close();
 						break;
 					}
