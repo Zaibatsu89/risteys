@@ -99,8 +99,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y].isOccupied = false;
 
                     //Reset the vehicle for future use
-                    lists.Vehicles[vehicle.ID[1]] = new Vehicle(string.Empty);
-
+                    lists.Vehicles[int.Parse(vehicle.ID.Substring(1,vehicle.ID.Length - 1))] = new Vehicle(string.Empty);
                 }
             }
             else
@@ -276,6 +275,9 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                                 case "truck":
                                     vehicleType = "t";
                                     break;
+								default:
+									vehicleType = "?";
+									break;
                             }
 
                             if (!lane.spawnTile.isOccupied)
