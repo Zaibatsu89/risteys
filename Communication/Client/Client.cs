@@ -602,10 +602,12 @@ namespace KruispuntGroep6.Communication.Client
 			previousInputJSONnumber = 0;
 			//stop connection timer
 			timerConnection.Stop();
+			/* TODO: is commented for test session
 			//create welcome message
 			string message = strings.HiIAmSimulator;
 			//send this message to controller
 			SendToController(message);
+			 */
 
 			// Update GUI
 			OnMessageChanged(btnConnect, btnConnect.GetType(), enabled: false);
@@ -811,7 +813,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		private void SendStartTime()
 		{
-			string jsonStartTime = DynamicJson.Serialize(new { starttime = DateTime.UtcNow.ToString(strings.DateTimeFormat) });
+			string jsonStartTime = DynamicJson.Serialize(new Object[] { new { starttime = DateTime.UtcNow.ToString(strings.DateTimeFormat) }});
 
 			if (Int32.Equals(previousInputJSONnumber, 0))
 			{

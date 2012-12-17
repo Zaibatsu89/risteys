@@ -72,7 +72,7 @@ namespace KruispuntGroep6.Communication.Json
 		/// <summary>
 		/// Gets random detector type.
 		/// </summary>
-		/// <returns>String used to contain the detector type value (bike, bus, car, pedestrian).</returns>
+		/// <returns>String used to contain the detector type value (bicycle, bus, car, pedestrian).</returns>
 		private string GetRandomDetectorType(string lane)
 		{
 			string vehicleType = string.Empty;
@@ -83,7 +83,7 @@ namespace KruispuntGroep6.Communication.Json
 					vehicleType = "pedestrian";
 					break;
 				case "1":
-					vehicleType = "bike";
+					vehicleType = "bicycle";
 					break;
 				case "2":
 					vehicleType = "bus";
@@ -221,7 +221,7 @@ namespace KruispuntGroep6.Communication.Json
 
 			switch (vehicleType)
 			{
-				case "bike":
+				case "bicycle":
 					lane = "1";
 					break;
 				case "bus":
@@ -274,8 +274,8 @@ namespace KruispuntGroep6.Communication.Json
 
 			switch (vehicleType)
 			{
-				// Bike can go from every direction and lane 1 and go to every direction and lane 6.
-				case "bike":
+				// bicycle can go from every direction and lane 1 and go to every direction and lane 6.
+				case "bicycle":
 					switch (from.Substring(0, 1))
 					{
 						case "N":
@@ -675,7 +675,7 @@ namespace KruispuntGroep6.Communication.Json
 		}
 
 		/// <summary>
-		/// Gets random vehicle type (bike, bus, car, godzilla, pedestrian or truck).
+		/// Gets random vehicle type (bicycle, bus, car, godzilla, pedestrian or truck).
 		/// </summary>
 		/// <returns>VehicleType used to contain the vehicle type value.</returns>
 		private string GetRandomVehicleType(ArrayList exclude)
@@ -692,7 +692,7 @@ namespace KruispuntGroep6.Communication.Json
 					switch (intRandom)
 					{
 						case 0:
-							strRandom = "bike";
+							strRandom = "bicycle";
 							break;
 						case 1:
 							strRandom = "bus";
@@ -729,7 +729,7 @@ namespace KruispuntGroep6.Communication.Json
 				switch (intRandom)
 				{
 					case 0:
-						strRandom = "bike";
+						strRandom = "bicycle";
 						break;
 					case 1:
 						strRandom = "bus";

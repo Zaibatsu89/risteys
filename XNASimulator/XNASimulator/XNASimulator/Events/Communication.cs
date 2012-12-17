@@ -75,6 +75,7 @@ namespace KruispuntGroep6.Simulator.Events
 			connectionAttempts = 0;
 			//stop connection timer
 			timerConnection.Stop();
+			/* TODO: is commented for test session
 			//create message
 			string message = "Hi, I am communication";
 			//create a StreamWriter based on the current NetworkStream
@@ -83,6 +84,7 @@ namespace KruispuntGroep6.Simulator.Events
 			writer.WriteLine(message);
 			//ensure the buffer is empty
 			writer.Flush();
+			 */
 
 			// Read messages forever
 			thrReadForever = new Thread(new ThreadStart(ReadForever));
