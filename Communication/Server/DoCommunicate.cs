@@ -42,17 +42,15 @@ namespace KruispuntGroep6.Communication.Server
 			{
 				//set out line variable to an empty string
 				string data = string.Empty;
+
 				while (true)
 				{
 					//read the current line
 					data = reader.ReadLine();
-					//display this line
-					// If String is exit message, display it and break.
+					// If String is exit message, close client and break.
 					if (data.Equals(strings.Exit))
 					{
-						/* TODO: is commented for test session
-						Console.WriteLine(strings.Disconnected, strings.HiIAmSimulator);
-						 */
+						Console.WriteLine(strings.Disconnected);
 						client.Close();
 						break;
 					}
@@ -60,27 +58,26 @@ namespace KruispuntGroep6.Communication.Server
 					else if (data.StartsWith(strings.Hi))
 					{
 						Console.WriteLine(string.Format(strings.Connected, data));
-
-						// Send a welcome message back to the client.
-						data = strings.HiIAmController;
 					}
-					// If String isn't welcome message, display him as JSON.
-					else if (data.StartsWith(strings.BraceOpen))
+					// Else, display message.
+					else
 					{
-						data = JsonConverter.JsonObjectToMessage(data);
+						Console.WriteLine(string.Format(strings.Received, data));
 					}
-					else if (data.StartsWith(strings.BracketOpen))
-					{
-						data = JsonConverter.JsonArrayToMessage(data);
-					}
-
-					//send our message
-					Server.SendMessage(data);
 				}
 			}
-			catch (Exception)
+			// Gonna catch 'em all... Pokémon!
+			catch (SocketException e)
 			{
-				Console.WriteLine(strings.ReceiveError);
+				Console.WriteLine(string.Format(strings.SocketException, e.Message));
+			}
+			catch (IOException e)
+			{
+				Console.WriteLine(string.Format(strings.IOException, e.Message));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(string.Format(strings.Exception, e.Message));
 			}
 		}
 	}

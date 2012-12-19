@@ -15,24 +15,24 @@
 			get { return "{"; }
 		}
 
+		public string BracketClose
+		{
+			get { return "]"; }
+		}
+
 		public string BracketOpen
 		{
 			get { return "["; }
 		}
 
-		public string Broken
-		{
-			get { return "The connection is broken!"; }
-		}
-
-		public string ButtonDisconnect
-		{
-			get { return "btnDisconnect"; }
-		}
-
 		public string Clear
 		{
 			get { return "Clear"; }
+		}
+
+		public string Comma
+		{
+			get { return ","; }
 		}
 
 		public string Connect
@@ -77,12 +77,7 @@
 
 		public string Disconnected
 		{
-			get { return "Disconnected: {0}"; }
-		}
-
-		public string Empty
-		{
-			get { return "-"; }
+			get { return "A client has disconnected"; }
 		}
 
 		public string Exception
@@ -105,19 +100,9 @@
 			get { return "Hi"; }
 		}
 
-		public string HiIAmCommunication
-		{
-			get { return "Hi, I am communication"; }
-		}
-
 		public string HiIAmController
 		{
-			get { return "Hi, I am controller"; }
-		}
-
-		public string HiIAmSimulator
-		{
-			get { return "Hi, I am simulator"; }
+			get { return "Hi, I am controller and I serve from {0}:1337 forever"; }
 		}
 
 		public string Internet
@@ -195,11 +180,6 @@
 			get { return "Disconnected"; }
 		}
 
-		public string ListBoxResults
-		{
-			get { return "lbResults"; }
-		}
-
 		public string Localhost
 		{
 			get { return "127.0.0.1"; }
@@ -212,7 +192,7 @@
 
 		public string OneServer
 		{
-			get { return "There can only be one server per IP address!"; }
+			get { return "There can only be one server per IP address"; }
 		}
 
 		public int Port
@@ -223,11 +203,6 @@
 		public string Received
 		{
 			get { return "Received: {0}"; }
-		}
-
-		public string ReceiveError
-		{
-			get { return "Cannot receive from a client."; }
 		}
 
 		public string Send
@@ -245,39 +220,19 @@
 			get { return "Simulator"; }
 		}
 
-		public string SimulatorDisconnected
-		{
-			get { return "The simulator has disconnected"; }
-		}
-
 		public string SocketException
 		{
 			get { return "SocketException: {0}"; }
 		}
 
-		public string Stopped
-		{
-			get { return "\nThe controller stopped. Press <enter> to continue."; }
-		}
-
 		public string TcpClient
 		{
-			get { return "Kruispunt Groep 6: TCP Client"; }
+			get { return "Kruispunt Groep 6: Client"; }
 		}
 
 		public string TcpServer
 		{
-			get { return "Kruispunt Groep 6: TCP Server"; }
-		}
-
-		public string TextBoxConnectionStatus
-		{
-			get { return "tbConStatus"; }
-		}
-
-		public string Waiting
-		{
-			get { return "Waiting for simulator..."; }
+			get { return "Kruispunt Groep 6: Server"; }
 		}
 
 		public string With

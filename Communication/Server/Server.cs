@@ -30,8 +30,7 @@ namespace KruispuntGroep6.Communication.Server
 			GetAddress();
 
 			// inform the human being
-			Console.WriteLine(string.Format(strings.HiIAmController +
-				" and I serve from {0}:1337 forever", address));
+			Console.WriteLine(string.Format(strings.HiIAmController, address));
 			//create our TCPListener object
 			server = new System.Net.Sockets.TcpListener(IPAddress.Parse(address), strings.Port);
 			//check to see if the server is running
@@ -58,7 +57,7 @@ namespace KruispuntGroep6.Communication.Server
 					client = server.AcceptTcpClient();
 					//add client to clients
 					clients.Add(client);
-					//create a new DoCommunicate Object
+					//create a new DoCommunicate object
 					DoCommunicate comm = new DoCommunicate(client);
 				}
 			}
@@ -85,55 +84,6 @@ namespace KruispuntGroep6.Communication.Server
 			{
 				address = strings.Localhost;
 			}
-		}
-
-		/// <summary>
-		/// Sends message to all clients.
-		/// </summary>
-		/// <param name="message">String used to contain the message to send</param>
-		public static void SendMessage(string message)
-		{
-			//create our StreamWriter object
-			StreamWriter writer;
-
-			//create client to be removed
-			TcpClient clientToBeRemoved = null;
-
-            //loop through and write any messages to the window
-			foreach (TcpClient client in clients)
-			{
-				try
-				{
-					//check if the message is empty, of the particular
-					//index of out array is null, if it is then continue
-					if (!string.Equals(message.Trim(), string.Empty) || client != null)
-					{
-						//Use the GetStream method to get the current memory
-						//stream for this index of our TCPClient array
-						writer = new StreamWriter(client.GetStream());
-						//send our message
-						writer.WriteLine(message);
-						//make sure the buffer is empty
-						writer.Flush();
-						//dispose of our writer
-						writer = null;
-					}
-				}
-				catch (Exception)
-				{
-					// Remove client
-					clientToBeRemoved = client;
-				}
-			}
-
-			//if client to be removed isn't null, then remove that client for clients list
-			if (clientToBeRemoved != null)
-			{
-				clients.Remove(clientToBeRemoved);
-			}
-
-			//show message in console
-			Console.WriteLine(String.Format(strings.Sent, message));
 		}
 	}
 }

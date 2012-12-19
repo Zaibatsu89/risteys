@@ -8,6 +8,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 using KruispuntGroep6.Communication.Json;
+using KruispuntGroep6.Simulator.Main;
 
 namespace KruispuntGroep6.Communication.Client
 {
@@ -28,7 +29,6 @@ namespace KruispuntGroep6.Communication.Client
 		private int connectionAttempts;	// Integer used to contain the current connection attempt number.
 		private string[] detectorJSON;	// String array used to contain all lines of the JSON detector data file.
 		private int detectorJSONnumber;	// Integer used to contain the current detector JSON number.
-		private static bool disconnected;	// Boolean used in the test session.
 		private bool hasRealAddress;	// Boolean used to contain Controller address that the user has put in.
 		private string[] inputJSON;		// String array used to contain all lines of the JSON input data file.
 		private int inputJSONnumber;	// Integer used to contain the current input JSON number.
@@ -40,13 +40,14 @@ namespace KruispuntGroep6.Communication.Client
 		private int previousInputJSONnumber; // Integer used to contain the previous input JSON number.
 		private int previousStoplightJSONnumber; // Integer used to contain the previous stoplight JSON number.
 		private int previousTime;	// Integer used to contain the previous input JSON time value.
-		private static string realAddress;	// String used to contain Controller address to be used by Simulator via Program.
+		private string realAddress;	// String used to contain Controller address to be used by Simulator via Program.
+		private MainGame simulator; // MainGame used to be the instance of Simulator.
 		private string[] stoplightJSON;	// String array used to contain all lines of the JSON stoplight data file.
 		private int stoplightJSONnumber;	// Integer used to contain the current stoplight JSON number.
 		private Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
 		private TcpClient tcpClient;	// TcpClient used to contain the heart of this class: the TCP client.
 		private TextBox tbAddress, tbJsonGenerator, tbNewText; // TextBoxes used to contain boxes to input text.
-		private Thread thrConnect, thrReadForever; // Threads used to contain functions that needs to be executed at the same time.
+		private Thread thrConnect; // Thread used to contain functions that needs to be executed at the same time.
 		private System.Timers.Timer timerConnection, timerJson; // Timers used to contain a stopwatch.
 
 		/// <summary>
@@ -58,7 +59,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			// Generate GUI
 			this.btnClear = new Button();
-			this.btnClear.Click += new EventHandler(btnClear_Click);
+			this.btnClear.Click += new EventHandler(BtnClear_Click);
 			this.btnClear.Enabled = false;
 			this.btnClear.Location = new Point(6 * Font.Height - 3, 7 * Font.Height - 6);
 			this.btnClear.Parent = this;
@@ -66,14 +67,14 @@ namespace KruispuntGroep6.Communication.Client
 			this.btnClear.Text = strings.Clear;
 
 			this.btnConnect = new Button();
-			this.btnConnect.Click += new EventHandler(btnConnect_Click);
+			this.btnConnect.Click += new EventHandler(BtnConnect_Click);
 			this.btnConnect.Location = new Point(17 * Font.Height - 3, Font.Height - 6);
 			this.btnConnect.Parent = this;
 			this.btnConnect.Size = new Size(6 * Font.Height, 2 * Font.Height);
 			this.btnConnect.Text = strings.Connect;
 
 			this.btnDisconnect = new Button();
-			this.btnDisconnect.Click += new EventHandler(btnDisconnect_Click);
+			this.btnDisconnect.Click += new EventHandler(BtnDisconnect_Click);
 			this.btnDisconnect.Enabled = false;
 			this.btnDisconnect.Location = new Point(24 * Font.Height - 3, Font.Height - 6);
 			this.btnDisconnect.Parent = this;
@@ -81,14 +82,14 @@ namespace KruispuntGroep6.Communication.Client
 			this.btnDisconnect.Text = strings.Disconnect;
 
 			this.btnJsonGenerator = new Button();
-			this.btnJsonGenerator.Click += new EventHandler(btnJsonGenerator_Click);
+			this.btnJsonGenerator.Click += new EventHandler(BtnJsonGenerator_Click);
 			this.btnJsonGenerator.Location = new Point(21 * Font.Height - 3, 10 * Font.Height - 6);
 			this.btnJsonGenerator.Parent = this;
 			this.btnJsonGenerator.Size = new Size(9 * Font.Height, 2 * Font.Height);
 			this.btnJsonGenerator.Text = strings.GenerateJSON;
 
 			this.btnSend = new Button();
-			this.btnSend.Click += new EventHandler(btnSend_Click);
+			this.btnSend.Click += new EventHandler(BtnSend_Click);
 			this.btnSend.Enabled = false;
 			this.btnSend.Location = new Point(25 * Font.Height - 3, 7 * Font.Height - 6);
 			this.btnSend.Parent = this;
@@ -96,7 +97,7 @@ namespace KruispuntGroep6.Communication.Client
 			this.btnSend.Text = strings.Send;
 
 			this.btnSimulatorConnect = new Button();
-			this.btnSimulatorConnect.Click += new EventHandler(btnSimulatorConnect_Click);
+			this.btnSimulatorConnect.Click += new EventHandler(BtnSimulatorConnect_Click);
 			this.btnSimulatorConnect.Enabled = false;
 			this.btnSimulatorConnect.Location = new Point(17 * Font.Height - 3, 4 * Font.Height - 6);
 			this.btnSimulatorConnect.Parent = this;
@@ -104,7 +105,7 @@ namespace KruispuntGroep6.Communication.Client
 			this.btnSimulatorConnect.Text = strings.Connect;
 
 			this.btnSimulatorDisconnect = new Button();
-			this.btnSimulatorDisconnect.Click += new EventHandler(btnSimulatorDisconnect_Click);
+			this.btnSimulatorDisconnect.Click += new EventHandler(BtnSimulatorDisconnect_Click);
 			this.btnSimulatorDisconnect.Enabled = false;
 			this.btnSimulatorDisconnect.Location = new Point(24 * Font.Height - 3, 4 * Font.Height - 6);
 			this.btnSimulatorDisconnect.Parent = this;
@@ -192,7 +193,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// <summary>
 		/// Reads JSON input file.
 		/// </summary>
-		private bool readJSON()
+		private bool ReadJSON()
 		{
 			bool success = true;
 
@@ -318,7 +319,7 @@ namespace KruispuntGroep6.Communication.Client
 				OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonReadingError1);
 				OnMessageChanged(lbResults, lbResults.GetType(), strings.JsonReadingError2);
 				success = false;
-				Disconnected(true);
+				Disconnected(false);
 			}
 
 			return success;
@@ -343,7 +344,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnClear_Click(object sender, EventArgs e)
+		private void BtnClear_Click(object sender, EventArgs e)
 		{
 			btnClear.Enabled = false;
 			tbNewText.Text = string.Empty;
@@ -354,19 +355,15 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnConnect_Click(object sender, EventArgs e)
+		private void BtnConnect_Click(object sender, EventArgs e)
 		{
 			btnConnect.Enabled = false;
 			tbAddress.Enabled = false;
 			lblConStatusValue.Text = strings.Connecting;
 
-			timerConnection = new System.Timers.Timer(5000);
+			timerConnection = new System.Timers.Timer(1000);
 			timerConnection.Elapsed += new ElapsedEventHandler(timerConnection_Elapsed);
 			timerConnection.Start();
-
-			// Try to connect in the background...
-			thrConnect = new Thread(new ThreadStart(Connect));
-			thrConnect.Start();
 
 			// Attempt to connect, because we don't want to wait for the timer.
 			ConnectAttempt();
@@ -377,21 +374,14 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnDisconnect_Click(object sender, EventArgs e)
+		private void BtnDisconnect_Click(object sender, EventArgs e)
 		{
-			disconnected = true;
-
-			if (thrReadForever != null)
-			{
-				thrReadForever.Abort();
-			}
-
 			if (timerJson != null)
 			{
 				timerJson.Stop();
 			}
 
-			if (Int32.Equals(connectionAttempts, 0))
+			if (connectionAttempts.Equals(0))
 			{
 				SendToController(strings.Exit);
 				Disconnected(true);
@@ -407,22 +397,22 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnJsonGenerator_Click(object sender, EventArgs e)
+		private void BtnJsonGenerator_Click(object sender, EventArgs e)
 		{
 			int nrOfInputs = -1;
 
 			bool onlyNumbers = true;
 
-			if (!string.Equals(tbJsonGenerator.Text, string.Empty))
+			if (!tbJsonGenerator.Text.Equals(string.Empty))
 			{
 				foreach (char c in tbJsonGenerator.Text)
 				{
-					if (!Char.IsNumber(c))
+					if (!char.IsNumber(c))
 						onlyNumbers = false;
 				}
 
 				if (onlyNumbers)
-					nrOfInputs = Int32.Parse(tbJsonGenerator.Text);
+					nrOfInputs = int.Parse(tbJsonGenerator.Text);
 			}
 
 			if (nrOfInputs > 0)
@@ -450,7 +440,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnSend_Click(object sender, EventArgs e)
+		private void BtnSend_Click(object sender, EventArgs e)
 		{
 			SendToController(tbNewText.Text);
 		}
@@ -460,10 +450,10 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnSimulatorConnect_Click(object sender, EventArgs e)
+		private void BtnSimulatorConnect_Click(object sender, EventArgs e)
 		{
 			// Read JSON input file and if that's a success, send start time to Controller
-			if (readJSON())
+			if (ReadJSON())
 			{
 				// Disable JSON generator GUI, to prevent bugs
 				OnMessageChanged(btnJsonGenerator, btnJsonGenerator.GetType(), enabled: false);
@@ -473,10 +463,6 @@ namespace KruispuntGroep6.Communication.Client
 				OnMessageChanged(btnSimulatorDisconnect, btnSimulatorConnect.GetType());
 
 				SendStartTime();
-
-				// Read messages forever
-				thrReadForever = new Thread(new ThreadStart(ReadForever));
-				thrReadForever.Start();
 			}
 		}
 
@@ -485,7 +471,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		/// <param name="sender">Object used to determine the sender.</param>
 		/// <param name="e">EventArgs used to determine event arguments.</param>
-		private void btnSimulatorDisconnect_Click(object sender, EventArgs e)
+		private void BtnSimulatorDisconnect_Click(object sender, EventArgs e)
 		{
 			if (timerJson != null)
 			{
@@ -581,7 +567,6 @@ namespace KruispuntGroep6.Communication.Client
 			address = tbAddress.Text;
 
 			// Try to connect in the background...
-			thrConnect.Abort();
 			thrConnect = new Thread(new ThreadStart(Connect));
 			thrConnect.Start();
 
@@ -596,18 +581,16 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		private void Connected()
 		{
-			//reset connection attempts
-			connectionAttempts = 0;
-			//reset previous input json number
-			previousInputJSONnumber = 0;
 			//stop connection timer
 			timerConnection.Stop();
-			/* TODO: is commented for test session
-			//create welcome message
-			string message = strings.HiIAmSimulator;
-			//send this message to controller
-			SendToController(message);
-			 */
+			//reset connection attempts
+			connectionAttempts = 0;
+			//reset previous detector json number
+			previousDetectorJSONnumber = 0;
+			//reset previous input json number
+			previousInputJSONnumber = 0;
+			//reset previous stoplight json number
+			previousStoplightJSONnumber = 0;
 
 			// Update GUI
 			OnMessageChanged(btnConnect, btnConnect.GetType(), enabled: false);
@@ -615,6 +598,7 @@ namespace KruispuntGroep6.Communication.Client
 				string.Format(strings.Connected, tcpClient.Client.RemoteEndPoint.ToString()));
 			OnMessageChanged(btnDisconnect, btnDisconnect.GetType());
 			OnMessageChanged(tbNewText, tbNewText.GetType());
+			OnMessageChanged(btnSend, btnSend.GetType());
 
 			// Get address from textbox
 			address = tbAddress.Text;
@@ -626,13 +610,7 @@ namespace KruispuntGroep6.Communication.Client
 				hasRealAddress = true;
 			}
 
-			// Wait for Simulator to start
-			Thread.Sleep(1000);
-
 			OnMessageChanged(btnSimulatorConnect, btnSimulatorConnect.GetType());
-
-			//abort connect thread
-			thrConnect.Abort();
 		}
 
 		/// <summary>
@@ -683,47 +661,43 @@ namespace KruispuntGroep6.Communication.Client
 		}
 
 		/// <summary>
-		/// Gets the Time value of an input JSON.
+		/// Gets encrypted JSON.
 		/// </summary>
-		/// <param name="strJson"></param>
-		/// <returns></returns>
-		private int GetTime(string strJson)
+		/// <param name="json">String used to contain a JSON object or JSON array.</param>
+		/// <returns>Strings used to contain a message.</returns>
+		private string GetEncryptedJson(string json)
 		{
-			strJson = strJson.Substring(strJson.IndexOf("{"), strJson.IndexOf("}") - strJson.IndexOf("{") + 1);
-			var json = DynamicJson.Parse(strJson);
+			string encryptedJson = string.Empty;
 
-			return int.Parse(json.time);
+			if (json.StartsWith(strings.BraceOpen))
+			{
+				encryptedJson = JsonConverter.JsonObjectToMessage(json);
+			}
+			else if (json.StartsWith(strings.BracketOpen))
+			{
+				encryptedJson = JsonConverter.JsonArrayToMessage(json);
+			}
+
+			return encryptedJson;
 		}
 
 		/// <summary>
-		/// Reads messages from Controller, forever.
+		/// Gets the Time value of a JSON message.
 		/// </summary>
-		private void ReadForever()
+		/// <param name="message">String used to contain a JSON message.</param>
+		/// <returns>Integer used to contain a time in seconds.</returns>
+		private int GetTime(string message)
 		{
-			// Create our StreamReader Object, based on the current NetworkStream
-			StreamReader reader = new StreamReader(tcpClient.GetStream());
+			int time = 0;
 
-			// Begins to listen for incoming connection attempts from Controller or Simulator.
-			try
-			{
-				while (true)
-				{
-					string message = reader.ReadLine();
+			string json = message.Split(char.Parse(strings.BracketClose))[0].Remove(0, 1).Split(char.Parse(strings.Comma))[1];
 
-					if (message != null)
-					{
-						if (!string.Equals(message, string.Empty))
-						{
-							OnMessageChanged(lbResults, lbResults.GetType(), string.Format(strings.Received, message));
-						}
-					}
-				}
-			}
-			catch (ThreadAbortException) { }
-			catch (Exception e)
+			if (!json.Equals(string.Empty))
 			{
-				Console.WriteLine(e);
+				time = int.Parse(json);
 			}
+
+			return time;
 		}
 
 		/// <summary>
@@ -742,6 +716,10 @@ namespace KruispuntGroep6.Communication.Client
 
 					SendToController(detectorJSON[detectorJSONnumber]);
 
+					string jsonDetector = GetEncryptedJson(detectorJSON[detectorJSONnumber]);
+
+					simulator.Communication.Decrypter(jsonDetector);
+
 					detectorJSONnumber++;
 
 					if (detectorJSONnumber >= detectorJSON.Length)
@@ -758,20 +736,26 @@ namespace KruispuntGroep6.Communication.Client
 						previousInputJSONnumber = 0;
 					}
 
+					string jsonInput = GetEncryptedJson(inputJSON[inputJSONnumber]);
+
 					if (timerJson.Enabled)
 					{
-						inputTime = GetTime(inputJSON[inputJSONnumber]);
+						inputTime = GetTime(jsonInput);
 					}
 
 					while (inputTime.Equals(previousTime))
 					{
 						SendToController(inputJSON[inputJSONnumber]);
 
+						simulator.Communication.Decrypter(jsonInput);
+
 						inputJSONnumber++;
+
+						jsonInput = GetEncryptedJson(inputJSON[inputJSONnumber]);
 
 						if (inputJSONnumber < inputJSON.Length)
 						{
-							inputTime = GetTime(inputJSON[inputJSONnumber]);
+							inputTime = GetTime(jsonInput);
 						}
 						else
 						{
@@ -782,7 +766,7 @@ namespace KruispuntGroep6.Communication.Client
 
 					if (inputJSONnumber < inputJSON.Length)
 					{
-						previousTime = GetTime(inputJSON[inputJSONnumber]);
+						previousTime = GetTime(jsonInput);
 					}
 					else
 					{
@@ -797,6 +781,10 @@ namespace KruispuntGroep6.Communication.Client
 					}
 
 					SendToController(stoplightJSON[stoplightJSONnumber]);
+
+					string jsonStoplight = GetEncryptedJson(stoplightJSON[stoplightJSONnumber]);
+
+					simulator.Communication.Decrypter(jsonStoplight);
 
 					stoplightJSONnumber++;
 
@@ -813,9 +801,12 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		private void SendStartTime()
 		{
-			string jsonStartTime = DynamicJson.Serialize(new Object[] { new { starttime = DateTime.UtcNow.ToString(strings.DateTimeFormat) }});
+			string time = DateTime.Now.ToString(strings.DateTimeFormat);
+			string jsonStartTime = DynamicJson.Serialize(new object[]{new{starttime=time}});
 
-			if (Int32.Equals(previousInputJSONnumber, 0))
+			if (previousDetectorJSONnumber.Equals(0) &&
+				previousInputJSONnumber.Equals(0) &&
+				previousStoplightJSONnumber.Equals(0))
 			{
 				SendToController(jsonStartTime);
 			}
@@ -951,7 +942,7 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (target != null && target.InvokeRequired)
 			{
-				target.Invoke(MessageChanged, new object[] { sender, type, text, enabled });
+				target.Invoke(MessageChanged, new object[] {sender, type, text, enabled});
 			}
 			else
 			{
@@ -963,7 +954,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// Gets the IP address used by Simulator.
 		/// </summary>
 		/// <returns>String used to </returns>
-		public static string GetAddress()
+		public string GetAddress()
 		{
 			if (realAddress != null)
 			{
@@ -976,21 +967,12 @@ namespace KruispuntGroep6.Communication.Client
 		}
 
 		/// <summary>
-		/// Gets whether this Communication is disconnected with and used by Simulator.
+		/// Sets the Simulator.
 		/// </summary>
-		/// <returns></returns>
-		public static bool GetDisconnected()
+		/// <param name="simulator"></param>
+		public void SetSimulator(MainGame simulator)
 		{
-			return disconnected ? true : false;
-		}
-
-		/// <summary>
-		/// Sets whether this Communication is disconnected with and used by Simulator.
-		/// </summary>
-		/// <param name="disco"></param>
-		public static void SetDisconnected(bool disco)
-		{
-			disconnected = disco;
+			this.simulator = simulator;
 		}
 	}
 }

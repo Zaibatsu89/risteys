@@ -486,7 +486,7 @@ namespace KruispuntGroep6.Communication.Json
 				case "pedestrian":
 					direction = from[0].ToString();
 
-					if (string.Equals(from[1].ToString(), "0"))
+					if (from[1].ToString().Equals("0"))
 					{
 						lane = "7";
 					}
@@ -770,7 +770,7 @@ namespace KruispuntGroep6.Communication.Json
 		/// <returns>String used to contain JSON.</returns>
 		public string GenerateJSON(string type, int count, int total)
 		{
-			if (Int32.Equals(count, 0))
+			if (count.Equals(0))
 			{
 				index = 0;
 				jsons = new string[total];
@@ -921,9 +921,8 @@ namespace KruispuntGroep6.Communication.Json
 				// Write JSON file in main folder of KruispuntGroep6 called XNASimulator
 				File.WriteAllLines(jsonType + strings.JsonFileExtension, jsons);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				message = ex.Message;
 				succes = false;
 			}
 
