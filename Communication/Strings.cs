@@ -42,7 +42,7 @@
 
 		public string Connected
 		{
-			get { return "Connected:{0}"; }
+			get { return "Connected: {0}"; }
 		}
 
 		public string Connecting
@@ -102,7 +102,12 @@
 
 		public string HiIAmController
 		{
-			get { return "Hi, I am controller and I serve from {0}:1337 forever"; }
+			get { return "Hi, I am Kruispunt Groep 6: Controller and I serve from {0}:1337"; }
+		}
+
+		public string HiIAmSimulator
+		{
+			get { return "Hi, I am Kruispunt Groep 6: Simulator"; }
 		}
 
 		public string Internet

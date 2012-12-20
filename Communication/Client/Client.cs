@@ -383,12 +383,17 @@ namespace KruispuntGroep6.Communication.Client
 
 			if (connectionAttempts.Equals(0))
 			{
-				SendToController(strings.Exit);
+				SendToController(strings.Exit, false);
 				Disconnected(true);
 			}
 			else
 			{
 				DisconnectWhileConnecting();
+			}
+
+			if (tcpClient != null)
+			{
+				tcpClient = null;
 			}
 		}
 
@@ -548,13 +553,16 @@ namespace KruispuntGroep6.Communication.Client
 				if (connectionAttempts > 8)
 				{
 					OnMessageChanged(lbResults, lbResults.GetType(), strings.ConnectionError);
-					DisconnectWhileConnecting();
+					DisconnectWhileConnecting(false);
 				}
 			}
 
-			if (tcpClient.Connected)
+			if (tcpClient != null)
 			{
-				Connected();
+				if (tcpClient.Connected)
+				{
+					Connected();
+				}
 			}
 		}
 
@@ -570,10 +578,13 @@ namespace KruispuntGroep6.Communication.Client
 			thrConnect = new Thread(new ThreadStart(Connect));
 			thrConnect.Start();
 
-			connectionAttempts++;
+			if (tcpClient != null)
+			{
+				connectionAttempts++;
 
-			OnMessageChanged(lbResults, lbResults.GetType(),
-				string.Format(strings.ConnectionAttempt, connectionAttempts + strings.With + address));
+				OnMessageChanged(lbResults, lbResults.GetType(),
+					string.Format(strings.ConnectionAttempt, connectionAttempts + strings.With + address));
+			}
 		}
 
 		/// <summary>
@@ -591,6 +602,11 @@ namespace KruispuntGroep6.Communication.Client
 			previousInputJSONnumber = 0;
 			//reset previous stoplight json number
 			previousStoplightJSONnumber = 0;
+
+			//create welcome message
+			string message = strings.HiIAmSimulator;
+			//send this message to controller
+			SendToController(message, false);
 
 			// Update GUI
 			OnMessageChanged(btnConnect, btnConnect.GetType(), enabled: false);
@@ -652,9 +668,12 @@ namespace KruispuntGroep6.Communication.Client
 		/// <summary>
 		/// Disconnects from Controller while connecting to Controller.
 		/// </summary>
-		private void DisconnectWhileConnecting()
+		private void DisconnectWhileConnecting(bool show = true)
 		{
-			OnMessageChanged(lbResults, lbResults.GetType(), strings.ConnectingAborted);
+			if (show)
+			{
+				OnMessageChanged(lbResults, lbResults.GetType(), strings.ConnectingAborted);
+			}
 			connectionAttempts = 0;
 			timerConnection.Stop();
 			Disconnected(true);
@@ -716,9 +735,7 @@ namespace KruispuntGroep6.Communication.Client
 
 					SendToController(detectorJSON[detectorJSONnumber]);
 
-					string jsonDetector = GetEncryptedJson(detectorJSON[detectorJSONnumber]);
-
-					simulator.Communication.Decrypter(jsonDetector);
+					simulator.Communication.Decrypter(GetEncryptedJson(detectorJSON[detectorJSONnumber]));
 
 					detectorJSONnumber++;
 
@@ -736,26 +753,22 @@ namespace KruispuntGroep6.Communication.Client
 						previousInputJSONnumber = 0;
 					}
 
-					string jsonInput = GetEncryptedJson(inputJSON[inputJSONnumber]);
-
 					if (timerJson.Enabled)
 					{
-						inputTime = GetTime(jsonInput);
+						inputTime = GetTime(GetEncryptedJson(inputJSON[inputJSONnumber]));
 					}
 
 					while (inputTime.Equals(previousTime))
 					{
 						SendToController(inputJSON[inputJSONnumber]);
 
-						simulator.Communication.Decrypter(jsonInput);
+						simulator.Communication.Decrypter(GetEncryptedJson(inputJSON[inputJSONnumber]));
 
 						inputJSONnumber++;
 
-						jsonInput = GetEncryptedJson(inputJSON[inputJSONnumber]);
-
 						if (inputJSONnumber < inputJSON.Length)
 						{
-							inputTime = GetTime(jsonInput);
+							inputTime = GetTime(GetEncryptedJson(inputJSON[inputJSONnumber]));
 						}
 						else
 						{
@@ -766,7 +779,7 @@ namespace KruispuntGroep6.Communication.Client
 
 					if (inputJSONnumber < inputJSON.Length)
 					{
-						previousTime = GetTime(jsonInput);
+						previousTime = GetTime(GetEncryptedJson(inputJSON[inputJSONnumber]));
 					}
 					else
 					{
@@ -782,9 +795,7 @@ namespace KruispuntGroep6.Communication.Client
 
 					SendToController(stoplightJSON[stoplightJSONnumber]);
 
-					string jsonStoplight = GetEncryptedJson(stoplightJSON[stoplightJSONnumber]);
-
-					simulator.Communication.Decrypter(jsonStoplight);
+					simulator.Communication.Decrypter(GetEncryptedJson(stoplightJSON[stoplightJSONnumber]));
 
 					stoplightJSONnumber++;
 
@@ -823,13 +834,16 @@ namespace KruispuntGroep6.Communication.Client
 		/// Sends a message to Controller.
 		/// </summary>
 		/// <param name="message">String used to determine the message to be send.</param>
-		private void SendToController(string message)
+		private void SendToController(string message, bool show = true)
 		{
 			Send send2Controller = new Send();
 			send2Controller.SendMessage(tcpClient, message);
 
-			// Show sent data in results list.
-			OnMessageChanged(lbResults, lbResults.GetType(), string.Format(strings.Sent, message));
+			if (show)
+			{
+				// Show sent data in results list.
+				OnMessageChanged(lbResults, lbResults.GetType(), string.Format(strings.Sent, message));
+			}
 		}
 
 		/// <summary>
@@ -858,6 +872,7 @@ namespace KruispuntGroep6.Communication.Client
 			OnMessageChanged(tbJsonGenerator, tbJsonGenerator.GetType());
 			OnMessageChanged(cbJsonType, cbJsonType.GetType());
 			OnMessageChanged(btnSimulatorConnect, btnSimulatorConnect.GetType());
+			OnMessageChanged(btnSimulatorDisconnect, btnSimulatorConnect.GetType(), enabled: false);
 		}
 
 		/// <summary>

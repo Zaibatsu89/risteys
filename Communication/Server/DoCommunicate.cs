@@ -54,12 +54,12 @@ namespace KruispuntGroep6.Communication.Server
 						client.Close();
 						break;
 					}
-					// If String is welcome message.
+					// If String is welcome message, display name of connected client.
 					else if (data.StartsWith(strings.Hi))
 					{
 						Console.WriteLine(string.Format(strings.Connected, data));
 					}
-					// Else, display message.
+					// Else display message.
 					else
 					{
 						Console.WriteLine(string.Format(strings.Received, data));
