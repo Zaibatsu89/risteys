@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Windows.Forms;
 using KruispuntGroep6.Simulator.Main;
 
 namespace KruispuntGroep6.Communication
@@ -10,18 +11,21 @@ namespace KruispuntGroep6.Communication
 	{
 		private static string address;	// String used to be the IP address used by Client.
 		private static Client.Client client;	// Client used to be the instance of Client.
-		private static MainGame game;	// MainGame used to be the instance of Simulator.
+		private static MainGame simulator;	// MainGame used to be the instance of Simulator.
+		private static bool simulatorAllowed = true;	// Boolean used to determine whether
+														// the Simulator is allowed to start.
 
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			var serverThread = new Thread(ServerTask);
-			serverThread.Start();
+			new Thread(new ThreadStart(ServerTask)).Start();
 
-			var clientThread = new Thread(ClientTask);
-			clientThread.Start();
+			client = new Client.Client();
+			client.FormClosed += new FormClosedEventHandler(client_FormClosed);
+
+			new Thread(new ThreadStart(ClientTask)).Start();
 
 			address = string.Empty;
 
@@ -31,23 +35,30 @@ namespace KruispuntGroep6.Communication
 				{
 					address = client.GetAddress();
 				}
+				else
+				{
+					address = int.MaxValue.ToString();
+					simulatorAllowed = false;
+				}
 			}
 
-			var simulatorThread = new Thread(SimulatorTask);
-			simulatorThread.Start();
+			if (simulatorAllowed)
+			{
+				var simulatorThread = new Thread(SimulatorTask);
+				simulatorThread.Start();
+			}
 		}
 
 		/// <summary>
-		/// The client task.
+		/// The Client task.
 		/// </summary>
 		public static void ClientTask()
 		{
-			client = new Client.Client();
 			client.ShowDialog();
 		}
 
 		/// <summary>
-		/// The server task.
+		/// The Server task.
 		/// </summary>
 		public static void ServerTask()
 		{
@@ -55,15 +66,25 @@ namespace KruispuntGroep6.Communication
 		}
 
 		/// <summary>
-		/// The simulator task.
+		/// The Simulator task.
 		/// </summary>
 		public static void SimulatorTask()
 		{
-			using (game = new MainGame(address))
+			using (simulator = new MainGame(address))
 			{
-				client.SetSimulator(game);
-				game.Run();
+				client.SetSimulator(simulator);
+				simulator.Run();
 			}
+		}
+		
+		/// <summary>
+		/// The form closed event of Client.
+		/// </summary>
+		/// <param name="sender">Object used to determine the sender.</param>
+		/// <param name="e">EventArgs used to determine event arguments.</param>
+		private static void client_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			client = null;
 		}
 	}
 }

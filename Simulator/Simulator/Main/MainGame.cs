@@ -55,7 +55,8 @@ namespace KruispuntGroep6.Simulator.Main
 			this.Window.Title = "Kruispunt Groep 6: Simulator";
 
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "SimulatorContent";
+            Content.RootDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+				"SimulatorContent"));
 
             graphics.PreferredBackBufferHeight = TilesHor * 32;
             graphics.PreferredBackBufferWidth = TilesVer * 32;
@@ -69,7 +70,7 @@ namespace KruispuntGroep6.Simulator.Main
         /// </summary>
         protected override void Initialize()
         {
-            Textures.Default = Content.Load<Texture2D>("Sprites/Default32x32");
+            Textures.Default = Content.Load<Texture2D>("Sprites\\Default32x32");
 
             lists = new Lists();
 
@@ -121,12 +122,12 @@ namespace KruispuntGroep6.Simulator.Main
             Textures.Sidewalk = Content.Load<Texture2D>("Tiles/32p/Sidewalk32x32");
             #endregion
 
-            Textures.Car = Content.Load<Texture2D>("Sprites/Car32x32");
+            Textures.Car = Content.Load<Texture2D>("Sprites\\Car32x32");
 
-			this.LoadCrossroad(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-				"../../../../Simulator/SimulatorContent/Grids/Crossroad.txt"));
-			this.LoadPathfinding(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-				"../../../../Simulator/SimulatorContent/Grids/Pathfinding.txt"));
+			this.LoadCrossroad(Path.Combine(Content.RootDirectory,
+				"Grids\\Crossroad.txt"));
+			this.LoadPathfinding(Path.Combine(Content.RootDirectory,
+				"Grids\\Pathfinding.txt"));
 
             tileControl.FillTileList();
             laneControl.LoadLanes();
