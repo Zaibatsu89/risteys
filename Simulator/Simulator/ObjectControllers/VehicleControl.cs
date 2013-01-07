@@ -456,7 +456,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
 							try
 							{
-								path = new Tuple<string, List<Vector2>>(lists.Vehicles[i].ID, pathfinder.FindPath(pntDeparture, pntArrival));
+								//TODO: pathfinding class is too buggy, maybe find a better class on the internet?
+								//path = new Tuple<string, List<Vector2>>(lists.Vehicles[i].ID, pathfinder.FindPath(pntDeparture, pntArrival));
 							}
 							catch (IndexOutOfRangeException)
 							{
@@ -492,8 +493,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 		{
 			this.pathfinder = pathfinder;
 		}
-
-
 
         private void TempPathfinding(Vehicle vehicle)
         {
