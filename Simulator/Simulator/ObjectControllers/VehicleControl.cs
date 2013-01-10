@@ -13,7 +13,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
     {
         private Lists lists;
         private GraphicsDevice graphics;
-		private Pathfinder pathfinder;
 		private List<Tuple<string, List<Vector2>>> paths;
 		private Random random;
 
@@ -30,11 +29,11 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
         {
             foreach (TrafficObject vehicle in lists.Vehicles)
             {
-				if (!vehicle.ID.Equals(string.Empty))
+				if (!vehicle.ToString().Equals("default"))
 				{
 					this.CheckAlive(vehicle);
 					this.CheckNextTile(vehicle);
-					this.TempPathfinding(vehicle);
+					this.Pathfinding(vehicle);
 
 					if (!vehicle.stopRedLight && !vehicle.stopCar)
 					{
@@ -61,7 +60,6 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 						vehicle.collission = new Rectangle((int)vehicle.position.X, (int)vehicle.position.Y, vehicle.sprite.Width, vehicle.sprite.Height);
 					}
 				}
-
             }
         }
 
@@ -130,14 +128,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							switch (vehicle.ToString())
 							{
 								case "bus":
-									if
-									(
-										nextTile.adjacentTiles.ContainsKey(RotationEnum.North.ToString()) &&
-										!nextTile.Texture.Equals(Textures.BlinkLight) &&
-										!nextTile.Texture.Equals(Textures.GreenLight) &&
-										!nextTile.Texture.Equals(Textures.RedLight) &&
-										!nextTile.Texture.Equals(Textures.YellowLight)
-									)
+									if (nextTile.adjacentTiles.ContainsKey(RotationEnum.North.ToString()))
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.North.ToString()];
 									}
@@ -146,16 +137,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									if
 									(
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.North.ToString()) &&
-										(
-											!nextTile.Texture.Equals(Textures.Car) &&
-											nextTile.Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
-										)
+										!nextTile.Texture.Equals(Textures.Car) &&
+										nextTile.Texture.Equals(Textures.Truck)
 									)
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.North.ToString()];
@@ -167,13 +150,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.North.ToString()) &&
 										(
 											nextTile.adjacentTiles[RotationEnum.North.ToString()].Texture.Equals(Textures.Car) ||
-											nextTile.adjacentTiles[RotationEnum.North.ToString()].Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
+											nextTile.adjacentTiles[RotationEnum.North.ToString()].Texture.Equals(Textures.Truck)
 										)
 									)
 									{
@@ -182,11 +159,11 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									break;
 							}
 
-                            CheckTileOccupation(vehicle, nextTile);
+							CheckTileOccupation(vehicle, nextTile, currentTile.adjacentTiles[RotationEnum.North.ToString()].GridCoordinates);
                         }
                         else
                         {
-							CheckTileOccupation(vehicle, currentTile);
+							CheckTileOccupation(vehicle, currentTile, currentTile.GridCoordinates);
                         }
                     }
                     break;
@@ -200,14 +177,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							switch (vehicle.ToString())
 							{
 								case "bus":
-									if
-									(
-										nextTile.adjacentTiles.ContainsKey(RotationEnum.East.ToString()) &&
-										!nextTile.Texture.Equals(Textures.BlinkLight) &&
-										!nextTile.Texture.Equals(Textures.GreenLight) &&
-										!nextTile.Texture.Equals(Textures.RedLight) &&
-										!nextTile.Texture.Equals(Textures.YellowLight)
-									)
+									if (nextTile.adjacentTiles.ContainsKey(RotationEnum.East.ToString()))
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.East.ToString()];
 									}
@@ -216,16 +186,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									if
 									(
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.East.ToString()) &&
-										(
-											!nextTile.Texture.Equals(Textures.Car) &&
-											nextTile.Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
-										)
+										!nextTile.Texture.Equals(Textures.Car) &&
+										nextTile.Texture.Equals(Textures.Truck)
 									)
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.East.ToString()];
@@ -237,13 +199,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.East.ToString()) &&
 										(
 											nextTile.adjacentTiles[RotationEnum.East.ToString()].Texture.Equals(Textures.Car) ||
-											nextTile.adjacentTiles[RotationEnum.East.ToString()].Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
+											nextTile.adjacentTiles[RotationEnum.East.ToString()].Texture.Equals(Textures.Truck)
 										)
 									)
 									{
@@ -252,11 +208,11 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									break;
 							}
 
-                            CheckTileOccupation(vehicle, nextTile);
+							CheckTileOccupation(vehicle, nextTile, currentTile.adjacentTiles[RotationEnum.East.ToString()].GridCoordinates);
                         }
                         else
                         {
-                            CheckTileOccupation(vehicle, currentTile);
+							CheckTileOccupation(vehicle, currentTile, currentTile.GridCoordinates);
                         }
                     }
                     break;
@@ -270,14 +226,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							switch (vehicle.ToString())
 							{
 								case "bus":
-									if
-									(
-										nextTile.adjacentTiles.ContainsKey(RotationEnum.South.ToString()) &&
-										!nextTile.Texture.Equals(Textures.BlinkLight) &&
-										!nextTile.Texture.Equals(Textures.GreenLight) &&
-										!nextTile.Texture.Equals(Textures.RedLight) &&
-										!nextTile.Texture.Equals(Textures.YellowLight)
-									)
+									if (nextTile.adjacentTiles.ContainsKey(RotationEnum.South.ToString()))
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.South.ToString()];
 									}
@@ -286,16 +235,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									if
 									(
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.South.ToString()) &&
-										(
-											!nextTile.Texture.Equals(Textures.Car) &&
-											nextTile.Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
-										)
+										!nextTile.Texture.Equals(Textures.Car) &&
+										nextTile.Texture.Equals(Textures.Truck)
 									)
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.South.ToString()];
@@ -307,13 +248,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.South.ToString()) &&
 										(
 											nextTile.adjacentTiles[RotationEnum.South.ToString()].Texture.Equals(Textures.Car) ||
-											nextTile.adjacentTiles[RotationEnum.South.ToString()].Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
+											nextTile.adjacentTiles[RotationEnum.South.ToString()].Texture.Equals(Textures.Truck)
 										)
 									)
 									{
@@ -322,11 +257,11 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									break;
 							}
 
-                            CheckTileOccupation(vehicle, nextTile);
+							CheckTileOccupation(vehicle, nextTile, currentTile.adjacentTiles[RotationEnum.South.ToString()].GridCoordinates);
                         }
                         else
                         {
-                            CheckTileOccupation(vehicle, currentTile);
+							CheckTileOccupation(vehicle, currentTile, currentTile.GridCoordinates);
                         }
                     }
                     break;
@@ -340,14 +275,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							switch (vehicle.ToString())
 							{
 								case "bus":
-									if
-									(
-										nextTile.adjacentTiles.ContainsKey(RotationEnum.West.ToString()) &&
-										!nextTile.Texture.Equals(Textures.BlinkLight) &&
-										!nextTile.Texture.Equals(Textures.GreenLight) &&
-										!nextTile.Texture.Equals(Textures.RedLight) &&
-										!nextTile.Texture.Equals(Textures.YellowLight)
-									)
+									if (nextTile.adjacentTiles.ContainsKey(RotationEnum.West.ToString()))
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.West.ToString()];
 									}
@@ -356,16 +284,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									if
 									(
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.West.ToString()) &&
-										(
-											!nextTile.Texture.Equals(Textures.Car) &&
-											nextTile.Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
-										)
+										!nextTile.Texture.Equals(Textures.Car) &&
+										nextTile.Texture.Equals(Textures.Truck)
 									)
 									{
 										nextTile = nextTile.adjacentTiles[RotationEnum.West.ToString()];
@@ -377,13 +297,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 										nextTile.adjacentTiles.ContainsKey(RotationEnum.West.ToString()) &&
 										(
 											nextTile.adjacentTiles[RotationEnum.West.ToString()].Texture.Equals(Textures.Car) ||
-											nextTile.adjacentTiles[RotationEnum.West.ToString()].Texture.Equals(Textures.Truck) ||
-											(
-												!nextTile.Texture.Equals(Textures.BlinkLight) &&
-												!nextTile.Texture.Equals(Textures.GreenLight) &&
-												!nextTile.Texture.Equals(Textures.RedLight) &&
-												!nextTile.Texture.Equals(Textures.YellowLight)
-											)
+											nextTile.adjacentTiles[RotationEnum.West.ToString()].Texture.Equals(Textures.Truck)
 										)
 									)
 									{
@@ -392,18 +306,18 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 									break;
 							}
 
-                            CheckTileOccupation(vehicle, nextTile);
+							CheckTileOccupation(vehicle, nextTile, currentTile.adjacentTiles[RotationEnum.West.ToString()].GridCoordinates);
                         }
                         else
                         {
-                            CheckTileOccupation(vehicle, currentTile);
+                            CheckTileOccupation(vehicle, currentTile, currentTile.GridCoordinates);
                         }
                     }
                     break;
             }
         }
 
-        private void CheckTileOccupation(TrafficObject vehicle, Tile tile)
+        private void CheckTileOccupation(TrafficObject vehicle, Tile tile, Vector2 gridCoordinates)
         {
             //check if occupied
             if (tile.isOccupied)
@@ -451,16 +365,23 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
                 }
 
-
                 //set the new tile
-                vehicle.occupyingtile = tile.GridCoordinates;              
+				vehicle.occupyingtile = gridCoordinates;
             }
 
 			if
 			(
 				tile.Texture.Equals(Textures.BlinkLight) ||
 				tile.Texture.Equals(Textures.RedLight) ||
-				tile.Texture.Equals(Textures.Sidewalk2Red))
+				(
+					tile.Texture.Equals(Textures.Sidewalk2Green) &&
+					!vehicle.ToString().Equals("pedestrian")
+				) ||
+				(
+					tile.Texture.Equals(Textures.Sidewalk2Red) &&
+					vehicle.ToString().Equals("pedestrian")
+				)
+			)
             {
                 vehicle.stopRedLight = true;
             }
@@ -565,15 +486,177 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 			}
         }
 
-        public void Spawn(string type, string from, string to)
+        private void Pathfinding(TrafficObject vehicle)
         {
-            foreach (Lane lane in lists.Lanes)
-            {
-                if (lane.laneID.Equals(from))
-                {
+			if (!vehicle.destinationLaneID.Equals(string.Empty))
+			{
+				switch (vehicle.pathfindingStep)
+				{
+					case 0:
+						// Is the vehicle going to cross?
+						if (!vehicle.ToString().Equals("pedestrian"))
+						{
+							vehicle.pathfindingStep = 2;
+						}
+
+						switch (vehicle.destinationLaneID)
+						{
+							case "N6":
+								if (vehicle.currentLane.laneID[0].Equals('S'))
+								{
+									// Vehicle is going to cross
+									vehicle.pathfindingStep = 1;
+								}
+								break;
+							case "E6":
+								if (vehicle.currentLane.laneID[0].Equals('W'))
+								{
+									vehicle.pathfindingStep = 1;
+								}
+								break;
+							case "S6":
+								if (vehicle.currentLane.laneID[0].Equals('N'))
+								{
+									vehicle.pathfindingStep = 1;
+								}
+								break;
+							case "W6":
+								if (vehicle.currentLane.laneID[0].Equals('E'))
+								{
+									vehicle.pathfindingStep = 1;
+								}
+								break;
+						}
+
+						break;
+					case 1:
+						// Vehicle is going to cross
+						switch (vehicle.rotation)
+						{
+							case RotationEnum.East:
+								if (vehicle.occupyingtile.X > 9)
+								{
+									// Vehicle is in the center of the intersection, so turn
+									vehicle.rotation = RotationEnum.South;
+								}
+								break;
+							case RotationEnum.North:
+								if (vehicle.occupyingtile.Y < 10)
+								{
+									vehicle.rotation = RotationEnum.East;
+								}
+								break;
+							case RotationEnum.South:
+								if (vehicle.occupyingtile.Y > 9)
+								{
+									vehicle.rotation = RotationEnum.West;
+								}
+								break;
+							case RotationEnum.West:
+								if (vehicle.occupyingtile.X < 10)
+								{
+									vehicle.rotation = RotationEnum.North;
+								}
+								break;
+						}
+
+						vehicle.pathfindingStep = 2;
+
+						break;
+					case 2:
+						// Get destination tile position from destinationLaneID
+						Vector2 destination = new Vector2();
+
+						switch (vehicle.destinationLaneID[0])
+						{
+							case 'E':
+								destination = new Vector2(20, 12);
+								break;
+							case 'N':
+								destination = new Vector2(12, 0);
+								break;
+							case 'S':
+								destination = new Vector2(7, 20);
+								break;
+							case 'W':
+								destination = new Vector2(0, 7);
+								break;
+						}
+
+						// Pathfinding to destination direction
+						switch (vehicle.rotation)
+						{
+							case RotationEnum.East:
+								// Is the vehicle parallel with his destination?
+								if (vehicle.occupyingtile.X > destination.X)
+								{
+									// Is the vehicle going to north or to south?
+									if (vehicle.destinationLaneID[0].Equals('N'))
+									{
+										// Turn to north
+										vehicle.rotation = RotationEnum.North;
+									}
+									else
+									{
+										// Turn to south
+										vehicle.rotation = RotationEnum.South;
+									}
+								}
+								break;
+							case RotationEnum.North:
+								if (vehicle.occupyingtile.Y < destination.Y)
+								{
+									if (vehicle.destinationLaneID[0].Equals('W'))
+									{
+										vehicle.rotation = RotationEnum.West;
+									}
+									else
+									{
+										vehicle.rotation = RotationEnum.East;
+									}
+								}
+								break;
+							case RotationEnum.South:
+								if (vehicle.occupyingtile.Y > destination.Y)
+								{
+									if (vehicle.destinationLaneID[0].Equals('E'))
+									{
+										vehicle.rotation = RotationEnum.East;
+									}
+									else
+									{
+										vehicle.rotation = RotationEnum.West;
+									}
+								}
+								break;
+							case RotationEnum.West:
+								if (vehicle.occupyingtile.X < destination.X)
+								{
+									if (vehicle.destinationLaneID[0].Equals('S'))
+									{
+										vehicle.rotation = RotationEnum.South;
+									}
+									else
+									{
+										vehicle.rotation = RotationEnum.North;
+									}
+								}
+								break;
+						}
+
+						break;
+				}
+			}
+        }
+
+		public void Spawn(string type, string from, string to)
+		{
+			foreach (Lane lane in lists.Lanes)
+			{
+				if (lane.laneID.Equals(from))
+				{
 					for (int i = 0; i < lists.Vehicles.Length; i++)
 					{
-						lists.Vehicles[i].destinationLaneID = to;
 						TrafficObject newVehicle = lists.Vehicles[i];
 						string vehicleType = string.Empty;
 
@@ -614,8 +697,9 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							if (!lane.spawnTile.isOccupied)
 							{
 								newVehicle.ID = vehicleType + i;
+								newVehicle.destinationLaneID = to;
 								lists.Vehicles[i] = lane.SpawnVehicle(newVehicle);
-								
+
 								// Super important break, because without this break, the vehicleQueue gets full
 								break;
 							}
@@ -625,284 +709,8 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							}
 						}
 					}
-                }             
-            }
-
-			// Spawn car
-			RotationEnum directionFrom = RotationEnum.North;
-			
-			switch (from[0])
-			{
-				case 'N':
-					// spawn car from north
-					directionFrom = RotationEnum.North;
-					break;
-				case 'E':
-					// spawn car from east
-					directionFrom = RotationEnum.East;
-					break;
-				case 'S':
-					// spawn car from south
-					directionFrom = RotationEnum.South;
-					break;
-				case 'W':
-					// spawn car from west
-					directionFrom = RotationEnum.West;
-					break;
-			}
-
-			// Drive car
-			RotationEnum directionTo = RotationEnum.North;
-
-            switch (to[0])
-            {
-                case 'N':
-					if (type.Equals("pedestrian"))
-					{
-						directionTo = RotationEnum.South;
-					}
-					else
-					{
-						// drive car to north
-						directionTo = RotationEnum.North;
-					}
-                    break;
-                case 'E':
-					if (type.Equals("pedestrian"))
-					{
-						directionTo = RotationEnum.West;
-					}
-					else
-					{
-						// drive car to north
-						directionTo = RotationEnum.East;
-					}
-                    break;
-                case 'S':
-					if (type.Equals("pedestrian"))
-					{
-						directionTo = RotationEnum.North;
-					}
-					else
-					{
-						// drive car to north
-						directionTo = RotationEnum.South;
-					}
-                    break;
-                case 'W':
-					if (type.Equals("pedestrian"))
-					{
-						directionTo = RotationEnum.East;
-					}
-					else
-					{
-						// drive car to north
-						directionTo = RotationEnum.West;
-					}
-                    break;
-            }
-
-			int intTo = int.Parse(to[1].ToString());
-
-			Path(directionFrom, directionTo, intTo);
-        }
-
-		private void Path(RotationEnum from, RotationEnum to, int intTo)
-		{
-			for (int i = 0; i < lists.Vehicles.Length; i++)
-			{
-				Point pntDeparture = new Point();
-
-				if (lists.Vehicles[i].spawntile != null)
-				{
-					if (lists.Vehicles[i].spawntile.GridCoordinates != null)
-					{
-						int departureX = (int)lists.Vehicles[i].spawntile.GridCoordinates.X;
-						int departureY = (int)lists.Vehicles[i].spawntile.GridCoordinates.Y;
-
-						switch (from)
-						{
-							case RotationEnum.North:
-								// from north
-								departureY += 7;
-								break;
-							case RotationEnum.East:
-								// from east
-								departureX -= 7;
-								break;
-							case RotationEnum.South:
-								// from south
-								departureY -= 7;
-								break;
-							case RotationEnum.West:
-								// from west
-								departureX += 7;
-								break;
-							default:
-								throw new Exception(string.Format("Direction from {0} wordt niet herkend!", from));
-						}
-
-						if (departureX > -1 && departureY > -1)
-						{
-							pntDeparture = new Point(departureX, departureY);
-						}
-						else
-						{
-							// Pech gehad
-						}
-
-						Point pntArrival = new Point();
-
-						int arrivalX = -1;
-						int arrivalY = -1;
-
-						foreach (Lane lane in lists.Lanes)
-						{
-							switch (to)
-							{
-								case RotationEnum.North:
-									// to north
-									if (lane.laneID.Equals("N6"))
-									{
-										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
-										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
-									}
-									break;
-								case RotationEnum.East:
-									// to east
-									if (lane.laneID.Equals("E6"))
-									{
-										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
-										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
-									}
-									break;
-								case RotationEnum.South:
-									// to south
-									if (lane.laneID.Equals("S6"))
-									{
-										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
-										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
-									}
-									break;
-								case RotationEnum.West:
-									// to west
-									if (lane.laneID.Equals("W6"))
-									{
-										arrivalX = (int)lane.spawnTile.GridCoordinates.X;
-										arrivalY = (int)lane.spawnTile.GridCoordinates.Y;
-									}
-									break;
-								default:
-									throw new Exception(string.Format("Direction to {0} wordt niet herkend!", to));
-							}
-						}
-
-						if (arrivalX > -1 && arrivalY > -1)
-						{
-							pntArrival = new Point(arrivalX, arrivalY);
-						}
-						else
-						{
-							pntArrival = pntDeparture;
-						}
-
-						if (!pntArrival.Equals(pntDeparture))
-						{
-							Tuple<string, List<Vector2>> path = new Tuple<string, List<Vector2>>(lists.Vehicles[i].ID, new List<Vector2>());
-
-							try
-							{
-								//TODO: pathfinding class is too buggy, maybe find a better class on the internet?
-								//path = new Tuple<string, List<Vector2>>(lists.Vehicles[i].ID, pathfinder.FindPath(pntDeparture, pntArrival));
-							}
-							catch (IndexOutOfRangeException)
-							{
-
-							}
-
-							bool alreadyInPaths = false;
-
-							foreach (Tuple<string, List<Vector2>> path2 in paths)
-							{
-								if (path2.Item1.Equals(lists.Vehicles[i].ID))
-								{
-									alreadyInPaths = true;
-								}
-							}
-
-							if (!alreadyInPaths)
-							{
-								paths.Add(path);
-							}
-						}
-					}
 				}
 			}
 		}
-
-		public List<Tuple<string, List<Vector2>>> GetPaths()
-		{
-			return paths;
-		}
-
-		public void SetPathfinder(Pathfinder pathfinder)
-		{
-			this.pathfinder = pathfinder;
-		}
-
-        private void TempPathfinding(TrafficObject vehicle)
-        {
-            Tile occupyingTile = lists.Tiles[(int)vehicle.occupyingtile.X, (int)vehicle.occupyingtile.Y];
-
-            //origin
-            switch (vehicle.spawntile.Rotation)
-            {
-                case RotationEnum.North:
-                    //destination
-                    switch (vehicle.destinationLaneID)
-                    {
-						case "N6":case "E6":case "W6":
-							if (occupyingTile.Texture.Equals(Textures.RoadCenter))
-							{
-								vehicle.rotation = RotationEnum.East;
-							}
-                            break;
-                    }
-					break;
-                case RotationEnum.South:
-                    switch (vehicle.destinationLaneID)
-                    {
-						case "E6":case "S6":case "W6":
-							if (occupyingTile.Texture.Equals(Textures.RoadCenter))
-							{
-								vehicle.rotation = RotationEnum.West;
-							}
-                            break;
-                    }
-					break;
-                case RotationEnum.East:
-                    switch (vehicle.destinationLaneID)
-                    {
-						case "N6":case "S6":case "E6":
-							if (occupyingTile.Texture.Equals(Textures.RoadCenter))
-							{
-								vehicle.rotation = RotationEnum.South;
-							}
-                            break;
-                    }
-                    break;
-                case RotationEnum.West:
-                    switch (vehicle.destinationLaneID)
-                    {
-						case "N6":case "S6":case "W6":
-							if (occupyingTile.Texture.Equals(Textures.RoadCenter))
-							{
-								vehicle.rotation = RotationEnum.North;
-							}
-                            break;
-                    }
-                    break;
-            }
-        }
 	}
 }

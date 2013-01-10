@@ -9,7 +9,6 @@ namespace KruispuntGroep6.Communication
 	/// </summary>
 	public static class Program
 	{
-		private static string address;	// String used to be the IP address used by Client.
 		private static Client.Client client;	// Client used to be the instance of Client.
 		private static MainGame simulator;	// MainGame used to be the instance of Simulator.
 		private static bool simulatorAllowed = true;	// Boolean used to determine whether
@@ -27,7 +26,7 @@ namespace KruispuntGroep6.Communication
 
 			new Thread(new ThreadStart(ClientTask)).Start();
 
-			address = string.Empty;
+			string address = string.Empty;
 
 			while (address.Equals(string.Empty))
 			{
@@ -70,7 +69,7 @@ namespace KruispuntGroep6.Communication
 		/// </summary>
 		public static void SimulatorTask()
 		{
-			using (simulator = new MainGame(address))
+			using (simulator = new MainGame())
 			{
 				client.SetSimulator(simulator);
 				simulator.Run();

@@ -27,10 +27,6 @@
       <Name>Crossroad</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Grids\Pathfinding.txt">
-      <Name>Pathfinding</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Default32x32.jpg">

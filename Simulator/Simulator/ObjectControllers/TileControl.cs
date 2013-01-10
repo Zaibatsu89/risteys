@@ -67,15 +67,31 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
         public void ChangeLights(Tile tile)
         {
-            if (tile.isGreen == false && tile.Texture.Equals(Textures.RedLight))
-            {
-                tile.Texture = Textures.GreenLight;
-                tile.isGreen = true;
-            }
-            else if (tile.isGreen == true && tile.Texture.Equals(Textures.GreenLight))
-            {
-                tile.Texture = Textures.RedLight;
+			 if (tile.isGreen)
+			 {
+				if (tile.Texture.Equals(Textures.GreenLight))
+				{
+					tile.Texture = Textures.RedLight;
+				}
+				else if (tile.Texture.Equals(Textures.Sidewalk2Green))
+				{
+					tile.Texture = Textures.Sidewalk2Red;
+				}
+                
                 tile.isGreen = false;
+            }
+            else
+			{
+				if (tile.Texture.Equals(Textures.RedLight))
+				{
+					tile.Texture = Textures.GreenLight;
+				}
+				else if (tile.Texture.Equals(Textures.Sidewalk2Red))
+				{
+					tile.Texture = Textures.Sidewalk2Green;
+				}
+                
+                tile.isGreen = true;
             }
         }
 

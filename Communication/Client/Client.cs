@@ -603,11 +603,6 @@ namespace KruispuntGroep6.Communication.Client
 			//reset previous stoplight json number
 			previousStoplightJSONnumber = 0;
 
-			//create welcome message
-			string message = strings.HiIAmSimulator;
-			//send this message to controller
-			SendToController(message, false);
-
 			// Update GUI
 			OnMessageChanged(btnConnect, btnConnect.GetType(), enabled: false);
 			OnMessageChanged(lblConStatusValue, lblConStatusValue.GetType(),

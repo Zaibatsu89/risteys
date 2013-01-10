@@ -33,6 +33,8 @@ namespace KruispuntGroep6.Simulator.Objects
 
         public TrafficObject SpawnVehicle(TrafficObject vehicle)
         {
+			string destinationLaneID = vehicle.destinationLaneID;
+
 			switch (vehicle.ToString())
 			{
 				case "bicycle":
@@ -54,6 +56,8 @@ namespace KruispuntGroep6.Simulator.Objects
 					vehicle = new Truck(Textures.Truck, vehicle.ID, random);
 					break;
 			}
+
+			vehicle.destinationLaneID = destinationLaneID;
 
 			vehicle.rotation = this.spawnTile.Rotation;
 			vehicle.position = this.spawnTile.Position;

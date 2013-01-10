@@ -8,16 +8,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace KruispuntGroep6.Simulator.Main
 {
-    //TODO: bugs: 
-    //Ghost cars that don't move appear after reset or after stress
-
     /// <summary>
     /// This is the main type for your game
     /// </summary>
     public class MainGame : Microsoft.Xna.Framework.Game
     {
-		private string address;
-
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -29,9 +24,6 @@ namespace KruispuntGroep6.Simulator.Main
 
 		public Events.Communication Communication;
 
-		private PathfinderLoader pathfinderLoader;
-		private Pathfinder pathfinder;
-
 		private VehicleControl vehicleControl;
         private TileControl tileControl;
         private LaneControl laneControl;
@@ -42,15 +34,14 @@ namespace KruispuntGroep6.Simulator.Main
 
 		private static void Main(string[] args)
 		{
-			using (MainGame game = new MainGame("lol"))
+			using (MainGame game = new MainGame())
 			{
 				game.Run();
 			}
 		}
 
-        public MainGame(string address)
+        public MainGame()
         {
-			this.address = address;
 			this.Window.Title = "Kruispunt Groep 6: Simulator";
 
 			Content.RootDirectory = "Content";
@@ -74,7 +65,6 @@ namespace KruispuntGroep6.Simulator.Main
             lists = new Lists();
 
             levelBuilder = new LevelBuilder(lists);
-			pathfinderLoader = new PathfinderLoader(lists);
 
 			vehicleControl = new VehicleControl(this.GraphicsDevice, lists);
 			tileControl = new TileControl(lists);
@@ -130,12 +120,9 @@ namespace KruispuntGroep6.Simulator.Main
 
 			this.LoadCrossroad(Path.Combine(Content.RootDirectory,
 				"Grids\\Crossroad.txt"));
-			this.LoadPathfinding(Path.Combine(Content.RootDirectory,
-				"Grids\\Pathfinding.txt"));
 
             tileControl.FillTileList();
             laneControl.LoadLanes();
-			vehicleControl.SetPathfinder(pathfinder);
         }
 
         /// <summary>
@@ -187,16 +174,6 @@ namespace KruispuntGroep6.Simulator.Main
                 levelBuilder.LoadLevel(path);
             else throw new Exception("No Level Detected");
         }
-
-		private void LoadPathfinding(string filePath)
-		{
-			if (File.Exists(filePath))
-				pathfinderLoader.LoadLevel(filePath);
-			else throw new Exception("No Level Detected");
-
-			Map map = new Map(pathfinderLoader.GetLayout());
-			pathfinder = new Pathfinder(map);
-		}
 
         private void MouseButtonPress()
         {
