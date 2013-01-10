@@ -35,15 +35,18 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
                     if (!Texture2D.Equals(lists.Tiles[x, y].Texture, null))
                     {
                         // Draw it in screen space.                     
-                        spriteBatch.Draw(lists.Tiles[x, y].Texture,
-                                        lists.Tiles[x, y].DrawPosition,
-                                        null,
-                                        Color.White,
-                                        Rotation.getRotation(lists.Tiles[x, y].Rotation),
-                                        lists.Tiles[x, y].Origin,
-                                        1.0f,
-                                        SpriteEffects.None,
-                                        1.0f);
+                        spriteBatch.Draw
+						(
+							lists.Tiles[x, y].Texture,
+                            lists.Tiles[x, y].DrawPosition,
+                            null,
+                            Color.White,
+                            Rotation.getRotation(lists.Tiles[x, y].Rotation),
+                            lists.Tiles[x, y].Origin,
+                            1.0f,
+                            SpriteEffects.None,
+                            1.0f
+						);
                     }
                 }
             }
@@ -82,19 +85,92 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
             {
                 if(laneID.Equals(lane.laneID))
                 {
-					if (!laneID[1].Equals('0') && !laneID[1].Equals('7'))
+					switch (colour)
 					{
-						switch (colour)
-						{
-							case LightsEnum.Blink: lane.trafficLight.Texture = Textures.BlinkLight;
-								break;
-							case LightsEnum.Red: lane.trafficLight.Texture = Textures.RedLight;
-								break;
-							case LightsEnum.Green: lane.trafficLight.Texture = Textures.GreenLight;
-								break;
-							case LightsEnum.Yellow: lane.trafficLight.Texture = Textures.YellowLight;
-								break;
-						}
+						case LightsEnum.Blink:
+							if (!laneID[1].Equals('0') && !laneID[1].Equals('7'))
+							{
+								lane.trafficLight.Texture = Textures.BlinkLight;
+							}
+							break;
+						case LightsEnum.Green:
+							if (laneID[1].Equals('0') || laneID[1].Equals('7'))
+							{
+								if (laneID[1].Equals('0'))
+								{
+									if (lane.trafficLight.Texture.Equals(Textures.SidewalkDownRed))
+									{
+										lane.trafficLight.Texture = Textures.Sidewalk2Green;
+									}
+									else
+									{
+										lane.trafficLight.Texture = Textures.SidewalkRightRed;
+									}
+								}
+								else
+								{
+									if (lane.trafficLight.Texture.Equals(Textures.SidewalkRightRed))
+									{
+										lane.trafficLight.Texture = Textures.Sidewalk2Green;
+									}
+									else
+									{
+										lane.trafficLight.Texture = Textures.SidewalkDownRed;
+									}
+								}
+							}
+							else
+							{
+								lane.trafficLight.Texture = Textures.GreenLight;
+							}
+							break;
+						case LightsEnum.Off:
+							if (laneID[1].Equals('0') || laneID[1].Equals('7'))
+							{
+								lane.trafficLight.Texture = Textures.Sidewalk2Red;
+							}
+							else
+							{
+								lane.trafficLight.Texture = Textures.RedLight;
+							}
+							break;
+						case LightsEnum.Red:
+							if (laneID[1].Equals('0') || laneID[1].Equals('7'))
+							{
+								if (laneID[1].Equals('0'))
+								{
+									if (lane.trafficLight.Texture.Equals(Textures.SidewalkRightRed))
+									{
+										lane.trafficLight.Texture = Textures.Sidewalk2Red;
+									}
+									else
+									{
+										lane.trafficLight.Texture = Textures.SidewalkDownRed;
+									}
+								}
+								else
+								{
+									if (lane.trafficLight.Texture.Equals(Textures.SidewalkDownRed))
+									{
+										lane.trafficLight.Texture = Textures.Sidewalk2Red;
+									}
+									else
+									{
+										lane.trafficLight.Texture = Textures.SidewalkRightRed;
+									}
+								}
+							}
+							else
+							{
+								lane.trafficLight.Texture = Textures.RedLight;
+							}
+							break;
+						case LightsEnum.Yellow:
+							if (!laneID[1].Equals('0') && !laneID[1].Equals('7'))
+							{
+								lane.trafficLight.Texture = Textures.YellowLight;
+							}
+							break;
 					}
 				}
             }

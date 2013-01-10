@@ -571,10 +571,10 @@ namespace KruispuntGroep6.Communication.Json
 		/// <summary>
 		/// Gets random empty.
 		/// </summary>
-		/// <returns>String used to contain the empty value (true, false or null).</returns>
+		/// <returns>String used to contain the empty value (true or false).</returns>
 		private string GetRandomEmpty()
 		{
-			int intRandom = random.Next(3);
+			int intRandom = random.Next(2);
 			string strRandom = string.Empty;
 
 			switch (intRandom)
@@ -584,9 +584,6 @@ namespace KruispuntGroep6.Communication.Json
 					break;
 				case 1:
 					strRandom = "false";
-					break;
-				case 2:
-					strRandom = "null";
 					break;
 				default:
 					throw new Exception(string.Format("Random int {0} wordt niet herkend!", intRandom));
@@ -856,9 +853,9 @@ namespace KruispuntGroep6.Communication.Json
 					json += detectorType;
 					json += @""", ""loop"":""";
 					json += loop;
-					json += @""", ""empty"":""";
+					json += @""", ""empty"":";
 					json += empty;
-					json += @""", ""to"":""";
+					json += @", ""to"":""";
 					json += detectorTo;
 					break;
 			}

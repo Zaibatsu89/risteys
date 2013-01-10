@@ -41,15 +41,12 @@ namespace KruispuntGroep6.Simulator.Events
 
 					if (jsonParameters[0].Equals("input"))
 					{
-						if (!jsonParameters[2].Equals("pedestrian"))
-						{
-							// Spawn vehicle at 'from' and drive it to 'to'
-							vehicleControl.Spawn(jsonParameters[2], jsonParameters[3], jsonParameters[4]);
-						}
+						// Spawn vehicle at 'from' and drive it to 'to'
+						vehicleControl.Spawn(jsonParameters[2], jsonParameters[3], jsonParameters[4]);
 					}
 					else if (jsonParameters[0].Equals("stoplight"))
 					{
-						LightsEnum lightsEnum = LightsEnum.Red;
+						LightsEnum lightsEnum = LightsEnum.Off;
 
 						switch (jsonParameters[2])
 						{

@@ -2,9 +2,10 @@
 {
     public enum LightsEnum
     {
+		Blink,
+		Green,
+		Off,
         Red,
-        Green,
-        Yellow,
-        Blink
+        Yellow
     }
 }

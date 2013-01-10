@@ -5,7 +5,6 @@ using KruispuntGroep6.Simulator.ObjectControllers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
 
 namespace KruispuntGroep6.Simulator.Main
 {
@@ -54,9 +53,9 @@ namespace KruispuntGroep6.Simulator.Main
 			this.address = address;
 			this.Window.Title = "Kruispunt Groep 6: Simulator";
 
+			Content.RootDirectory = "Content";
+
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-				"SimulatorContent"));
 
             graphics.PreferredBackBufferHeight = TilesHor * 32;
             graphics.PreferredBackBufferWidth = TilesVer * 32;
@@ -70,7 +69,7 @@ namespace KruispuntGroep6.Simulator.Main
         /// </summary>
         protected override void Initialize()
         {
-            Textures.Default = Content.Load<Texture2D>("Sprites\\Default32x32");
+			Textures.Default = Content.Load<Texture2D>("Sprites\\Default32x32");
 
             lists = new Lists();
 
@@ -120,9 +119,14 @@ namespace KruispuntGroep6.Simulator.Main
             Textures.Crossing = Content.Load<Texture2D>("Tiles/32p/Crossing32x32");
             Textures.Grass = Content.Load<Texture2D>("Tiles/32p/Grass32x32");
             Textures.Sidewalk = Content.Load<Texture2D>("Tiles/32p/Sidewalk32x32");
-            #endregion
 
-            Textures.Car = Content.Load<Texture2D>("Sprites\\Car32x32");
+			Textures.Bicycle = Content.Load<Texture2D>("Sprites\\Bicycle32x32");
+			Textures.Bus = Content.Load<Texture2D>("Sprites\\Bus32x64");
+			Textures.Car = Content.Load<Texture2D>("Sprites\\Car32x32");
+			Textures.Godzilla = Content.Load<Texture2D>("Sprites\\Godzilla32x64");
+			Textures.Pedestrian = Content.Load<Texture2D>("Sprites\\Pedestrian32x32");
+			Textures.Truck = Content.Load<Texture2D>("Sprites\\Truck32x64");
+            #endregion
 
 			this.LoadCrossroad(Path.Combine(Content.RootDirectory,
 				"Grids\\Crossroad.txt"));

@@ -29,7 +29,12 @@ namespace KruispuntGroep6.Simulator.Globals
         public static Texture2D CarSortLeft;
         public static Texture2D CarSortRight;
 
+		public static Texture2D Bicycle;
+		public static Texture2D Bus;
         public static Texture2D Car;
-        public static Texture2D Default;
+		public static Texture2D Default;
+		public static Texture2D Godzilla;
+		public static Texture2D Pedestrian;
+		public static Texture2D Truck;
     }
 }

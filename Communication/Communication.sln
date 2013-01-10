@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication", "Communicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "..\Simulator\Simulator\Simulator.csproj", "{AFA814A2-2915-4E4C-A1ED-B287ADDBC126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulatorContent", "..\Simulator\SimulatorContent\SimulatorContent.contentproj", "{CDB65960-3890-4F9D-826F-F82879675B17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "..\Simulator\Content\Content.contentproj", "{CDB65960-3890-4F9D-826F-F82879675B17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

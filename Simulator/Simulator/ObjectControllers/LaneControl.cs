@@ -209,16 +209,14 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 
         private void SpawnQueuedVehicles(Lane lane)
         {
-                if (lane.vehicleQueue.Count > 0)
+            if (lane.vehicleQueue.Count > 0)
+            {
+                if (!lane.spawnTile.isOccupied)
                 {
-                    if (!lane.spawnTile.isOccupied)
-                    {
-                        Vehicle vehicle = lane.vehicleQueue.Dequeue();
-                        lane.SpawnVehicle(vehicle.ID);
-                    }
+                    TrafficObject vehicle = lane.vehicleQueue.Dequeue();
+                    lane.SpawnVehicle(vehicle);
                 }
-            
+            }
         }
-
     }
 }

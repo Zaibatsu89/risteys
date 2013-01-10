@@ -56,7 +56,8 @@ namespace KruispuntGroep6.Communication.Json
 						string strLight = dLight.ElementAt(i);
 						string strType = dType.ElementAt(i);
 						string strLoop = loop.ElementAt(i);
-						string strEmpty = empty.ElementAt(i);
+						bool boolEmpty = empty.ElementAt(i);
+						string strEmpty = boolEmpty.ToString();
 						string strTo = dTo.ElementAt(i);
 
 						if (i > 0)
@@ -219,7 +220,8 @@ namespace KruispuntGroep6.Communication.Json
 					string strDetectorLight = json.light;
 					string strDetectorType = json.type;
 					string strLoop = json.loop;
-					string strEmpty = json.empty;
+					bool boolEmpty = json.empty;
+					string strEmpty = boolEmpty.ToString();
 					string strDetectorTo = json.to;
 
 					message = message.Insert(0, "[");

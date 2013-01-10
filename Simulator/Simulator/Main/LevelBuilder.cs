@@ -82,17 +82,34 @@ namespace KruispuntGroep6.Simulator.Main
             {
                 case 'X':
                     return LoadTile(Textures.RoadCenter, RotationEnum.North, new Vector2(x,y));
-                case 'S':
-                    return LoadTile(Textures.Sidewalk, RotationEnum.North, new Vector2(x, y));
+                
                 case 'G':
                     return LoadTile(Textures.Grass, RotationEnum.North, new Vector2(x, y));
-                case 'C':
+
+				#region Crossings
+				case 'C':
                     return LoadTile(Textures.Crossing, RotationEnum.North, new Vector2(x, y));
                 case 'c':
-                    return LoadTile(Textures.Crossing, RotationEnum.East, new Vector2(x, y));
+                    return LoadTile(Textures.Crossing, RotationEnum.West, new Vector2(x, y));
+				case 'E':
+					return LoadTile(Textures.Crossing, RotationEnum.South, new Vector2(x, y));
+				case 'e':
+					return LoadTile(Textures.Crossing, RotationEnum.East, new Vector2(x, y));
+				#endregion
 
-                #region Roads
-                case 'A':
+				#region Sidewalks
+				case 's':
+					return LoadTile(Textures.Sidewalk, RotationEnum.South, new Vector2(x, y));
+				case 'S':
+					return LoadTile(Textures.Sidewalk, RotationEnum.East, new Vector2(x, y));
+				case 'q':
+					return LoadTile(Textures.Sidewalk, RotationEnum.West, new Vector2(x, y));
+				case 'Q':
+					return LoadTile(Textures.Sidewalk, RotationEnum.North, new Vector2(x, y));
+				#endregion
+
+				#region Roads
+				case 'A':
                     return LoadTile(Textures.Road, RotationEnum.South, new Vector2(x, y));
                 case 'a':
                     return LoadTile(Textures.Road, RotationEnum.East, new Vector2(x, y));

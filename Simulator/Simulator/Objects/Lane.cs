@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KruispuntGroep6.Simulator.Globals;
-using System;
+using KruispuntGroep6.Simulator.Objects.TrafficObjects;
 
 namespace KruispuntGroep6.Simulator.Objects
 {
@@ -9,8 +10,8 @@ namespace KruispuntGroep6.Simulator.Objects
         public static int LaneLength = 7;
 
         public List<Tile> laneTiles { get; set; }
-        public List<Vehicle> laneVehicles { get; set; }
-        public Queue<Vehicle> vehicleQueue { get; set; }
+        public List<TrafficObject> laneVehicles { get; set; }
+		public Queue<TrafficObject> vehicleQueue { get; set; }
 
         public string laneID { get; private set; }
         public Tile trafficLight { get; set; }
@@ -25,27 +26,49 @@ namespace KruispuntGroep6.Simulator.Objects
         {
             this.laneID = ID;
             this.laneTiles = new List<Tile>();
-            this.laneVehicles = new List<Vehicle>();
-            this.vehicleQueue = new Queue<Vehicle>();
+			this.laneVehicles = new List<TrafficObject>();
+			this.vehicleQueue = new Queue<TrafficObject>();
             this.random = new Random();
         }
 
-        public Vehicle SpawnVehicle(string vehicleID)
+        public TrafficObject SpawnVehicle(TrafficObject vehicle)
         {
-            Vehicle vehicle = new Vehicle(Textures.Car, vehicleID, random);
-            vehicle.rotation = this.spawnTile.Rotation;
-            vehicle.position = this.spawnTile.Position;
-            vehicle.drawposition = this.spawnTile.DrawPosition;
+			switch (vehicle.ToString())
+			{
+				case "bicycle":
+					vehicle = new Bicycle(Textures.Bicycle, vehicle.ID, random);
+					break;
+				case "bus":
+					vehicle = new Bus(Textures.Bus, vehicle.ID, random);
+					break;
+				case "car":
+					vehicle = new Car(Textures.Car, vehicle.ID, random);
+					break;
+				case "godzilla":
+					vehicle = new Godzilla(Textures.Godzilla, vehicle.ID, random);
+					break;
+				case "pedestrian":
+					vehicle = new Pedestrian(Textures.Pedestrian, vehicle.ID, random);
+					break;
+				case "truck":
+					vehicle = new Truck(Textures.Truck, vehicle.ID, random);
+					break;
+			}
 
-            //occupy tile
-            vehicle.spawntile = this.spawnTile;
-            vehicle.occupyingtile = this.spawnTile.GridCoordinates;
-            this.spawnTile.isOccupied = true;
-            this.spawnTile.OccupiedID = vehicle.ID;
+			vehicle.rotation = this.spawnTile.Rotation;
+			vehicle.position = this.spawnTile.Position;
+			vehicle.drawposition = this.spawnTile.DrawPosition;
 
-            vehicle.currentLane = this;
-            this.laneVehicles.Add(vehicle);
-            return vehicle;
+			//occupy tile
+			vehicle.spawntile = this.spawnTile;
+			vehicle.occupyingtile = this.spawnTile.GridCoordinates;
+			this.spawnTile.isOccupied = true;
+			this.spawnTile.OccupiedID = vehicle.ID;
+
+			vehicle.currentLane = this;
+			this.laneVehicles.Add(vehicle);
+
+			return vehicle;
         }
 
         public string CreateDetectionPackage()
