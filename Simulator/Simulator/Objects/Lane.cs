@@ -20,15 +20,12 @@ namespace KruispuntGroep6.Simulator.Objects
         public Tile sidewalkCrossing { get; set; }
         public Tile spawnTile { get; set; }
 
-        private Random random;
-
         public Lane(string ID)
         {
             this.laneID = ID;
             this.laneTiles = new List<Tile>();
 			this.laneVehicles = new List<TrafficObject>();
 			this.vehicleQueue = new Queue<TrafficObject>();
-            this.random = new Random();
         }
 
         public TrafficObject SpawnVehicle(TrafficObject vehicle)
@@ -38,22 +35,22 @@ namespace KruispuntGroep6.Simulator.Objects
 			switch (vehicle.ToString())
 			{
 				case "bicycle":
-					vehicle = new Bicycle(Textures.Bicycle, vehicle.ID, random);
+					vehicle = new Bicycle(Textures.Bicycle, vehicle.ID);
 					break;
 				case "bus":
-					vehicle = new Bus(Textures.Bus, vehicle.ID, random);
+					vehicle = new Bus(Textures.Bus, vehicle.ID);
 					break;
 				case "car":
-					vehicle = new Car(Textures.Car, vehicle.ID, random);
+					vehicle = new Car(Textures.Car, vehicle.ID);
 					break;
 				case "godzilla":
-					vehicle = new Godzilla(Textures.Godzilla, vehicle.ID, random);
+					vehicle = new Godzilla(Textures.Godzilla, vehicle.ID);
 					break;
 				case "pedestrian":
-					vehicle = new Pedestrian(Textures.Pedestrian, vehicle.ID, random);
+					vehicle = new Pedestrian(Textures.Pedestrian, vehicle.ID);
 					break;
 				case "truck":
-					vehicle = new Truck(Textures.Truck, vehicle.ID, random);
+					vehicle = new Truck(Textures.Truck, vehicle.ID);
 					break;
 			}
 

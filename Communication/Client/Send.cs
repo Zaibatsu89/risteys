@@ -1,23 +1,24 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using KruispuntGroep6.Communication.Json;
 
 namespace KruispuntGroep6.Communication.Client
 {
 	/// <summary>
 	/// Class used to send messages to the controller.
 	/// </summary>
-    class Send
+    public class Send
     {
-		private Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
+		private static Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
+
+		public static TcpClient tcpClient { get; set; } // TcpClient used to contain the TCP client.
 
 		/// <summary>
 		/// Sends a message to the controller.
 		/// </summary>
 		/// <param name="tcpClient">The TcpClient is used to determine the current client connection</param>
 		/// <param name="message">The string is used to determine the message to send</param>
-		public void SendMessage(TcpClient tcpClient, string message)
+		public static void SendMessage(string message)
 		{
 			string retMessage = string.Empty;
 

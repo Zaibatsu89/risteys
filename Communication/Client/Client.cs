@@ -592,6 +592,9 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		private void Connected()
 		{
+			// Send tcpClient to the static send class
+			Send.tcpClient = tcpClient;
+
 			//stop connection timer
 			timerConnection.Stop();
 			//reset connection attempts
@@ -831,8 +834,7 @@ namespace KruispuntGroep6.Communication.Client
 		/// <param name="message">String used to determine the message to be send.</param>
 		private void SendToController(string message, bool show = true)
 		{
-			Send send2Controller = new Send();
-			send2Controller.SendMessage(tcpClient, message);
+			Send.SendMessage(message);
 
 			if (show)
 			{
