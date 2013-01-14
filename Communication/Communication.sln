@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication", "Communicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "..\Simulator\Simulator\Simulator.csproj", "{AFA814A2-2915-4E4C-A1ED-B287ADDBC126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "..\Simulator\Content\Content.contentproj", "{CDB65960-3890-4F9D-826F-F82879675B17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "..\Simulator\Content\Content.contentproj", "{0EE28E46-CCC6-41EA-8F4F-15F8A574BA1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{AFA814A2-2915-4E4C-A1ED-B287ADDBC126}.Release|Any CPU.ActiveCfg = Release|x86
 		{AFA814A2-2915-4E4C-A1ED-B287ADDBC126}.Release|x86.ActiveCfg = Release|x86
 		{AFA814A2-2915-4E4C-A1ED-B287ADDBC126}.Release|x86.Build.0 = Release|x86
-		{CDB65960-3890-4F9D-826F-F82879675B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CDB65960-3890-4F9D-826F-F82879675B17}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CDB65960-3890-4F9D-826F-F82879675B17}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{CDB65960-3890-4F9D-826F-F82879675B17}.Release|x86.ActiveCfg = Debug|Any CPU
+		{0EE28E46-CCC6-41EA-8F4F-15F8A574BA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE28E46-CCC6-41EA-8F4F-15F8A574BA1C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0EE28E46-CCC6-41EA-8F4F-15F8A574BA1C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE28E46-CCC6-41EA-8F4F-15F8A574BA1C}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

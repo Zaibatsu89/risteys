@@ -7,7 +7,7 @@ namespace KruispuntGroep6.Communication.Client
 	/// <summary>
 	/// Class used to send messages to the controller.
 	/// </summary>
-    public class Send
+    public static class Send
     {
 		private static Strings strings = new Strings();	// Strings used to store various strings used in the GUI.
 

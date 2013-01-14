@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6D32033E-F019-45F4-B2EF-E6E604D55ECB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KruispuntGroep6.Communication</RootNamespace>
     <AssemblyName>KruispuntGroep6Communication</AssemblyName>
@@ -81,6 +81,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Recieve.cs" />
     <Compile Include="Json\DynamicJson.cs" />
     <Compile Include="Json\JsonGenerator.cs" />
     <Compile Include="Client\Send.cs" />

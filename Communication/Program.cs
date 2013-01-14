@@ -19,7 +19,7 @@ namespace KruispuntGroep6.Communication
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			new Thread(new ThreadStart(ServerTask)).Start();
+			//new Thread(new ThreadStart(ServerTask)).Start();
 
 			client = new Client.Client();
 			client.FormClosed += new FormClosedEventHandler(client_FormClosed);

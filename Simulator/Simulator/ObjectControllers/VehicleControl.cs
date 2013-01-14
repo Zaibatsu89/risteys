@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using KruispuntGroep6.Communication.Client;
 using KruispuntGroep6.Simulator.Globals;
 using KruispuntGroep6.Simulator.Objects;
 using KruispuntGroep6.Simulator.Objects.TrafficObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using KruispuntGroep6.Communication.Client;
 
 namespace KruispuntGroep6.Simulator.ObjectControllers
 {
@@ -783,27 +783,27 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 						{
 							switch (type)
 							{
-								case "bicycle":
+								case "BICYCLE":
 									newVehicle = new Bicycle(string.Empty);
 									vehicleType = "b";
 									break;
-								case "bus":
+								case "BUS":
 									newVehicle = new Bus(string.Empty);
 									vehicleType = "B";
 									break;
-								case "car":
+								case "CAR":
 									newVehicle = new Car(string.Empty);
 									vehicleType = "c";
 									break;
-								case "godzilla":
+								case "GODZILLA":
 									newVehicle = new Godzilla(string.Empty);
 									vehicleType = "g";
 									break;
-								case "pedestrian":
+								case "PEDESTRIAN":
 									newVehicle = new Pedestrian(string.Empty);
 									vehicleType = "p";
 									break;
-								case "truck":
+								case "TRUCK":
 									newVehicle = new Truck(string.Empty);
 									vehicleType = "t";
 									break;

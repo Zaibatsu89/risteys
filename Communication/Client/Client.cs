@@ -48,7 +48,7 @@ namespace KruispuntGroep6.Communication.Client
 		private TcpClient tcpClient;	// TcpClient used to contain the heart of this class: the TCP client.
 		private TextBox tbAddress, tbJsonGenerator, tbNewText; // TextBoxes used to contain boxes to input text.
 		private Thread thrConnect; // Thread used to contain functions that needs to be executed at the same time.
-		private System.Timers.Timer timerConnection, timerJson; // Timers used to contain a stopwatch.
+		private System.Timers.Timer timerConnection, timerJson, timerReceive; // Timers used to contain a stopwatch.
 
 		/// <summary>
 		/// Constructor.
@@ -592,6 +592,10 @@ namespace KruispuntGroep6.Communication.Client
 		/// </summary>
 		private void Connected()
 		{
+			// Send tcpClient to the static recieve class
+			Recieve.tcpClient = tcpClient;
+			// Start recieving messages from the controller
+			Recieve.ReceiveMessage(simulator);
 			// Send tcpClient to the static send class
 			Send.tcpClient = tcpClient;
 
@@ -758,7 +762,8 @@ namespace KruispuntGroep6.Communication.Client
 
 					while (inputTime.Equals(previousTime))
 					{
-						SendToController(inputJSON[inputJSONnumber]);
+						// TODO: for session
+						//SendToController(inputJSON[inputJSONnumber]);
 
 						simulator.Communication.Decrypter(GetEncryptedJson(inputJSON[inputJSONnumber]));
 
@@ -811,13 +816,15 @@ namespace KruispuntGroep6.Communication.Client
 		private void SendStartTime()
 		{
 			string time = DateTime.Now.ToString(strings.DateTimeFormat);
-			string jsonStartTime = DynamicJson.Serialize(new object[]{new{starttime=time}});
+			string jsonStartTime = DynamicJson.Serialize(new object[] { new { starttime = time } });
+			string jsonMultiplier = DynamicJson.Serialize(new object[] { new { multiplier = 1 } });
 
 			if (previousDetectorJSONnumber.Equals(0) &&
 				previousInputJSONnumber.Equals(0) &&
 				previousStoplightJSONnumber.Equals(0))
 			{
 				SendToController(jsonStartTime);
+				SendToController(jsonMultiplier);
 			}
 
 			timerJson = new System.Timers.Timer(1000);

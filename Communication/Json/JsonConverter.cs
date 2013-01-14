@@ -17,16 +17,16 @@ namespace KruispuntGroep6.Communication.Json
 		{
 			string jsonType = string.Empty;
 
-			if (message.Contains("from"))
-				jsonType = "input";
-			else if (message.Contains("state"))
-				jsonType = "stoplight";
-			else if (message.Contains("loop"))
-				jsonType = "detector";
-			else if (message.Contains("starttime"))
-				jsonType = "start";
-			else if (message.Contains("multiplier"))
-				jsonType = "multiplier";
+			if (message.Contains("from") || message.Contains("FROM"))
+				jsonType = "INPUT";
+			else if (message.Contains("state") || message.Contains("STATE"))
+				jsonType = "STOPLIGHT";
+			else if (message.Contains("loop") || message.Contains("LOOP"))
+				jsonType = "DETECTOR";
+			else if (message.Contains("starttime") || message.Contains("STARTTIME"))
+				jsonType = "STARTTIME";
+			else if (message.Contains("multiplier") || message.Contains("MULTIPLIER"))
+				jsonType = "MULTIPLIER";
 
 			return jsonType;
 		}
@@ -44,7 +44,7 @@ namespace KruispuntGroep6.Communication.Json
 
 			switch (message)
 			{
-				case "detector":
+				case "DETECTOR":
 					var dLight = ((dynamic[])json).Select(d => d.light);
 					var dType = ((dynamic[])json).Select(d => d.type);
 					var loop = ((dynamic[])json).Select(d => d.loop);
@@ -62,30 +62,30 @@ namespace KruispuntGroep6.Communication.Json
 
 						if (i > 0)
 						{
-							message += "[detector";
+							message += "[" + message;
 						}
 						else
 						{
 							message = message.Insert(0, "[");
 						}
-
+						
 						message += ",";
-						message += strLight;
+						message += strLight.ToUpper();
 						message += ",";
-						message += strType;
+						message += strType.ToUpper();
 						message += ",";
-						message += strLoop;
+						message += strLoop.ToUpper();
 						message += ",";
-						message += strEmpty;
+						message += strEmpty.ToUpper();
 						message += ",";
-						message += strTo;
+						message += strTo.ToUpper();
 						message += "],";
 					}
 
 					message = message.Remove(message.Length - 1);
 
 					break;
-				case "input":
+				case "INPUT":
 					var time = ((dynamic[])json).Select(d => d.time);
 					var type = ((dynamic[])json).Select(d => d.type);
 					var from = ((dynamic[])json).Select(d => d.from);
@@ -100,7 +100,7 @@ namespace KruispuntGroep6.Communication.Json
 
 						if (i > 0)
 						{
-							message += "[input";
+							message += "[" + message;
 						}
 						else
 						{
@@ -108,20 +108,20 @@ namespace KruispuntGroep6.Communication.Json
 						}
 
 						message += ",";
-						message += strTime;
+						message += strTime.ToUpper();
 						message += ",";
-						message += strType;
+						message += strType.ToUpper();
 						message += ",";
-						message += strFrom;
+						message += strFrom.ToUpper();
 						message += ",";
-						message += strTo;
+						message += strTo.ToUpper();
 						message += "],";
 					}
 
 					message = message.Remove(message.Length - 1);
 
 					break;
-				case "multiplier":
+				case "MULTIPLIER":
 					var multiplier = ((dynamic[])json).Select(d => d.multiplier);
 
 					for (int i = 0; i < count; i++)
@@ -130,21 +130,21 @@ namespace KruispuntGroep6.Communication.Json
 
 						if (i > 0)
 						{
-							message += "[multiplier";
+							message += "[" + message;
 						}
 						else
 						{
 							message = message.Insert(0, "[");
 						}
 						message += ",";
-						message += strMultiplier;
+						message += strMultiplier.ToUpper();
 						message += "],";
 					}
 
 					message = message.Remove(message.Length - 1);
 
 					break;
-				case "stoplight":
+				case "STOPLIGHT":
 					var light = ((dynamic[])json).Select(d => d.light);
 					var state = ((dynamic[])json).Select(d => d.state);
 
@@ -155,7 +155,7 @@ namespace KruispuntGroep6.Communication.Json
 
 						if (i > 0)
 						{
-							message += "[stoplight";
+							message += "[" + message;
 						}
 						else
 						{
@@ -163,9 +163,9 @@ namespace KruispuntGroep6.Communication.Json
 						}
 
 						message += ",";
-						message += strLight;
+						message += strLight.ToUpper();
 						message += ",";
-						message += strState;
+						message += strState.ToUpper();
 						message += "],";
 					}
 
@@ -173,7 +173,7 @@ namespace KruispuntGroep6.Communication.Json
 
 					break;
 				
-				case "start":
+				case "STARTTIME":
 					var starttime = ((dynamic[])json).Select(d => d.starttime);
 
 					for (int i = 0; i < count; i++)
@@ -182,14 +182,14 @@ namespace KruispuntGroep6.Communication.Json
 
 						if (i > 0)
 						{
-							message += "[starttime";
+							message += "[" + message;
 						}
 						else
 						{
 							message = message.Insert(0, "[");
 						}
 						message += ",";
-						message += strStarttime;
+						message += strStarttime.ToUpper();
 						message += "],";
 					}
 
@@ -216,7 +216,7 @@ namespace KruispuntGroep6.Communication.Json
 
 			switch (message)
 			{
-				case "detector":
+				case "DETECTOR":
 					string strDetectorLight = json.light;
 					string strDetectorType = json.type;
 					string strLoop = json.loop;
@@ -226,19 +226,19 @@ namespace KruispuntGroep6.Communication.Json
 
 					message = message.Insert(0, "[");
 					message += ",";
-					message += strDetectorLight;
+					message += strDetectorLight.ToUpper();
 					message += ",";
-					message += strDetectorType;
+					message += strDetectorType.ToUpper();
 					message += ",";
-					message += strLoop;
+					message += strLoop.ToUpper();
 					message += ",";
-					message += strEmpty;
+					message += strEmpty.ToUpper();
 					message += ",";
-					message += strDetectorTo;
+					message += strDetectorTo.ToUpper();
 					message += "]";
 
 					break;
-				case "input":
+				case "INPUT":
 					string strTime = json.time;
 					string strType = json.type;
 					string strFrom = json.from;
@@ -246,43 +246,43 @@ namespace KruispuntGroep6.Communication.Json
 
 					message = message.Insert(0, "[");
 					message += ",";
-					message += strTime;
+					message += strTime.ToUpper();
 					message += ",";
-					message += strType;
+					message += strType.ToUpper();
 					message += ",";
-					message += strFrom;
+					message += strFrom.ToUpper();
 					message += ",";
-					message += strTo;
+					message += strTo.ToUpper();
 					message += "]";
 
 					break;
-				case "multiplier":
+				case "MULTIPLIER":
 					string strMultiplier = json.multiplier;
 
 					message = message.Insert(0, "[");
 					message += ",";
-					message += strMultiplier;
+					message += strMultiplier.ToUpper();
 					message += "]";
 
 					break;
-				case "start":
+				case "STARTTIME":
 					string strStarttime = json.starttime;
 
 					message = message.Insert(0, "[");
 					message += ",";
-					message += strStarttime;
+					message += strStarttime.ToUpper();
 					message += "]";
 
 					break;
-				case "stoplight":
+				case "STOPLIGHT":
 					string strLight = json.light;
 					string strState = json.state;
 
 					message = message.Insert(0, "[");
 					message += ",";
-					message += strLight;
+					message += strLight.ToUpper();
 					message += ",";
-					message += strState;
+					message += strState.ToUpper();
 					message += "]";
 
 					break;

@@ -39,27 +39,27 @@ namespace KruispuntGroep6.Simulator.Events
 
 					string[] jsonParameters = jsonObject.Split(',');
 
-					if (jsonParameters[0].Equals("input"))
+					if (jsonParameters[0].Equals("INPUT"))
 					{
 						// Spawn vehicle at 'from' and drive it to 'to'
 						vehicleControl.Spawn(jsonParameters[2], jsonParameters[3], jsonParameters[4]);
 					}
-					else if (jsonParameters[0].Equals("stoplight"))
+					else if (jsonParameters[0].Contains("STOPLIGHT"))
 					{
 						LightsEnum lightsEnum = LightsEnum.Off;
 
 						switch (jsonParameters[2])
 						{
-							case "blink":
+							case "BLINK":
 								lightsEnum = LightsEnum.Blink;
 								break;
-							case "green":
+							case "GREEN":
 								lightsEnum = LightsEnum.Green;
 								break;
-							case "red":
+							case "RED":
 								lightsEnum = LightsEnum.Red;
 								break;
-							case "yellow":
+							case "YELLOW":
 								lightsEnum = LightsEnum.Yellow;
 								break;
 						}
