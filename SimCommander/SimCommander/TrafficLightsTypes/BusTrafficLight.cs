@@ -134,22 +134,22 @@ namespace SimCommander.TrafficLichtTypes
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLight: " + this.Name + " LightID: " + lightId.ToString() + " GreenTime: " + this.greenTimer.Interval);
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLight: " + this.Name + " LightID: " + lightId.ToString() + " thread: " + Thread.CurrentThread.Name);
                     //base.OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.green));
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.green));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.GREEN.ToString()));
                     break;
                 case 2:
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLight: " + this.Name + " LightID: " + lightId.ToString() + " YelloTime: " + this.orangeTimer.Interval);
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLight: " + this.Name + " LightID: " + lightId.ToString() + " thread: " + Thread.CurrentThread.Name);
                     //base.OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.yellow));
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.yellow));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.YELLOW.ToString()));
                     break;
                 case 3:
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLight: " + this.Name + " LightID: " + lightId.ToString() + " RED HAS NO TIMER");
                     //Bootstrapper.MessageLoop.Enqueue("TrafficLight: " + this.Name + " LightID: " + lightId.ToString() + " thread: " + Thread.CurrentThread.Name);
                     //base.OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.red));
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.red));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.RED.ToString()));
                     break;
                 case 4:
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.outOfOrder));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.BLINK.ToString()));
                     break;
                 default:
                     //Bootstrapper.MessageLoop.Enqueue("Invalid LightID");

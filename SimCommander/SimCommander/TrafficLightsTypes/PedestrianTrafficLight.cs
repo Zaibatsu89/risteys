@@ -101,16 +101,16 @@ namespace SimCommander.TrafficLichtTypes
             switch (lightId)
             {
                 case 1:
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.green));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.GREEN.ToString()));
                     break;
                 case 2:
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.yellow));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.YELLOW.ToString()));
                     break;
                 case 3:
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.red));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.RED.ToString()));
                     break;
                 case 4:
-                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.outOfOrder));
+                    OnTrafficLightChanged(this.Name, new TrafficLightPackage(this.Name, TrafficLightPackage.TrafficLightState.BLINK.ToString()));
                     break;
                 default:
                     //Bootstrapper.MessageLoop.Enqueue("Invalid LightID");

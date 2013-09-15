@@ -113,7 +113,7 @@ namespace SimCommander
         /// <param name="tlp"></param>
         private void TrafficLightController_trafficLightChanged(string sender, TrafficLightPackage tlp)
         {
-            if (tlp.State == TrafficLightPackage.TrafficLightState.red)
+            if (tlp.state == TrafficLightPackage.TrafficLightState.RED.ToString())
             {
                 lock (lockthis)
                 {

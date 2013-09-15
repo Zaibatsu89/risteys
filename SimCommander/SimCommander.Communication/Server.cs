@@ -96,18 +96,35 @@ namespace SimCommander.Communication
 
                 while (!quit)
                 {
-                    data = reader.ReadLine();
-                    if(data.Equals(Strings.Exit))
-                    {
-                        OnInfoMessage("Connection lost");
-                        client.Close();
-                        quit = true;
-                        break;
-                    }
-                    if (data.Equals(Strings.HiIAmSimulator))
-                        OnInfoMessage("Hi I'am a Simulator");
-                    else
-                        OnMessageRecieved(data);
+					try
+					{
+						data = reader.ReadLine();
+					}
+					catch (IOException)
+					{
+						OnInfoMessage("Connection lost");
+						client.Close();
+						quit = true;
+						break;
+					}
+
+					if (data != null)
+					{
+						if (data != String.Empty)
+						{
+							if (data.Equals(Strings.Exit))
+							{
+								OnInfoMessage("Connection lost");
+								client.Close();
+								quit = true;
+								break;
+							}
+							if (data.Equals(Strings.HiIAmSimulator))
+								OnInfoMessage("Hi I'am a Simulator");
+							else
+								OnMessageRecieved(data);
+						}
+					}
                 }
             }
 

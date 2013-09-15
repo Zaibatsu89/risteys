@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimCommander", "SimCommander\SimCommander.csproj", "{57E671F5-5F65-461E-A372-047B33BE1AC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimCommander.Communication", "SimCommander.Communication\SimCommander.Communication.csproj", "{F65184C9-70CB-433A-9A7A-DDC13C23A610}"
