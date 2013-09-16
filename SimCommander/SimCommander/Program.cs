@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Threading;
 
 namespace SimCommander
@@ -13,10 +9,6 @@ namespace SimCommander
         static void Main(string[] args)
         {
             new Thread(new ThreadStart(Bootstrapper.run)).Start();
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Statistics());
-            
         }
     }
 }

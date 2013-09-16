@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Threading;
+﻿using SimCommander.Communication.Json;
 using SimCommander.SharedObjects;
-using SimCommander.Communication.Json;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace SimCommander.Communication
 {

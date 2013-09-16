@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SimCommander.Exceptions;
 using SimCommander.SharedObjects;
 using System.Threading;
-using SimCommander.Exceptions;
 
 namespace SimCommander.TrafficLichtTypes
 {
@@ -24,7 +20,7 @@ namespace SimCommander.TrafficLichtTypes
         public override void add()
         {
             // to check if the matrix has the right dimention of 8*8=64 element.
-            if (base.TrafficLightMatrix.Length != 64)
+            if (TrafficLightMatrix.Length != 64)
                 throw new InvalidTrafficLightMatrix("the number of an trafficLightMatrix needs to represent exectly 64 element");
 
             //MyTrafficLightMatrices.Enqueue(new ValuePair(TrafficLightMatrices[dlp.Light], dlp.Destination));

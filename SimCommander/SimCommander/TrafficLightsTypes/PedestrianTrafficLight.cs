@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SimCommander.Exceptions;
 using SimCommander.SharedObjects;
+using System;
 using System.Threading;
-using SimCommander.Exceptions;
 
 namespace SimCommander.TrafficLichtTypes
 {

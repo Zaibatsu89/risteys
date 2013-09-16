@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using SimCommander.Exceptions;
-using SimCommander.Utils;
+﻿using SimCommander.Exceptions;
 using SimCommander.SharedObjects;
-using System.Timers;
 using System.Threading;
 
 namespace SimCommander.TrafficLichtTypes
@@ -161,4 +158,3 @@ namespace SimCommander.TrafficLichtTypes
         #endregion
     }
 }
-

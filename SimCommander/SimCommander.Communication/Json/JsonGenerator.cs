@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Collections;
-
-namespace SimCommander.Communication.Json
+﻿namespace SimCommander.Communication.Json
 {
     ///// <summary>
     ///// Class to generate random JSON.

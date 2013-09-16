@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using SimCommander.Communication;
+using SimCommander.ControllerDelegates;
 using SimCommander.SharedObjects;
 using SimCommander.TrafficLichtTypes;
-using SimCommander.ControllerDelegates;
-using SimCommander.Communication;
+using System;
+using System.Collections.Generic;
+using System.Threading;
 // use a namespace aliase otherwise there is a 
 // collision between System.Windows.Forms.Timer
 // and System.Threading.Timer
@@ -552,7 +550,7 @@ namespace SimCommander
         /// <param name="speed"></param>
         public void Multiplier(int speed)
         {
-            if (speed <= 1)
+            if (speed < 1)
             {
                 throw new Exception("Invalid multiplier value given");
             }

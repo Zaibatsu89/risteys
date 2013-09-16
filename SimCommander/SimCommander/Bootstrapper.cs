@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using SimCommander.Communication;
+﻿using SimCommander.Communication;
 using SimCommander.SharedObjects;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SimCommander
@@ -47,9 +44,7 @@ namespace SimCommander
 
         public static void run()
         {
-
             Bootstrapper b = new Bootstrapper();
-            //new Thread(new ThreadStart(b.start)).Start();
 
             while (!b.tlc.Quit)
             {
@@ -61,7 +56,6 @@ namespace SimCommander
                         Console.WriteLine("Statistics");
 
                 }
-
 
                 if (!b.tlc.Quit)
                     b.tlc.Quit = Quit;

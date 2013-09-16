@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SimCommander.Exceptions;
-using System.Timers;
+﻿using SimCommander.Communication;
 using SimCommander.ControllerDelegates;
-using SimCommander.Communication;
-using System.Windows.Forms;
+using SimCommander.Exceptions;
 using SimCommander.SharedObjects;
+using System;
+using System.Windows.Forms;
 
 namespace SimCommander
 {

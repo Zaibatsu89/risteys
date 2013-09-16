@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SimCommander.TrafficLichtTypes;
-using SimCommander.SharedObjects;
-
-namespace SimCommander.Utils
+﻿namespace SimCommander.Utils
 {
     public class Utils
     {
