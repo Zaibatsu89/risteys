@@ -39,10 +39,11 @@ namespace KruispuntGroep6.Simulator.Json
 		public static string JsonArrayToMessage(string strJson)
 		{
 			var json = DynamicJson.Parse(strJson);
-			string message = GetType(strJson);
+			string jsonType = GetType(strJson);
 			var count = ((dynamic[])json).Count();
+			string message = string.Empty;
 
-			switch (message)
+			switch (jsonType)
 			{
 				case "DETECTOR":
 					var dLight = ((dynamic[])json).Select(d => d.light);
@@ -60,15 +61,8 @@ namespace KruispuntGroep6.Simulator.Json
 						string strEmpty = boolEmpty.ToString();
 						string strTo = dTo.ElementAt(i);
 
-						if (i > 0)
-						{
-							message += "[" + message;
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
-
+						message += "[";
+						message += jsonType;
 						message += ",";
 						message += strLight.ToUpper();
 						message += ",";
@@ -98,15 +92,8 @@ namespace KruispuntGroep6.Simulator.Json
 						string strFrom = from.ElementAt(i);
 						string strTo = to.ElementAt(i);
 
-						if (i > 0)
-						{
-							message += "[" + message;
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
-
+						message += "[";
+						message += jsonType;
 						message += ",";
 						message += strTime.ToUpper();
 						message += ",";
@@ -128,14 +115,8 @@ namespace KruispuntGroep6.Simulator.Json
 					{
 						string strMultiplier = multiplier.ElementAt(i);
 
-						if (i > 0)
-						{
-							message += "[" + message;
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
+						message += "[";
+						message += jsonType;
 						message += ",";
 						message += strMultiplier.ToUpper();
 						message += "],";
@@ -153,15 +134,8 @@ namespace KruispuntGroep6.Simulator.Json
 						string strLight = light.ElementAt(i);
 						string strState = state.ElementAt(i);
 
-						if (i > 0)
-						{
-							message += "[" + message;
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
-
+						message += "[";
+						message += jsonType;
 						message += ",";
 						message += strLight.ToUpper();
 						message += ",";
@@ -180,14 +154,8 @@ namespace KruispuntGroep6.Simulator.Json
 					{
 						string strStarttime = starttime.ElementAt(i);
 
-						if (i > 0)
-						{
-							message += "[" + message;
-						}
-						else
-						{
-							message = message.Insert(0, "[");
-						}
+						message += "[";
+						message += jsonType;
 						message += ",";
 						message += strStarttime.ToUpper();
 						message += "],";
