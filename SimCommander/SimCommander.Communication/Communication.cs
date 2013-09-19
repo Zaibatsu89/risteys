@@ -1,5 +1,7 @@
-﻿using SimCommander.Communication.Json;
+﻿using Microsoft.CSharp.RuntimeBinder;
+using SimCommander.Communication.Json;
 using SimCommander.SharedObjects;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -80,23 +82,32 @@ namespace SimCommander.Communication
                     var empty = ((dynamic[])json).Select(d => d.empty);
                     var dTo = ((dynamic[])json).Select(d => d.to);
 
-                    for(int i = 0; i < count; i++)
-                        OnDetectionLoopMessage(new DetectionLoopPackage((string)dLight.ElementAt(i), (string)dType.ElementAt(i), (string)loop.ElementAt(i), (string)empty.ElementAt(i), (string)dTo.ElementAt(i)));
+					string strEmpty = string.Empty;
+
+					for (int i = 0; i < count; i++)
+					{
+						try
+						{
+							strEmpty = (string)empty.ElementAt(i);
+						}
+						catch (RuntimeBinderException)
+						{
+							strEmpty = Convert.ToString((bool)empty.ElementAt(i));
+						}
+
+						OnDetectionLoopMessage(new DetectionLoopPackage((string)dLight.ElementAt(i), (string)dType.ElementAt(i), (string)loop.ElementAt(i), strEmpty, (string)dTo.ElementAt(i)));
+					}
                     break;
                 case "start":
+                    var starttime = ((dynamic[])json).Select(d => d.starttime);
 
-                    //var starttime = ((dynamic[])json).Select(d => d.starttime);
-
-                    //OnTimeMessage((string)starttime.ElementAt(0));
-                    OnTimeMessage(json.starttime);
+                    OnTimeMessage((string)starttime.ElementAt(0));
                     break;
                 case "multiplier":
+					var multiplier = ((dynamic[])json).Select(d => d.multiplier);
 
-                    //int strMultiplier = json.multiplier;
-                    var multiplier = json.multiplier;
-
-                    OnMultiplierChanged((int) multiplier);
-                    break;
+                    OnMultiplierChanged((int)multiplier.ElementAt(0));
+					break;
                 default:
                     break;
             }

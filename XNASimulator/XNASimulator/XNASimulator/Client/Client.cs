@@ -813,13 +813,15 @@ namespace KruispuntGroep6.Simulator.Client
 		private void SendStartTime()
 		{
 			string time = DateTime.Now.ToString(strings.DateTimeFormat);
-			string jsonStartTime = DynamicJson.Serialize(new{starttime=time});
+			string jsonStartTime = DynamicJson.Serialize(new object[] { new { starttime = time } });
+			string jsonMultiplier = DynamicJson.Serialize(new object[] { new { multiplier = 1 } });
 
 			if (previousDetectorJSONnumber.Equals(0) &&
 				previousInputJSONnumber.Equals(0) &&
 				previousStoplightJSONnumber.Equals(0))
 			{
 				SendToController(jsonStartTime, true, false);
+				SendToController(jsonMultiplier, true, false);
 			}
 
 			previousTime = 1;
