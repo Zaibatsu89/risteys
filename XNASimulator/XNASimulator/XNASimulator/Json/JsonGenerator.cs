@@ -92,14 +92,7 @@ namespace KruispuntGroep6.Simulator.Json
 				case "3":
 				case "4":
 				case "5":
-					if (random.Next(2) < 1)
-					{
-						vehicleType = "car";
-					}
-					else
-					{
-						vehicleType = "truck";
-					}
+					vehicleType = "car";
 					break;
 				case "6":
 					vehicleType = "godzilla";
@@ -246,10 +239,6 @@ namespace KruispuntGroep6.Simulator.Json
 					{
 						lane = "7";
 					}
-					break;
-				case "truck":
-					// Truck can come from lane 3, 4 or 5.
-					lane = random.Next(3, 6).ToString();
 					break;
 				default:
 					// Unknown vehicle can come from every lane, except 6.
@@ -496,69 +485,6 @@ namespace KruispuntGroep6.Simulator.Json
 						lane = "0";
 					}
 					break;
-				// Truck can go from every direction and lane 3, 4 or 5 and go to every direction and lane 6.
-				case "truck":
-					switch (from[0].ToString())
-					{
-						case "N":
-							switch (from[1].ToString())
-							{
-								case "3":
-									direction = "W";
-									break;
-								case "4":
-									direction = "S";
-									break;
-								case "5":
-									direction = "E";
-									break;
-							}
-							break;
-						case "E":
-							switch (from[1].ToString())
-							{
-								case "3":
-									direction = "N";
-									break;
-								case "4":
-									direction = "W";
-									break;
-								case "5":
-									direction = "S";
-									break;
-							}
-							break;
-						case "S":
-							switch (from[1].ToString())
-							{
-								case "3":
-									direction = "E";
-									break;
-								case "4":
-									direction = "N";
-									break;
-								case "5":
-									direction = "W";
-									break;
-							}
-							break;
-						case "W":
-							switch (from[1].ToString())
-							{
-								case "3":
-									direction = "S";
-									break;
-								case "4":
-									direction = "E";
-									break;
-								case "5":
-									direction = "N";
-									break;
-							}
-							break;
-					}
-					lane = "6";
-					break;
 				// Unknown vehicle can go to every direction and every lane, except 1, 2, 3, 4 and 5.
 				default:
 					direction = GetRandomDirection(null);
@@ -673,7 +599,7 @@ namespace KruispuntGroep6.Simulator.Json
 		}
 
 		/// <summary>
-		/// Gets random vehicle type (bicycle, bus, car, godzilla, pedestrian or truck).
+		/// Gets random vehicle type (bicycle, bus, car, godzilla or pedestrian).
 		/// </summary>
 		/// <returns>VehicleType used to contain the vehicle type value.</returns>
 		private string GetRandomVehicleType(ArrayList exclude)
@@ -685,7 +611,7 @@ namespace KruispuntGroep6.Simulator.Json
 			{
 				while (exclude.Contains(strRandom) || intRandom < 0)
 				{
-					intRandom = random.Next(6);
+					intRandom = random.Next(5);
 
 					switch (intRandom)
 					{
@@ -712,9 +638,6 @@ namespace KruispuntGroep6.Simulator.Json
 						case 4:
 							strRandom = "pedestrian";
 							break;
-						case 5:
-							strRandom = "truck";
-							break;
 						default:
 							throw new Exception(string.Format("Random int {0} wordt niet herkend!", intRandom));
 					}
@@ -722,7 +645,7 @@ namespace KruispuntGroep6.Simulator.Json
 			}
 			else
 			{
-				intRandom = random.Next(6);
+				intRandom = random.Next(5);
 
 				switch (intRandom)
 				{
@@ -748,9 +671,6 @@ namespace KruispuntGroep6.Simulator.Json
 						break;
 					case 4:
 						strRandom = "pedestrian";
-						break;
-					case 5:
-						strRandom = "truck";
 						break;
 					default:
 						throw new Exception(string.Format("Random int {0} wordt niet herkend!", intRandom));
