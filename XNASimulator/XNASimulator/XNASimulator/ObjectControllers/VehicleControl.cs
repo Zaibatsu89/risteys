@@ -281,7 +281,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							vehicle.currentLane.laneID +
 							@""", ""type"":""" +
 							vehicle.ToString() +
-							@""", ""loop"":""close"", ""empty"":""false"", ""to"":""" +
+							@""", ""loop"":""close"", ""empty"":""true"", ""to"":""" +
 							vehicle.destinationLaneID +
 							@"""}]";
 
@@ -294,7 +294,7 @@ namespace KruispuntGroep6.Simulator.ObjectControllers
 							vehicle.currentLane.laneID +
 							@""", ""type"":""" +
 							vehicle.ToString() +
-							@""", ""loop"":""far"", ""empty"":""false"", ""to"":""" +
+							@""", ""loop"":""far"", ""empty"":""true"", ""to"":""" +
 							vehicle.destinationLaneID +
 							@"""}]";
 

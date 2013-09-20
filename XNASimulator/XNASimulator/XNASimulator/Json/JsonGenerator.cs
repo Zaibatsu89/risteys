@@ -802,7 +802,7 @@ namespace KruispuntGroep6.Simulator.Json
 
 			if (previousCount.Equals(count) || count > nextCount)
 			{
-				json = @"[{";
+				json = @"{";
 
 				nextCount = count;
 			}
@@ -861,7 +861,7 @@ namespace KruispuntGroep6.Simulator.Json
 					break;
 			}
 
-			json += @"""}]";
+			json += @"""},";
 
 			if (type.Equals("inputs"))
 			{
@@ -913,6 +913,15 @@ namespace KruispuntGroep6.Simulator.Json
 			}
 
 			jsons = tempJsons;
+
+			string bracketOpen = jsons[0];
+			bracketOpen = bracketOpen.Insert(0, strings.BracketOpen);
+			jsons[0] = bracketOpen;
+
+			string bracketClose = jsons[jsons.Length - 1];
+			bracketClose = bracketClose.Remove(bracketClose.Length - 1);
+			bracketClose += strings.BracketClose;
+			jsons[jsons.Length - 1] = bracketClose;
 
 			try
 			{
