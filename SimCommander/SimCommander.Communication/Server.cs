@@ -163,19 +163,15 @@ namespace SimCommander.Communication
         {
             StreamWriter writer;
             string __message = "";
-            List<TcpClient> __clients;
             
             while (!quit)
             {
                 if (message.Count > 0)
                 {
-                    lock (lockthis)
-                    { 
-                        __clients = clients;
-                    }
-
-                    foreach (TcpClient client in __clients)
+					for (int i = clients.Count - 1; i >= 0; i--)
                     {
+						TcpClient client = clients[i];
+
                         try
                         {
                             //check if the message is empty, of the particular
@@ -187,10 +183,7 @@ namespace SimCommander.Communication
                                 writer.WriteLine(__message);
 
                                 writer.Flush();
-
-//                                writer.Close();
                             }
-
                         }
                         catch (Exception e)
                         {

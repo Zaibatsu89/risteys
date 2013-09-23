@@ -8,7 +8,7 @@
         private bool isEmpty = true;
         private string destination = "Null";
 
-        public DetectionLoopPackage(string light, string type, string distance, string isEmtpy, string detination)
+        public DetectionLoopPackage(string light, string type, string distance, string isEmtpy, string destination)
         {
             this.light = light;
             this.type = type;
@@ -84,5 +84,17 @@
                 destination = value;
             }
         }
+
+		public override string ToString()
+		{
+			return
+			"[" +
+				"light: " + light + ", " +
+				"type: " + type + ", " +
+				"loop: " + distance + ", " +
+				"empty: " + isEmpty.ToString().ToLower() + ", " +
+				"to: " + destination +
+			"]";
+		}
     }
 }

@@ -82,7 +82,7 @@ namespace SimCommander.Communication
                     var empty = ((dynamic[])json).Select(d => d.empty);
                     var dTo = ((dynamic[])json).Select(d => d.to);
 
-					string strEmpty = string.Empty;
+					string strEmpty;
 
 					for (int i = 0; i < count; i++)
 					{
