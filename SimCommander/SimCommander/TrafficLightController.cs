@@ -30,7 +30,7 @@ namespace SimCommander
         /// <summary>
         /// An immutable dictionare with diraction layout's based on matrices.
         /// </summary>
-        public ImmutableDictionary<string, int[]> TRAFFICLGHTMATRICES;
+        public ImmutableDictionary<string, int[]> TRAFFICLIGHTMATRICES;
 
         /// <summary>
         /// An immutable dictionary witch contains all the traffic light's.
@@ -48,9 +48,8 @@ namespace SimCommander
             interrupt = false;
             ControllerMatrix = new int[64];
             multiplier = 1;
-            Quit = false;
             time = new DateTime(1970, 01, 01, 00, 00, 00);
-            this.trafficLightChanged += new trafficLightChangedEventHandler(TrafficLightController_trafficLightChanged);
+            //this.trafficLightChanged += new trafficLightChangedEventHandler(TrafficLightController_trafficLightChanged);
 
             initTrafficLights();
 
@@ -72,7 +71,7 @@ namespace SimCommander
                 {
                     // this must be a restart
                     restart();
-                    Bootstrapper.MessageLoop.Enqueue("This is a restart");
+					Console.WriteLine("This is a restart");
                 }
                 else
                 {
@@ -103,23 +102,6 @@ namespace SimCommander
         #endregion
 
         #region private methods
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="tlp"></param>
-        private void TrafficLightController_trafficLightChanged(string sender, TrafficLightPackage tlp)
-        {
-            if (tlp.state == TrafficLightPackage.TrafficLightState.RED.ToString())
-            {
-                lock (lockthis)
-                {
-                    Utils.Utils.removeCollisionMatrix(ref ControllerMatrix, TRAFFICLGHTMATRICES[sender]);
-                }
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -129,7 +111,7 @@ namespace SimCommander
             /// <summary>
             /// An immutable dictionare with diraction layout's based on matrices.
             /// </summary>
-            TRAFFICLGHTMATRICES = new ImmutableDictionary<string, int[]>(
+            TRAFFICLIGHTMATRICES = new ImmutableDictionary<string, int[]>(
                 new Dictionary<string, int[]>()
             {
                 {"N0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
@@ -186,7 +168,7 @@ namespace SimCommander
 	                                0, 0, 0, 0, 0, 1, 0, 0, 
 	                                0, 0, 0, 0, 0, 1, 1, 1, 
 	                                0, 0, 0, 0, 0, 0, 0, 0}},
-                {"E0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+				{"N7", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
                                     1, 1, 1, 1, 1, 1, 1, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
@@ -195,6 +177,15 @@ namespace SimCommander
                                     1, 0, 0, 0, 0, 0, 0, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
                                     1, 1, 1, 1, 1, 1, 1, 1}},
+				{"E0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+									1, 1, 1, 1, 1, 1, 1, 1,
+									1, 0, 0, 0, 0, 0, 0, 1,
+									1, 0, 0, 0, 0, 0, 0, 1,
+									1, 0, 0, 0, 0, 0, 0, 1,
+									1, 0, 0, 0, 0, 0, 0, 1,
+									1, 0, 0, 0, 0, 0, 0, 1,
+									1, 0, 0, 0, 0, 0, 0, 1,
+									1, 1, 1, 1, 1, 1, 1, 1}},
                 {"E1", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
 	                                0, 0, 0, 0, 0, 0, 1, 0, 
 	                                1, 1, 1, 1, 1, 1, 1, 1, 
@@ -240,7 +231,16 @@ namespace SimCommander
 	                                0, 1, 1, 1, 1, 1, 1, 1, 
 	                                0, 1, 0, 0, 0, 0, 0, 0, 
 	                                0, 1, 0, 0, 0, 0, 0, 0}},
-                {"S0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+				{"E7", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+                                    1, 1, 1, 1, 1, 1, 1, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 1, 1, 1, 1, 1, 1, 1}},
+				{"S0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
                                     1, 1, 1, 1, 1, 1, 1, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
@@ -294,7 +294,16 @@ namespace SimCommander
 	                                0, 0, 1, 0, 0, 0, 0, 0, 
 	                                0, 0, 1, 0, 0, 0, 0, 0, 
 	                                0, 0, 1, 0, 0, 0, 0, 0}},
-                {"W0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+				{"S7", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+                                    1, 1, 1, 1, 1, 1, 1, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 1, 1, 1, 1, 1, 1, 1}},
+				{"W0", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
                                     1, 1, 1, 1, 1, 1, 1, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
                                     1, 0, 0, 0, 0, 0, 0, 1,
@@ -347,7 +356,16 @@ namespace SimCommander
 	                                0, 0, 0, 0, 0, 0, 0, 0, 
 	                                0, 0, 0, 0, 0, 0, 0, 0, 
 	                                0, 0, 0, 0, 0, 0, 0, 0, 
-	                                0, 0, 0, 0, 0, 0, 0, 0}}
+	                                0, 0, 0, 0, 0, 0, 0, 0}},
+				{"W7", new int[]{// n0 n1 n2 n3 n4 n5 n6 n7
+                                    1, 1, 1, 1, 1, 1, 1, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 0, 0, 0, 0, 0, 0, 1,
+                                    1, 1, 1, 1, 1, 1, 1, 1}}
             });
 
             #endregion
@@ -359,67 +377,69 @@ namespace SimCommander
             //TRAFFICLIGHTS = new ImmutableDictionary<string, TrafficLight>(
             //    new SortedDictionary<string, TrafficLight>()
             //{
-            //    {"N1", new BusTrafficLight("N1", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"N2", new BusTrafficLight("N2", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"N3", new BusTrafficLight("N3", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"N4", new BusTrafficLight("N4", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"E1", new BusTrafficLight("E1", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"E2", new BusTrafficLight("E2", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"E3", new BusTrafficLight("E3", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"E4", new BusTrafficLight("E4", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"S1", new BusTrafficLight("S1", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"S2", new BusTrafficLight("S2", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"S3", new BusTrafficLight("S3", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"S4", new BusTrafficLight("S4", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"W1", new BusTrafficLight("W1", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"W2", new BusTrafficLight("W2", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"W3", new BusTrafficLight("W3", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"W4", new BusTrafficLight("W4", multiplier, TRAFFICLGHTMATRICES)},
-            //    {"W5", new BusTrafficLight("W5", multiplier, TRAFFICLGHTMATRICES)}
+            //    {"N1", new BusTrafficLight("N1", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"N2", new BusTrafficLight("N2", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"N3", new BusTrafficLight("N3", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"N4", new BusTrafficLight("N4", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"E1", new BusTrafficLight("E1", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"E2", new BusTrafficLight("E2", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"E3", new BusTrafficLight("E3", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"E4", new BusTrafficLight("E4", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"S1", new BusTrafficLight("S1", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"S2", new BusTrafficLight("S2", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"S3", new BusTrafficLight("S3", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"S4", new BusTrafficLight("S4", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"W1", new BusTrafficLight("W1", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"W2", new BusTrafficLight("W2", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"W3", new BusTrafficLight("W3", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"W4", new BusTrafficLight("W4", multiplier, TRAFFICLIGHTMATRICES)},
+            //    {"W5", new BusTrafficLight("W5", multiplier, TRAFFICLIGHTMATRICES)}
             //});
 
             #endregion
 
-            /// <summary>
+			#region An immutable dictionary witch contains all the traffic light's.
+			/// <summary>
             /// An immutable dictionary witch contains all the traffic light's.
             /// </summary>
             TRAFFICLIGHTS = new ImmutableDictionary<string, TrafficLight>(
                 new SortedDictionary<string, TrafficLight>()
             {
-                {"N0", new PedestrianTrafficLight("N0", multiplier, TRAFFICLGHTMATRICES["N0"])},
-                {"N1", new BikeTrafficLight("N1", multiplier, TRAFFICLGHTMATRICES["N1"])},
-                {"N2", new CarTrafficLight("N2", multiplier, TRAFFICLGHTMATRICES["N2"])},
-                {"N3", new CarTrafficLight("N3", multiplier, TRAFFICLGHTMATRICES["N3"])},
-                {"N4", new CarTrafficLight("N4", multiplier, TRAFFICLGHTMATRICES["N4"])},
-                {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLGHTMATRICES["N5"])},
-                {"N7", new PedestrianTrafficLight("N7", multiplier, TRAFFICLGHTMATRICES["N0"])},
-                {"E0", new PedestrianTrafficLight("E0", multiplier, TRAFFICLGHTMATRICES["E0"])},
-                {"E1", new BikeTrafficLight("E1", multiplier, TRAFFICLGHTMATRICES["E1"])},
-                {"E2", new CarTrafficLight("E2", multiplier, TRAFFICLGHTMATRICES["E2"])},
-                {"E3", new CarTrafficLight("E3", multiplier, TRAFFICLGHTMATRICES["E3"])},
-                {"E4", new CarTrafficLight("E4", multiplier, TRAFFICLGHTMATRICES["E4"])},
-                {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLGHTMATRICES["E5"])},
-                {"E7", new PedestrianTrafficLight("E7", multiplier, TRAFFICLGHTMATRICES["E0"])},
-                {"S0", new PedestrianTrafficLight("S0", multiplier, TRAFFICLGHTMATRICES["S0"])},
-                {"S1", new BikeTrafficLight("S13", multiplier, TRAFFICLGHTMATRICES["S1"])},
-                {"S2", new CarTrafficLight("S2", multiplier, TRAFFICLGHTMATRICES["S2"])},
-                {"S3", new CarTrafficLight("S3", multiplier, TRAFFICLGHTMATRICES["S3"])},
-                {"S4", new CarTrafficLight("S4", multiplier, TRAFFICLGHTMATRICES["S4"])},
-                {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLGHTMATRICES["S5"])},
-                {"S7", new PedestrianTrafficLight("S7", multiplier, TRAFFICLGHTMATRICES["S0"])},
-                {"W0", new PedestrianTrafficLight("W0", multiplier, TRAFFICLGHTMATRICES["W0"])},
-                {"W1", new BikeTrafficLight("W1", multiplier, TRAFFICLGHTMATRICES["W1"])},
-                {"W2", new CarTrafficLight("W2", multiplier, TRAFFICLGHTMATRICES["W2"])},
-                {"W3", new CarTrafficLight("W3", multiplier, TRAFFICLGHTMATRICES["W3"])},
-                {"W4", new CarTrafficLight("W4", multiplier, TRAFFICLGHTMATRICES["W4"])},
-                {"W5", new CarTrafficLight("W5", multiplier, TRAFFICLGHTMATRICES["W5"])},
-                {"W7", new PedestrianTrafficLight("W7", multiplier, TRAFFICLGHTMATRICES["W0"])}
+                {"N0", new PedestrianTrafficLight("N0", multiplier, TRAFFICLIGHTMATRICES["N0"])},
+                {"N1", new BikeTrafficLight("N1", multiplier, TRAFFICLIGHTMATRICES["N1"])},
+                {"N2", new CarTrafficLight("N2", multiplier, TRAFFICLIGHTMATRICES["N2"])},
+                {"N3", new CarTrafficLight("N3", multiplier, TRAFFICLIGHTMATRICES["N3"])},
+                {"N4", new CarTrafficLight("N4", multiplier, TRAFFICLIGHTMATRICES["N4"])},
+                {"N5", new BusTrafficLight("N5", multiplier, TRAFFICLIGHTMATRICES["N5"])},
+                {"N7", new PedestrianTrafficLight("N7", multiplier, TRAFFICLIGHTMATRICES["N7"])},
+                {"E0", new PedestrianTrafficLight("E0", multiplier, TRAFFICLIGHTMATRICES["E0"])},
+                {"E1", new BikeTrafficLight("E1", multiplier, TRAFFICLIGHTMATRICES["E1"])},
+                {"E2", new CarTrafficLight("E2", multiplier, TRAFFICLIGHTMATRICES["E2"])},
+                {"E3", new CarTrafficLight("E3", multiplier, TRAFFICLIGHTMATRICES["E3"])},
+                {"E4", new CarTrafficLight("E4", multiplier, TRAFFICLIGHTMATRICES["E4"])},
+                {"E5", new BusTrafficLight("E5", multiplier, TRAFFICLIGHTMATRICES["E5"])},
+                {"E7", new PedestrianTrafficLight("E7", multiplier, TRAFFICLIGHTMATRICES["E7"])},
+                {"S0", new PedestrianTrafficLight("S0", multiplier, TRAFFICLIGHTMATRICES["S0"])},
+                {"S1", new BikeTrafficLight("S1", multiplier, TRAFFICLIGHTMATRICES["S1"])},
+                {"S2", new CarTrafficLight("S2", multiplier, TRAFFICLIGHTMATRICES["S2"])},
+                {"S3", new CarTrafficLight("S3", multiplier, TRAFFICLIGHTMATRICES["S3"])},
+                {"S4", new CarTrafficLight("S4", multiplier, TRAFFICLIGHTMATRICES["S4"])},
+                {"S5", new BusTrafficLight("S5", multiplier, TRAFFICLIGHTMATRICES["S5"])},
+                {"S7", new PedestrianTrafficLight("S7", multiplier, TRAFFICLIGHTMATRICES["S7"])},
+                {"W0", new PedestrianTrafficLight("W0", multiplier, TRAFFICLIGHTMATRICES["W0"])},
+                {"W1", new BikeTrafficLight("W1", multiplier, TRAFFICLIGHTMATRICES["W1"])},
+                {"W2", new CarTrafficLight("W2", multiplier, TRAFFICLIGHTMATRICES["W2"])},
+                {"W3", new CarTrafficLight("W3", multiplier, TRAFFICLIGHTMATRICES["W3"])},
+                {"W4", new CarTrafficLight("W4", multiplier, TRAFFICLIGHTMATRICES["W4"])},
+                {"W5", new CarTrafficLight("W5", multiplier, TRAFFICLIGHTMATRICES["W5"])},
+                {"W7", new PedestrianTrafficLight("W7", multiplier, TRAFFICLIGHTMATRICES["W7"])}
             });
+			#endregion
 
-            foreach (KeyValuePair<string, TrafficLight> tl in TRAFFICLIGHTS)
+			foreach (KeyValuePair<string, TrafficLight> tl in TRAFFICLIGHTS)
             {
                 tl.Value.TrafficLightChanged += new trafficLightChangedEventHandler(OnTrafficLightChanged);
             }
@@ -439,7 +459,7 @@ namespace SimCommander
             //create a module to turn off all the trafficlights between 2 am and 4am
 
             if (Int32.Parse(time.ToString("hhmm")) >= 200 && Int32.Parse(time.ToString("hhmm")) <= 400)
-                OnInfoMessage("night modus is entered but not yet implemented");
+				Console.WriteLine("night modus is entered but not yet implemented");
 
         }
 
@@ -448,7 +468,7 @@ namespace SimCommander
         /// </summary>
         private void restart()
         {
-            OnInfoMessage("The trafficlightController is restarted");
+			Console.WriteLine("The trafficlightController is restarted");
 
             // call firts quit to close the threads
             Quit = true; 
@@ -458,7 +478,6 @@ namespace SimCommander
             multiplier = 1;
             // before enable the threads again u need to set 
             // quit to false;
-            Quit = false;
             
             // start the threads again
 
@@ -471,10 +490,10 @@ namespace SimCommander
         /// </summary>
         private void processDetectionMessage()
         {
-            OnInfoMessage("DEBUG: processDetectionMessage started");
+			//Console.WriteLine("DEBUG: processDetectionMessage started");
             //Bootstrapper.MessageLoop.Enqueue("DEBUG: processDetectionMessage started");
 
-            while (!Quit)
+            while (true)
             {
 
                 //Thread.Sleep(new Random().Next(150, 330));
@@ -503,25 +522,27 @@ namespace SimCommander
         /// </summary>
         private void produceTrafficLightMessage()
         {
-            Thread.CurrentThread.Name= "trafficLightController-Thread";
+            Thread.CurrentThread.Name = "trafficLightController-Thread";
             //Bootstrapper.MessageLoop.Enqueue("DEBUG: produceTrafficLightMessage started");
-            OnInfoMessage("DEBUG: produceTrafficLightMessage started");
+			//Console.WriteLine("DEBUG: produceTrafficLightMessage started");
 
             // get a the first trafficlight to start with.
             TrafficLight old = TRAFFICLIGHTS["N1"];
-            while (!Quit)
+
+            while (true)
             {
                 foreach (string tl in TRAFFICLIGHTS.Keys)
                 {
                     if (tl != old.Name && TRAFFICLIGHTS[tl].CompareTo(old) > 0)
                         old = TRAFFICLIGHTS[tl];
                 }
+
                 lock (lockthis)
                 {
                     //if (old.NumberOfWaitingEntities > 0 && old.isGreen == false)
-                    if (old.NumberOfWaitingEntities > 0 && old.isGreen == false && Utils.Utils.collisionCheck(ControllerMatrix, old.TrafficLightMatrix))
+                    if (old.NumberOfWaitingEntities > 0 && !old.isGreen)// && Utils.collisionCheck(ControllerMatrix, old.TrafficLightMatrix))
                     {
-                        Utils.Utils.addCollisionCheck(ref ControllerMatrix, old.TrafficLightMatrix);
+                        //Utils.addCollisionCheck(ref ControllerMatrix, old.TrafficLightMatrix);
                         //Bootstrapper.MessageLoop.Enqueue("TrafficLightController: " + Thread.CurrentThread.Name + " turns light: " + old.Name + " to green");
                         new Thread(new ThreadStart(old.TurnLightGreen)).Start();
                     }
@@ -573,20 +594,6 @@ namespace SimCommander
                     target.Invoke(trafficLightChanged, new object[] { sender, tlp });
                 else
                     trafficLightChanged(sender, tlp);
-            }
-        }
-
-        public event delegates.OnInfoMessageHandler messageInfo;
-
-        protected virtual void OnInfoMessage(string message)
-        {
-            if (messageInfo != null)
-            {
-                form.Control target = messageInfo.Target as form.Control;
-                if (target != null && target.InvokeRequired)
-                    target.Invoke(messageInfo, new object[] { message });
-                else
-                    messageInfo(message);
             }
         }
         #endregion

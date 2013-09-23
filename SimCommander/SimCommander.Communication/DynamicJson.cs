@@ -20,7 +20,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace SimCommander.Communication.Json
+namespace SimCommander.Communication
 {
     public class DynamicJson : DynamicObject
     {

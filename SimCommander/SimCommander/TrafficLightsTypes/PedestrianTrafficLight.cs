@@ -28,7 +28,7 @@ namespace SimCommander.TrafficLichtTypes
             // increment the number of waiting entities.
             numberOfWaitingEntities++;
             //Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
-            OnInfoMessage(this.Name + ": " + this.numberOfWaitingEntities);
+			//Console.WriteLine(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace SimCommander.TrafficLichtTypes
 
             numberOfWaitingEntities--;
             //Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
-            OnInfoMessage(this.Name + ": " + this.numberOfWaitingEntities);
+			//Console.WriteLine(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         public override void TurnLightGreen()
@@ -60,7 +60,7 @@ namespace SimCommander.TrafficLichtTypes
 
             //Bootstrapper.MessageLoop.Enqueue((string)o[0]);
 
-            OnInfoMessage((string)o[0]);
+			//Console.WriteLine((string)o[0]);
 
             this.isGreen = true;
             this.SetTrafficLight(1); // turn the light green
@@ -111,7 +111,7 @@ namespace SimCommander.TrafficLichtTypes
                     break;
                 default:
                     //Bootstrapper.MessageLoop.Enqueue("Invalid LightID");
-                    OnInfoMessage("Invalid LightID");
+					Console.WriteLine("Invalid LightID");
                     break;
             }
         }

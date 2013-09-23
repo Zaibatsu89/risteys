@@ -1,9 +1,8 @@
-﻿using Microsoft.CSharp.RuntimeBinder;
-using SimCommander.Communication.Json;
-using SimCommander.SharedObjects;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.CSharp.RuntimeBinder;
+using SimCommander.SharedObjects;
 
 namespace SimCommander.Communication
 {
@@ -55,17 +54,11 @@ namespace SimCommander.Communication
         {
             s = new Server();
             s.MessageRecieved += new delegates.OnMessageRecievedHandler(s_MessageRecieved);
-            s.InfoMessageChanged += new delegates.OnInfoMessageHandler(s_InfoMessageChanged);
         }
 
         public void WriteMessage(string Message)
         {
-            s.message.Enqueue(Message);
-        }
-
-        private void s_InfoMessageChanged(string Message)
-        {
-            OnInfoMessageRecieved(Message);
+			s.write(Message);
         }
 
         private void s_MessageRecieved(string message)
@@ -177,21 +170,6 @@ namespace SimCommander.Communication
                     MultiplierChanged(multiplier);
             }
         }
-
-        public event delegates.OnInfoMessageHandler InfoMessageChanged;
-
-        protected virtual void OnInfoMessageRecieved(string InfoMessage)
-        {
-            if (InfoMessageChanged != null)
-            {
-                Control target = InfoMessageChanged.Target as Control;
-                if (target != null && target.InvokeRequired)
-                    target.Invoke(InfoMessageChanged, new object[] { InfoMessage });
-                else
-                    InfoMessageChanged(InfoMessage);
-            }
-        }
-
         #endregion
     }
 }

@@ -13,8 +13,6 @@ namespace SimCommander.Communication
         private List<TcpClient> clients;
         private TcpListener server;
         private string address;
-        public static volatile bool quit;
-        public Queue<String> message;
 
         public object lockthis = new object();
 
@@ -23,10 +21,7 @@ namespace SimCommander.Communication
             clients = new List<TcpClient>();
             // detect current ip address and uses it
             SetAddress();
-            OnInfoMessage("server adres: " + address);
-
-            quit = false;
-            message = new Queue<string>();
+			//Console.WriteLine("server adres: " + address);
 
             //OnInfoMessage(string.Format(Strings.HiIAmController +
             //    " and I serve from {0}:1337 forever", address));
@@ -41,14 +36,13 @@ namespace SimCommander.Communication
 
         private void connect()
         {
-            Thread.Sleep(1000);
-            OnInfoMessage(string.Format("the server is started on {0}:1337", this.address.ToString()));
+			Console.WriteLine(string.Format("The server is started on {0}:1337", this.address.ToString()));
 
             // create our TCPListener object
             server = new TcpListener(IPAddress.Parse(address), Int32.Parse(Strings.Port));
             server.Start();
-            new Thread(new ThreadStart(write)).Start();
-            while (!quit)
+
+            while (true)
             {
 
                 //create a null connection
@@ -67,7 +61,6 @@ namespace SimCommander.Communication
 
                     //create a new DoCommunicate Object
                     ClientReader reader = new ClientReader(client);
-                    reader.InfoMessageChanged += new delegates.OnInfoMessageHandler(reader_InfoMessageChanged);
                     reader.MessageRecieved += new delegates.OnMessageRecievedHandler(reader_MessageRecieved);
                 }
             }
@@ -75,7 +68,6 @@ namespace SimCommander.Communication
 
         private class ClientReader
         {
-
             private StreamReader reader;
             private TcpClient client;
 
@@ -92,7 +84,7 @@ namespace SimCommander.Communication
             {
                 string data = "";
 
-                while (!quit)
+                while (true)
                 {
 					try
 					{
@@ -100,9 +92,8 @@ namespace SimCommander.Communication
 					}
 					catch (IOException)
 					{
-						OnInfoMessage("Connection lost");
+						Console.WriteLine("Connection lost");
 						client.Close();
-						quit = true;
 						break;
 					}
 
@@ -112,13 +103,12 @@ namespace SimCommander.Communication
 						{
 							if (data.Equals(Strings.Exit))
 							{
-								OnInfoMessage("Connection lost");
+								Console.WriteLine("Connection lost");
 								client.Close();
-								quit = true;
 								break;
 							}
 							if (data.Equals(Strings.HiIAmSimulator))
-								OnInfoMessage("Hi I'am a Simulator");
+								Console.WriteLine("Hi I'am a Simulator");
 							else
 								OnMessageRecieved(data);
 						}
@@ -127,21 +117,6 @@ namespace SimCommander.Communication
             }
 
             #region events
-
-            public event delegates.OnInfoMessageHandler InfoMessageChanged;
-
-            protected virtual void OnInfoMessage(string message)
-            {
-                if (InfoMessageChanged != null)
-                {
-                    Control target = InfoMessageChanged.Target as Control;
-                    if (target != null && target.InvokeRequired)
-                        target.Invoke(InfoMessageChanged, new object[] { message });
-                    else
-                        InfoMessageChanged(message);
-                }
-            }
-
             public event delegates.OnMessageRecievedHandler MessageRecieved;
 
             protected virtual void OnMessageRecieved(string message)
@@ -159,38 +134,30 @@ namespace SimCommander.Communication
             #endregion
         }
 
-        private void write()
+        public void write(string message)
         {
             StreamWriter writer;
-            string __message = "";
             
-            while (!quit)
+			for (int i = clients.Count - 1; i >= 0; i--)
             {
-                if (message.Count > 0)
+				TcpClient client = clients[i];
+
+                try
                 {
-					for (int i = clients.Count - 1; i >= 0; i--)
+                    //check if the message is empty, of the particular
+                    //index of out array is null, if it is then continue
+                    if (!string.Equals(message, string.Empty) || !TcpClient.Equals(client, null))
                     {
-						TcpClient client = clients[i];
+                        writer = new StreamWriter(client.GetStream());
+                        writer.WriteLine(message);
 
-                        try
-                        {
-                            //check if the message is empty, of the particular
-                            //index of out array is null, if it is then continue
-                            if (!string.Equals(message.Peek().Trim(), string.Empty) || !TcpClient.Equals(client, null))
-                            {
-                                writer = new StreamWriter(client.GetStream());
-                                __message = message.Dequeue();
-                                writer.WriteLine(__message);
-
-                                writer.Flush();
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            OnInfoMessage(e.Message);
-                            clients.Remove(client);
-                        }
+                        writer.Flush();
                     }
+                }
+                catch (Exception e)
+                {
+					Console.WriteLine(e.Message);
+                    clients.Remove(client);
                 }
             }
         }
@@ -219,28 +186,7 @@ namespace SimCommander.Communication
         {
             OnMessageRecieved(message);
         }
-
-        private void reader_InfoMessageChanged(string Message)
-        {
-            OnInfoMessage(Message);
-        }
-
         #region eventhandlers
-
-        public event delegates.OnInfoMessageHandler InfoMessageChanged;
-
-        protected virtual void OnInfoMessage(string message)
-        {
-            if (InfoMessageChanged != null)
-            {
-                Control target = InfoMessageChanged.Target as Control;
-                if (target != null && target.InvokeRequired)
-                    target.Invoke(InfoMessageChanged, new object[] { message });
-                else
-                    InfoMessageChanged(message);
-            }
-        }
-
         public event delegates.OnMessageRecievedHandler MessageRecieved;
 
         protected virtual void OnMessageRecieved(string message)

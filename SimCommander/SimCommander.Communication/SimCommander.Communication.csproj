@@ -47,9 +47,7 @@
   <ItemGroup>
     <Compile Include="Communication.cs" />
     <Compile Include="delegates.cs" />
-    <Compile Include="Json\DynamicJson.cs" />
-    <Compile Include="Json\JsonConverter.cs" />
-    <Compile Include="Json\JsonGenerator.cs" />
+    <Compile Include="DynamicJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Strings.cs" />

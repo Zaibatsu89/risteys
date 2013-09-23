@@ -1,9 +1,8 @@
-﻿using SimCommander.Communication;
+﻿using System;
+using System.Windows.Forms;
 using SimCommander.ControllerDelegates;
 using SimCommander.Exceptions;
 using SimCommander.SharedObjects;
-using System;
-using System.Windows.Forms;
 
 namespace SimCommander
 {
@@ -141,7 +140,7 @@ namespace SimCommander
             //    throw new InvalidTrafficLightMatrix("the number of an trafficLightMatrix needs to represent exectly 64 element");
             // increment the number of waiting entities.
             numberOfWaitingEntities++;
-            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
+			//Console.WriteLine(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         /// <summary>
@@ -155,7 +154,7 @@ namespace SimCommander
 
             //decrease the number of waiting entities.
             numberOfWaitingEntities--;
-            Bootstrapper.MessageLoop.Enqueue(this.Name + ": " + this.numberOfWaitingEntities);
+			//Console.WriteLine(this.Name + ": " + this.numberOfWaitingEntities);
         }
 
         #endregion
@@ -220,21 +219,6 @@ namespace SimCommander
                     TrafficLightChanged(sender, tlp);
             }
         }
-
-        public event delegates.OnInfoMessageHandler messageInfo;
-
-        protected virtual void OnInfoMessage(string message)
-        {
-            if (messageInfo != null)
-            {
-                Control target = messageInfo.Target as Control;
-                if (target != null && target.InvokeRequired)
-                    target.Invoke(messageInfo, new object[] { message });
-                else
-                    messageInfo(message);
-            }
-        }
-
         #endregion
     }
 }
