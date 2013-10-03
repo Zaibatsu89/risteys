@@ -24,8 +24,8 @@ namespace KruispuntGroep4.Generator
 			btnJsonGenerator.Click += new EventHandler(Generate);
 			btnJsonGenerator.Location = new Point(21 * Font.Height - 3, Font.Height - 6);
 			btnJsonGenerator.Parent = this;
-			btnJsonGenerator.Size = new Size(9 * Font.Height, 2 * Font.Height);
-			btnJsonGenerator.Text = Strings.GenerateJSON;
+			btnJsonGenerator.Size = new Size(11 * Font.Height, 2 * Font.Height);
+			btnJsonGenerator.Text = Strings.GenerateJSON + Strings.C;
 
 			cbJsonType = new ComboBox();
 			cbJsonType.Items.Add(Strings.JsonTypeInput);
@@ -46,7 +46,7 @@ namespace KruispuntGroep4.Generator
 
 			MaximizeBox = false;
 
-			Size = new Size(31 * Font.Height, 5 * Font.Height);
+			Size = new Size(33 * Font.Height, 5 * Font.Height);
 
 			tbJsonGenerator = new TextBox();
 			tbJsonGenerator.Location = new Point(9 * Font.Height, Font.Height - 3);

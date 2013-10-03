@@ -843,8 +843,8 @@ namespace KruispuntGroep4.Generator
 
 			try
 			{
-				// Write JSON file in main folder of KruispuntGroep6 called XNASimulator
-				File.WriteAllLines(jsonType + Strings.JsonFileExtension, jsons);
+				// Write JSON file in C:\
+				File.WriteAllLines(Strings.C + jsonType + Strings.JsonFileExtension, jsons);
 			}
 			catch (Exception)
 			{

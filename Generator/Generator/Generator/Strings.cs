@@ -7,7 +7,8 @@
 	{
 		public const string BracketClose = "]";
 		public const string BracketOpen = "[";
-		public const string GenerateJSON = "Generate JSON file";
+		public const string C = @"C:\";
+		public const string GenerateJSON = "Generate JSON file in ";
 		public const string Generator = "Generator - SEN Groep 4";
 		public const string JsonGenerator = "How many JSONs?";
 		public const string JsonFileExtension =".json";
