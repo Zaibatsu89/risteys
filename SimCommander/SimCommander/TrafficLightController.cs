@@ -48,7 +48,7 @@ namespace SimCommander
             interrupt = false;
             ControllerMatrix = new int[64];
             multiplier = 1;
-            time = new DateTime(1970, 01, 01, 00, 00, 00);
+			time = DateTime.MinValue;
             //this.trafficLightChanged += new trafficLightChangedEventHandler(TrafficLightController_trafficLightChanged);
 
             initTrafficLights();
@@ -67,7 +67,7 @@ namespace SimCommander
         {
             set
             {
-                if (this.time.ToString() != new DateTime(1970, 01, 01, 00, 00, 00).ToString())
+                if (this.time.ToString() != DateTime.MinValue.ToString())
                 {
                     // this must be a restart
                     restart();
@@ -458,9 +458,8 @@ namespace SimCommander
 
             //create a module to turn off all the trafficlights between 2 am and 4am
 
-            if (Int32.Parse(time.ToString("hhmm")) >= 200 && Int32.Parse(time.ToString("hhmm")) <= 400)
+			if (time.Hour >= 2 && time.Hour <= 3)
 				Console.WriteLine("night modus is entered but not yet implemented");
-
         }
 
         /// <summary>
@@ -500,21 +499,23 @@ namespace SimCommander
                 //if(this.DetectionQueue.Count > 0)
                 //    Bootstrapper.MessageLoop.Enqueue(this.DetectionQueue.Dequeue());
                 // get a detectionLoop message from the queue to process
+				lock (lockthis)
+				{
+					if (this.DetectionQueue.Count > 0)
+					{
+						DetectionLoopPackage dlm = this.DetectionQueue.Dequeue();
 
-                if (this.DetectionQueue.Count > 0)
-                {
-                    DetectionLoopPackage dlm = this.DetectionQueue.Dequeue();
-
-                    // for safety reason we try to change the type to lowercase in 
-                    // case one team uses it with a capital char at the front.
-                    if(dlm.Distance.ToLower() == "far")
-                        this.TRAFFICLIGHTS[dlm.Light.ToUpper()].add();
-                    else if (dlm.Distance.ToLower() == "close" && this.TRAFFICLIGHTS[dlm.Light.ToUpper()].NumberOfWaitingEntities > 0)
-                    {
-                        this.TRAFFICLIGHTS[dlm.Light.ToUpper()].remove();
-                    }
+						// for safety reason we try to change the type to lowercase in 
+						// case one team uses it with a capital char at the front.
+						if (dlm.Distance.ToLower() == "far")
+							this.TRAFFICLIGHTS[dlm.Light.ToUpper()].add();
+						else if (dlm.Distance.ToLower() == "close" && this.TRAFFICLIGHTS[dlm.Light.ToUpper()].NumberOfWaitingEntities > 0)
+						{
+							this.TRAFFICLIGHTS[dlm.Light.ToUpper()].remove();
+						}
+					}
                 }
-            }
+			}
         }
 
         /// <summary>

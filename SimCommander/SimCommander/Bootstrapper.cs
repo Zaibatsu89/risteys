@@ -17,6 +17,7 @@ namespace SimCommander
             com.MultiplierChanged += new delegates.MultiplierChangedHandler(com_MultiplierChanged);
             com.TimeMessage += new delegates.TimerMsgHandler(com_TimeMessage);
             com.DetectionLoopMessage += new delegates.DetectionLoopMsgHandler(com_DetectionLoopMessage);
+			com.Reset += new delegates.OnResetHandler(com_Reset);
         }
 
         void tlc_trafficLightChanged(string sender, TrafficLightPackage tlp)
@@ -48,6 +49,11 @@ namespace SimCommander
 			Console.WriteLine("Multiplier updated: " + Multiplier.ToString());
             tlc.Multiplier(Multiplier);
         }
+
+		void com_Reset()
+		{
+			Console.WriteLine("A simulator has disconnected");
+		}
 
         #endregion
     }

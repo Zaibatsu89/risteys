@@ -53,7 +53,8 @@ namespace SimCommander.Communication
         public Communication()
         {
             s = new Server();
-            s.MessageRecieved += new delegates.OnMessageRecievedHandler(s_MessageRecieved);
+            s.MessageReceived += new delegates.OnMessageReceivedHandler(s_MessageRecieved);
+			s.Reset += new delegates.OnResetHandler(s_Reset);
         }
 
         public void WriteMessage(string Message)
@@ -105,6 +106,11 @@ namespace SimCommander.Communication
                     break;
             }
         }
+
+		private void s_Reset()
+		{
+			OnReset();
+		}
 
         /// <summary>
         /// Gets the json type of a dynamic json string.
@@ -170,6 +176,20 @@ namespace SimCommander.Communication
                     MultiplierChanged(multiplier);
             }
         }
+
+		public event delegates.OnResetHandler Reset;
+
+		protected virtual void OnReset()
+		{
+			if (Reset != null)
+			{
+				Control target = Reset.Target as Control;
+				if (target != null && target.InvokeRequired)
+					target.Invoke(Reset);
+				else
+					Reset();
+			}
+		}
         #endregion
     }
 }

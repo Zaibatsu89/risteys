@@ -61,7 +61,8 @@ namespace SimCommander.Communication
 
                     //create a new DoCommunicate Object
                     ClientReader reader = new ClientReader(client);
-                    reader.MessageRecieved += new delegates.OnMessageRecievedHandler(reader_MessageRecieved);
+                    reader.MessageRecieved += new delegates.OnMessageReceivedHandler(reader_MessageRecieved);
+					reader.Reset += new delegates.OnResetHandler(reader_Reset);
                 }
             }
         }
@@ -94,6 +95,7 @@ namespace SimCommander.Communication
 					{
 						Console.WriteLine("Connection lost");
 						client.Close();
+						OnReset();
 						break;
 					}
 
@@ -105,6 +107,7 @@ namespace SimCommander.Communication
 							{
 								Console.WriteLine("Connection lost");
 								client.Close();
+								OnReset();
 								break;
 							}
 							if (data.Equals(Strings.HiIAmSimulator))
@@ -117,7 +120,7 @@ namespace SimCommander.Communication
             }
 
             #region events
-            public event delegates.OnMessageRecievedHandler MessageRecieved;
+            public event delegates.OnMessageReceivedHandler MessageRecieved;
 
             protected virtual void OnMessageRecieved(string message)
             {
@@ -131,6 +134,19 @@ namespace SimCommander.Communication
                 }
             }
 
+			public event delegates.OnResetHandler Reset;
+
+			protected virtual void OnReset()
+			{
+				if (Reset != null)
+				{
+					Control target = Reset.Target as Control;
+					if (target != null && target.InvokeRequired)
+						target.Invoke(Reset);
+					else
+						Reset();
+				}
+			}
             #endregion
         }
 
@@ -146,7 +162,7 @@ namespace SimCommander.Communication
                 {
                     //check if the message is empty, of the particular
                     //index of out array is null, if it is then continue
-                    if (!string.Equals(message, string.Empty) || !TcpClient.Equals(client, null))
+                    if (!string.Equals(message, string.Empty) || client != null)
                     {
                         writer = new StreamWriter(client.GetStream());
                         writer.WriteLine(message);
@@ -184,23 +200,41 @@ namespace SimCommander.Communication
 
         private void reader_MessageRecieved(string message)
         {
-            OnMessageRecieved(message);
+            OnMessageReceived(message);
         }
-        #region eventhandlers
-        public event delegates.OnMessageRecievedHandler MessageRecieved;
 
-        protected virtual void OnMessageRecieved(string message)
+		private void reader_Reset()
+		{
+			OnReset();
+		}
+        #region eventhandlers
+        public event delegates.OnMessageReceivedHandler MessageReceived;
+
+        protected virtual void OnMessageReceived(string message)
         {
-            if (MessageRecieved != null)
+            if (MessageReceived != null)
             {
-                Control target = MessageRecieved.Target as Control;
+                Control target = MessageReceived.Target as Control;
                 if (target != null && target.InvokeRequired)
-                    target.Invoke(MessageRecieved, new object[] { message });
+                    target.Invoke(MessageReceived, new object[] { message });
                 else
-                    MessageRecieved(message);
+                    MessageReceived(message);
             }
         }
 
+		public event delegates.OnResetHandler Reset;
+
+		protected virtual void OnReset()
+		{
+			if (Reset != null)
+			{
+				Control target = Reset.Target as Control;
+				if (target != null && target.InvokeRequired)
+					target.Invoke(Reset);
+				else
+					Reset();
+			}
+		}
         #endregion
     }
 }
